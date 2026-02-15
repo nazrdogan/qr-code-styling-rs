@@ -1,6 +1,6 @@
 [package]
 name = "qr-code-styling"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Nazir Dogan <nazrdogan@gmail.com>"]
 description = "Styled QR code generation with customizable dots, corners, gradients, and logo embedding"
