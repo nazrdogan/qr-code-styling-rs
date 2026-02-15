@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(magick:*)",
+      "Bash(curl:*)",
+      "Bash(cargo run:*)"
+    ]
+  }
+}

@@ -1,0 +1,53 @@
+[package]
+name = "qr-code-styling"
+version = "0.1.0"
+edition = "2021"
+authors = ["Nazir Dogan <nazrdogan@gmail.com>"]
+description = "Styled QR code generation with customizable dots, corners, gradients, and logo embedding"
+license = "MIT"
+keywords = ["qr", "qrcode", "svg", "styling"]
+categories = ["encoding", "graphics"]
+repository = "https://github.com/nazrdogan/qr-code-styling-rs"
+homepage = "https://github.com/nazrdogan/qr-code-styling-rs"
+documentation = "https://docs.rs/qr-code-styling"
+readme = "README.md"
+exclude = ["*.svg", "*.pdf", "*.png", "*.jpg", "*.webp", "!examples/logo.png"]
+
+[lib]
+crate-type = ["lib"]
+
+[dependencies]
+qrcode = "0.14"
+thiserror = "2.0"
+base64 = "0.22"
+
+# Image processing
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp"] }
+
+# SVG rendering
+resvg = "0.44"
+tiny-skia = "0.11"
+
+# PDF generation (SVG to PDF vector conversion)
+svg2pdf = "0.12"
+lopdf = "0.34"
+
+# Optional serde support
+serde = { version = "1.0", features = ["derive"], optional = true }
+serde_json = { version = "1.0", optional = true }
+
+[dev-dependencies]
+criterion = "0.5"
+proptest = "1.4"
+rayon = "1.10"
+
+[features]
+default = ["png", "jpeg", "webp"]
+serde = ["dep:serde", "dep:serde_json"]
+png = []
+jpeg = []
+webp = []
+
+[profile.release]
+lto = true
+opt-level = 3

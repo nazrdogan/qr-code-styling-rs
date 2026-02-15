@@ -1,0 +1,27 @@
+# Rust build artifacts
+/target/
+Cargo.lock
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Generated output files
+/output/
+!/examples/logo.png
+
+# Output directories
+bulk_pdf_output/
+output_*/
+
+# Editor backups
+*~
+\#*\#
+
+# Profiling
+perf.data
+perf.data.old
+flamegraph.svg
