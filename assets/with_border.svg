@@ -1,0 +1,1513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="300" viewBox="0 0 300 300">
+<defs>
+<clipPath id="clip-path-background-color-7"><rect x="0" y="0" width="300" height="300"/></clipPath>
+<clipPath id="clip-path-dot-color-7">
+<path d="M 121 94 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,122.5,95.5)"/>
+<rect x="124" y="94" width="3" height="3"/>
+<rect x="127" y="94" width="3" height="3"/>
+<rect x="130" y="94" width="3" height="3"/>
+<rect x="133" y="94" width="3" height="3"/>
+<rect x="136" y="94" width="3" height="3"/>
+<path d="M 139 94 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 145 94 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,146.5,95.5)"/>
+<path d="M 151 94 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,152.5,95.5)"/>
+<rect x="154" y="94" width="3" height="3"/>
+<rect x="157" y="94" width="3" height="3"/>
+<path d="M 160 94 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<circle cx="167.5" cy="95.5" r="1.5"/>
+<path d="M 175 94 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,176.5,95.5)"/>
+<path d="M 178 94 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 121 97 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,122.5,98.5)"/>
+<rect x="124" y="97" width="3" height="3"/>
+<rect x="127" y="97" width="3" height="3"/>
+<path d="M 133 97 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,134.5,98.5)"/>
+<rect x="136" y="97" width="3" height="3"/>
+<path d="M 139 97 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,140.5,98.5)"/>
+<rect x="145" y="97" width="3" height="3"/>
+<path d="M 154 97 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,155.5,98.5)"/>
+<circle cx="170.5" cy="98.5" r="1.5"/>
+<circle cx="119.5" cy="101.5" r="1.5"/>
+<path d="M 127 100 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,128.5,101.5)"/>
+<path d="M 136 100 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,137.5,101.5)"/>
+<rect x="145" y="100" width="3" height="3"/>
+<path d="M 157 100 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,158.5,101.5)"/>
+<rect x="160" y="100" width="3" height="3"/>
+<path d="M 163 100 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 172 100 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,173.5,101.5)"/>
+<path d="M 178 100 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,179.5,101.5)"/>
+<path d="M 139 103 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,140.5,104.5)"/>
+<rect x="142" y="103" width="3" height="3"/>
+<rect x="145" y="103" width="3" height="3"/>
+<path d="M 151 103 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,152.5,104.5)"/>
+<rect x="163" y="103" width="3" height="3"/>
+<path d="M 169 103 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,170.5,104.5)"/>
+<path d="M 172 103 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,173.5,104.5)"/>
+<path d="M 178 103 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,179.5,104.5)"/>
+<path d="M 118 106 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,119.5,107.5)"/>
+<path d="M 127 106 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,128.5,107.5)"/>
+<rect x="130" y="106" width="3" height="3"/>
+<path d="M 133 106 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<rect x="142" y="106" width="3" height="3"/>
+<path d="M 145 106 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,146.5,107.5)"/>
+<rect x="151" y="106" width="3" height="3"/>
+<path d="M 154 106 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 160 106 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,161.5,107.5)"/>
+<path d="M 163 106 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,164.5,107.5)"/>
+<rect x="169" y="106" width="3" height="3"/>
+<circle cx="176.5" cy="107.5" r="1.5"/>
+<rect x="118" y="109" width="3" height="3"/>
+<rect x="121" y="109" width="3" height="3"/>
+<rect x="124" y="109" width="3" height="3"/>
+<rect x="127" y="109" width="3" height="3"/>
+<rect x="130" y="109" width="3" height="3"/>
+<path d="M 136 109 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,137.5,110.5)"/>
+<rect x="139" y="109" width="3" height="3"/>
+<rect x="142" y="109" width="3" height="3"/>
+<path d="M 148 109 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,149.5,110.5)"/>
+<rect x="151" y="109" width="3" height="3"/>
+<rect x="154" y="109" width="3" height="3"/>
+<path d="M 166 109 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,167.5,110.5)"/>
+<rect x="169" y="109" width="3" height="3"/>
+<path d="M 172 109 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 178 109 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,179.5,110.5)"/>
+<path d="M 118 112 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,119.5,113.5)"/>
+<path d="M 124 112 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,125.5,113.5)"/>
+<path d="M 130 112 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,131.5,113.5)"/>
+<rect x="136" y="112" width="3" height="3"/>
+<path d="M 142 112 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,143.5,113.5)"/>
+<path d="M 148 112 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,149.5,113.5)"/>
+<rect x="154" y="112" width="3" height="3"/>
+<circle cx="161.5" cy="113.5" r="1.5"/>
+<rect x="166" y="112" width="3" height="3"/>
+<rect x="172" y="112" width="3" height="3"/>
+<path d="M 178 112 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,179.5,113.5)"/>
+<circle cx="122.5" cy="116.5" r="1.5"/>
+<circle cx="128.5" cy="116.5" r="1.5"/>
+<path d="M 136 115 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,137.5,116.5)"/>
+<path d="M 139 115 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 154 115 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,155.5,116.5)"/>
+<path d="M 157 115 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 163 115 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,164.5,116.5)"/>
+<rect x="166" y="115" width="3" height="3"/>
+<rect x="172" y="115" width="3" height="3"/>
+<circle cx="98.5" cy="119.5" r="1.5"/>
+<path d="M 106 118 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,107.5,119.5)"/>
+<circle cx="113.5" cy="119.5" r="1.5"/>
+<path d="M 118 118 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,119.5,119.5)"/>
+<path d="M 142 118 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,143.5,119.5)"/>
+<path d="M 148 118 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,149.5,119.5)"/>
+<path d="M 151 118 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<rect x="157" y="118" width="3" height="3"/>
+<rect x="160" y="118" width="3" height="3"/>
+<rect x="163" y="118" width="3" height="3"/>
+<rect x="166" y="118" width="3" height="3"/>
+<rect x="169" y="118" width="3" height="3"/>
+<rect x="172" y="118" width="3" height="3"/>
+<path d="M 175 118 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 181 118 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,182.5,119.5)"/>
+<path d="M 187 118 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,188.5,119.5)"/>
+<path d="M 190 118 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<circle cx="197.5" cy="119.5" r="1.5"/>
+<path d="M 94 121 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,95.5,122.5)"/>
+<circle cx="101.5" cy="122.5" r="1.5"/>
+<path d="M 106 121 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,107.5,122.5)"/>
+<path d="M 115 121 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,116.5,122.5)"/>
+<rect x="118" y="121" width="3" height="3"/>
+<path d="M 121 121 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<circle cx="128.5" cy="122.5" r="1.5"/>
+<circle cx="134.5" cy="122.5" r="1.5"/>
+<path d="M 139 121 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,140.5,122.5)"/>
+<path d="M 142 121 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,143.5,122.5)"/>
+<path d="M 151 121 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,152.5,122.5)"/>
+<rect x="154" y="121" width="3" height="3"/>
+<rect x="157" y="121" width="3" height="3"/>
+<rect x="163" y="121" width="3" height="3"/>
+<path d="M 178 121 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,179.5,122.5)"/>
+<rect x="181" y="121" width="3" height="3"/>
+<rect x="184" y="121" width="3" height="3"/>
+<rect x="187" y="121" width="3" height="3"/>
+<path d="M 190 121 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,191.5,122.5)"/>
+<circle cx="200.5" cy="122.5" r="1.5"/>
+<path d="M 94 124 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,95.5,125.5)"/>
+<path d="M 97 124 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 109 124 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,110.5,125.5)"/>
+<rect x="112" y="124" width="3" height="3"/>
+<rect x="115" y="124" width="3" height="3"/>
+<path d="M 118 124 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,119.5,125.5)"/>
+<circle cx="125.5" cy="125.5" r="1.5"/>
+<circle cx="131.5" cy="125.5" r="1.5"/>
+<path d="M 136 124 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,137.5,125.5)"/>
+<path d="M 145 124 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,146.5,125.5)"/>
+<rect x="157" y="124" width="3" height="3"/>
+<rect x="160" y="124" width="3" height="3"/>
+<rect x="163" y="124" width="3" height="3"/>
+<rect x="166" y="124" width="3" height="3"/>
+<rect x="169" y="124" width="3" height="3"/>
+<path d="M 172 124 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 178 124 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,179.5,125.5)"/>
+<rect x="181" y="124" width="3" height="3"/>
+<path d="M 187 124 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,188.5,125.5)"/>
+<circle cx="194.5" cy="125.5" r="1.5"/>
+<path d="M 97 127 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,98.5,128.5)"/>
+<path d="M 100 127 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 106 127 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,107.5,128.5)"/>
+<path d="M 121 127 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,122.5,128.5)"/>
+<path d="M 127 127 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,128.5,128.5)"/>
+<path d="M 133 127 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,134.5,128.5)"/>
+<path d="M 136 127 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,137.5,128.5)"/>
+<path d="M 145 127 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,146.5,128.5)"/>
+<path d="M 148 127 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 154 127 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,155.5,128.5)"/>
+<rect x="157" y="127" width="3" height="3"/>
+<rect x="166" y="127" width="3" height="3"/>
+<path d="M 172 127 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,173.5,128.5)"/>
+<rect x="181" y="127" width="3" height="3"/>
+<path d="M 196 127 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,197.5,128.5)"/>
+<path d="M 100 130 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,101.5,131.5)"/>
+<rect x="106" y="130" width="3" height="3"/>
+<rect x="109" y="130" width="3" height="3"/>
+<rect x="112" y="130" width="3" height="3"/>
+<path d="M 115 130 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<rect x="121" y="130" width="3" height="3"/>
+<rect x="124" y="130" width="3" height="3"/>
+<rect x="127" y="130" width="3" height="3"/>
+<path d="M 130 130 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 151 130 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,152.5,131.5)"/>
+<rect x="154" y="130" width="3" height="3"/>
+<rect x="157" y="130" width="3" height="3"/>
+<path d="M 160 130 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 166 130 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,167.5,131.5)"/>
+<path d="M 175 130 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,176.5,131.5)"/>
+<rect x="181" y="130" width="3" height="3"/>
+<rect x="184" y="130" width="3" height="3"/>
+<path d="M 187 130 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 193 130 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,194.5,131.5)"/>
+<rect x="196" y="130" width="3" height="3"/>
+<circle cx="203.5" cy="131.5" r="1.5"/>
+<rect x="106" y="133" width="3" height="3"/>
+<rect x="109" y="133" width="3" height="3"/>
+<path d="M 118 133 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,119.5,134.5)"/>
+<rect x="121" y="133" width="3" height="3"/>
+<rect x="124" y="133" width="3" height="3"/>
+<path d="M 127 133 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,128.5,134.5)"/>
+<path d="M 133 133 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,134.5,134.5)"/>
+<path d="M 148 133 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,149.5,134.5)"/>
+<rect x="151" y="133" width="3" height="3"/>
+<rect x="154" y="133" width="3" height="3"/>
+<path d="M 157 133 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,158.5,134.5)"/>
+<path d="M 163 133 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,164.5,134.5)"/>
+<path d="M 169 133 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,170.5,134.5)"/>
+<rect x="172" y="133" width="3" height="3"/>
+<rect x="175" y="133" width="3" height="3"/>
+<path d="M 181 133 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,182.5,134.5)"/>
+<path d="M 190 133 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,191.5,134.5)"/>
+<rect x="196" y="133" width="3" height="3"/>
+<path d="M 94 136 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,95.5,137.5)"/>
+<rect x="97" y="136" width="3" height="3"/>
+<rect x="100" y="136" width="3" height="3"/>
+<rect x="103" y="136" width="3" height="3"/>
+<rect x="106" y="136" width="3" height="3"/>
+<rect x="109" y="136" width="3" height="3"/>
+<path d="M 112 136 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 118 136 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,119.5,137.5)"/>
+<path d="M 124 136 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,125.5,137.5)"/>
+<path d="M 130 136 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,131.5,137.5)"/>
+<path d="M 133 136 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,134.5,137.5)"/>
+<rect x="163" y="136" width="3" height="3"/>
+<path d="M 169 136 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,170.5,137.5)"/>
+<rect x="175" y="136" width="3" height="3"/>
+<path d="M 184 136 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,185.5,137.5)"/>
+<rect x="187" y="136" width="3" height="3"/>
+<rect x="190" y="136" width="3" height="3"/>
+<rect x="193" y="136" width="3" height="3"/>
+<rect x="196" y="136" width="3" height="3"/>
+<path d="M 100 139 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,101.5,140.5)"/>
+<rect x="103" y="139" width="3" height="3"/>
+<rect x="106" y="139" width="3" height="3"/>
+<path d="M 115 139 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,116.5,140.5)"/>
+<circle cx="122.5" cy="140.5" r="1.5"/>
+<path d="M 163 139 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,164.5,140.5)"/>
+<path d="M 166 139 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 175 139 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,176.5,140.5)"/>
+<rect x="184" y="139" width="3" height="3"/>
+<rect x="196" y="139" width="3" height="3"/>
+<rect x="199" y="139" width="3" height="3"/>
+<path d="M 202 139 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<circle cx="95.5" cy="143.5" r="1.5"/>
+<path d="M 103 142 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,104.5,143.5)"/>
+<rect x="106" y="142" width="3" height="3"/>
+<rect x="109" y="142" width="3" height="3"/>
+<rect x="112" y="142" width="3" height="3"/>
+<rect x="115" y="142" width="3" height="3"/>
+<path d="M 118 142 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 124 142 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,125.5,143.5)"/>
+<path d="M 127 142 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 133 142 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,134.5,143.5)"/>
+<path d="M 166 142 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,167.5,143.5)"/>
+<path d="M 178 142 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,179.5,143.5)"/>
+<rect x="181" y="142" width="3" height="3"/>
+<rect x="184" y="142" width="3" height="3"/>
+<path d="M 187 142 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 193 142 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,194.5,143.5)"/>
+<rect x="196" y="142" width="3" height="3"/>
+<path d="M 199 142 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,200.5,143.5)"/>
+<path d="M 97 145 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,98.5,146.5)"/>
+<path d="M 100 145 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 106 145 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,107.5,146.5)"/>
+<rect x="109" y="145" width="3" height="3"/>
+<path d="M 121 145 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,122.5,146.5)"/>
+<rect x="124" y="145" width="3" height="3"/>
+<path d="M 130 145 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,131.5,146.5)"/>
+<rect x="133" y="145" width="3" height="3"/>
+<path d="M 169 145 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,170.5,146.5)"/>
+<rect x="172" y="145" width="3" height="3"/>
+<rect x="175" y="145" width="3" height="3"/>
+<path d="M 178 145 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,179.5,146.5)"/>
+<rect x="187" y="145" width="3" height="3"/>
+<path d="M 190 145 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 103 148 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,104.5,149.5)"/>
+<path d="M 109 148 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,110.5,149.5)"/>
+<rect x="112" y="148" width="3" height="3"/>
+<rect x="115" y="148" width="3" height="3"/>
+<rect x="118" y="148" width="3" height="3"/>
+<rect x="121" y="148" width="3" height="3"/>
+<rect x="124" y="148" width="3" height="3"/>
+<path d="M 133 148 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,134.5,149.5)"/>
+<path d="M 169 148 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,170.5,149.5)"/>
+<rect x="175" y="148" width="3" height="3"/>
+<path d="M 184 148 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,185.5,149.5)"/>
+<rect x="187" y="148" width="3" height="3"/>
+<path d="M 94 151 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,95.5,152.5)"/>
+<rect x="97" y="151" width="3" height="3"/>
+<rect x="100" y="151" width="3" height="3"/>
+<rect x="103" y="151" width="3" height="3"/>
+<rect x="124" y="151" width="3" height="3"/>
+<circle cx="131.5" cy="152.5" r="1.5"/>
+<path d="M 166 151 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,167.5,152.5)"/>
+<path d="M 172 151 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,173.5,152.5)"/>
+<rect x="175" y="151" width="3" height="3"/>
+<path d="M 178 151 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<rect x="184" y="151" width="3" height="3"/>
+<rect x="187" y="151" width="3" height="3"/>
+<path d="M 190 151 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 196 151 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,197.5,152.5)"/>
+<circle cx="203.5" cy="152.5" r="1.5"/>
+<path d="M 94 154 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,95.5,155.5)"/>
+<path d="M 100 154 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,101.5,155.5)"/>
+<path d="M 103 154 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,104.5,155.5)"/>
+<path d="M 112 154 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,113.5,155.5)"/>
+<path d="M 115 154 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 121 154 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,122.5,155.5)"/>
+<rect x="124" y="154" width="3" height="3"/>
+<path d="M 127 154 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<circle cx="134.5" cy="155.5" r="1.5"/>
+<path d="M 163 154 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,164.5,155.5)"/>
+<path d="M 166 154 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,167.5,155.5)"/>
+<path d="M 181 154 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,182.5,155.5)"/>
+<path d="M 184 154 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,185.5,155.5)"/>
+<path d="M 196 154 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,197.5,155.5)"/>
+<path d="M 199 154 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<circle cx="98.5" cy="158.5" r="1.5"/>
+<circle cx="107.5" cy="158.5" r="1.5"/>
+<rect x="115" y="157" width="3" height="3"/>
+<rect x="118" y="157" width="3" height="3"/>
+<rect x="121" y="157" width="3" height="3"/>
+<rect x="163" y="157" width="3" height="3"/>
+<path d="M 175 157 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,176.5,158.5)"/>
+<circle cx="191.5" cy="158.5" r="1.5"/>
+<path d="M 199 157 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,200.5,158.5)"/>
+<path d="M 94 160 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,95.5,161.5)"/>
+<circle cx="101.5" cy="161.5" r="1.5"/>
+<path d="M 112 160 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,113.5,161.5)"/>
+<rect x="115" y="160" width="3" height="3"/>
+<rect x="118" y="160" width="3" height="3"/>
+<rect x="121" y="160" width="3" height="3"/>
+<rect x="124" y="160" width="3" height="3"/>
+<rect x="127" y="160" width="3" height="3"/>
+<rect x="130" y="160" width="3" height="3"/>
+<path d="M 133 160 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<rect x="163" y="160" width="3" height="3"/>
+<rect x="166" y="160" width="3" height="3"/>
+<rect x="169" y="160" width="3" height="3"/>
+<rect x="172" y="160" width="3" height="3"/>
+<rect x="175" y="160" width="3" height="3"/>
+<path d="M 178 160 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 184 160 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,185.5,161.5)"/>
+<path d="M 193 160 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,194.5,161.5)"/>
+<path d="M 94 163 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,95.5,164.5)"/>
+<path d="M 97 163 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<circle cx="104.5" cy="164.5" r="1.5"/>
+<path d="M 109 163 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,110.5,164.5)"/>
+<path d="M 121 163 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,122.5,164.5)"/>
+<rect x="127" y="163" width="3" height="3"/>
+<path d="M 139 163 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,140.5,164.5)"/>
+<rect x="142" y="163" width="3" height="3"/>
+<path d="M 145 163 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 154 163 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,155.5,164.5)"/>
+<rect x="157" y="163" width="3" height="3"/>
+<rect x="160" y="163" width="3" height="3"/>
+<rect x="163" y="163" width="3" height="3"/>
+<rect x="169" y="163" width="3" height="3"/>
+<rect x="178" y="163" width="3" height="3"/>
+<rect x="181" y="163" width="3" height="3"/>
+<rect x="184" y="163" width="3" height="3"/>
+<path d="M 187 163 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 193 163 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,194.5,164.5)"/>
+<path d="M 196 163 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<rect x="97" y="166" width="3" height="3"/>
+<path d="M 100 166 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<rect x="109" y="166" width="3" height="3"/>
+<rect x="112" y="166" width="3" height="3"/>
+<rect x="115" y="166" width="3" height="3"/>
+<path d="M 118 166 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 127 166 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,128.5,167.5)"/>
+<path d="M 142 166 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,143.5,167.5)"/>
+<circle cx="149.5" cy="167.5" r="1.5"/>
+<rect x="157" y="166" width="3" height="3"/>
+<rect x="163" y="166" width="3" height="3"/>
+<rect x="166" y="166" width="3" height="3"/>
+<rect x="169" y="166" width="3" height="3"/>
+<path d="M 175 166 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,176.5,167.5)"/>
+<rect x="178" y="166" width="3" height="3"/>
+<path d="M 181 166 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,182.5,167.5)"/>
+<path d="M 187 166 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,188.5,167.5)"/>
+<path d="M 190 166 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 196 166 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,197.5,167.5)"/>
+<path d="M 199 166 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 94 169 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,95.5,170.5)"/>
+<path d="M 97 169 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,98.5,170.5)"/>
+<path d="M 103 169 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,104.5,170.5)"/>
+<rect x="106" y="169" width="3" height="3"/>
+<rect x="109" y="169" width="3" height="3"/>
+<circle cx="122.5" cy="170.5" r="1.5"/>
+<path d="M 130 169 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,131.5,170.5)"/>
+<path d="M 133 169 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 139 169 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,140.5,170.5)"/>
+<path d="M 145 169 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,146.5,170.5)"/>
+<path d="M 157 169 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,158.5,170.5)"/>
+<rect x="163" y="169" width="3" height="3"/>
+<rect x="169" y="169" width="3" height="3"/>
+<path d="M 172 169 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<circle cx="185.5" cy="170.5" r="1.5"/>
+<path d="M 199 169 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,200.5,170.5)"/>
+<rect x="109" y="172" width="3" height="3"/>
+<path d="M 112 172 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 124 172 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,125.5,173.5)"/>
+<path d="M 136 172 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,137.5,173.5)"/>
+<path d="M 139 172 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,140.5,173.5)"/>
+<path d="M 145 172 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,146.5,173.5)"/>
+<path d="M 154 172 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,155.5,173.5)"/>
+<path d="M 163 172 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,164.5,173.5)"/>
+<rect x="166" y="172" width="3" height="3"/>
+<rect x="169" y="172" width="3" height="3"/>
+<rect x="172" y="172" width="3" height="3"/>
+<path d="M 175 172 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<circle cx="182.5" cy="173.5" r="1.5"/>
+<path d="M 190 172 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,191.5,173.5)"/>
+<path d="M 100 175 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,101.5,176.5)"/>
+<rect x="103" y="175" width="3" height="3"/>
+<rect x="106" y="175" width="3" height="3"/>
+<path d="M 109 175 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,110.5,176.5)"/>
+<path d="M 118 175 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,119.5,176.5)"/>
+<rect x="121" y="175" width="3" height="3"/>
+<rect x="124" y="175" width="3" height="3"/>
+<path d="M 127 175 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 133 175 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,134.5,176.5)"/>
+<path d="M 136 175 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,137.5,176.5)"/>
+<path d="M 148 175 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,149.5,176.5)"/>
+<rect x="154" y="175" width="3" height="3"/>
+<rect x="157" y="175" width="3" height="3"/>
+<path d="M 160 175 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 166 175 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,167.5,176.5)"/>
+<path d="M 172 175 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,173.5,176.5)"/>
+<rect x="175" y="175" width="3" height="3"/>
+<path d="M 178 175 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 184 175 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,185.5,176.5)"/>
+<rect x="187" y="175" width="3" height="3"/>
+<rect x="190" y="175" width="3" height="3"/>
+<rect x="193" y="175" width="3" height="3"/>
+<path d="M 196 175 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<circle cx="203.5" cy="176.5" r="1.5"/>
+<path d="M 94 178 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,95.5,179.5)"/>
+<path d="M 97 178 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 103 178 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,104.5,179.5)"/>
+<path d="M 112 178 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,113.5,179.5)"/>
+<path d="M 115 178 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 133 178 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,134.5,179.5)"/>
+<path d="M 145 178 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,146.5,179.5)"/>
+<rect x="148" y="178" width="3" height="3"/>
+<path d="M 154 178 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,155.5,179.5)"/>
+<rect x="157" y="178" width="3" height="3"/>
+<rect x="160" y="178" width="3" height="3"/>
+<path d="M 163 178 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<rect x="178" y="178" width="3" height="3"/>
+<rect x="181" y="178" width="3" height="3"/>
+<rect x="184" y="178" width="3" height="3"/>
+<rect x="187" y="178" width="3" height="3"/>
+<rect x="190" y="178" width="3" height="3"/>
+<circle cx="200.5" cy="179.5" r="1.5"/>
+<circle cx="119.5" cy="182.5" r="1.5"/>
+<path d="M 124 181 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,125.5,182.5)"/>
+<path d="M 127 181 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 136 181 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,137.5,182.5)"/>
+<circle cx="143.5" cy="182.5" r="1.5"/>
+<rect x="148" y="181" width="3" height="3"/>
+<rect x="163" y="181" width="3" height="3"/>
+<path d="M 169 181 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,170.5,182.5)"/>
+<path d="M 172 181 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<rect x="178" y="181" width="3" height="3"/>
+<rect x="190" y="181" width="3" height="3"/>
+<path d="M 193 181 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<rect x="124" y="184" width="3" height="3"/>
+<circle cx="131.5" cy="185.5" r="1.5"/>
+<rect x="136" y="184" width="3" height="3"/>
+<path d="M 145 184 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,146.5,185.5)"/>
+<rect x="148" y="184" width="3" height="3"/>
+<rect x="151" y="184" width="3" height="3"/>
+<rect x="154" y="184" width="3" height="3"/>
+<rect x="157" y="184" width="3" height="3"/>
+<rect x="160" y="184" width="3" height="3"/>
+<rect x="163" y="184" width="3" height="3"/>
+<path d="M 166 184 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 172 184 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,173.5,185.5)"/>
+<rect x="178" y="184" width="3" height="3"/>
+<circle cx="185.5" cy="185.5" r="1.5"/>
+<rect x="190" y="184" width="3" height="3"/>
+<rect x="193" y="184" width="3" height="3"/>
+<rect x="196" y="184" width="3" height="3"/>
+<path d="M 199 184 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 121 187 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,122.5,188.5)"/>
+<rect x="124" y="187" width="3" height="3"/>
+<path d="M 133 187 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,134.5,188.5)"/>
+<path d="M 136 187 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,137.5,188.5)"/>
+<path d="M 142 187 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,143.5,188.5)"/>
+<rect x="145" y="187" width="3" height="3"/>
+<rect x="148" y="187" width="3" height="3"/>
+<rect x="151" y="187" width="3" height="3"/>
+<path d="M 157 187 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,158.5,188.5)"/>
+<rect x="163" y="187" width="3" height="3"/>
+<rect x="178" y="187" width="3" height="3"/>
+<rect x="190" y="187" width="3" height="3"/>
+<rect x="196" y="187" width="3" height="3"/>
+<rect x="199" y="187" width="3" height="3"/>
+<path d="M 202 187 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<circle cx="119.5" cy="191.5" r="1.5"/>
+<path d="M 124 190 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,125.5,191.5)"/>
+<path d="M 127 190 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 139 190 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,140.5,191.5)"/>
+<rect x="151" y="190" width="3" height="3"/>
+<path d="M 154 190 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 163 190 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,164.5,191.5)"/>
+<path d="M 178 190 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,179.5,191.5)"/>
+<rect x="181" y="190" width="3" height="3"/>
+<rect x="184" y="190" width="3" height="3"/>
+<rect x="187" y="190" width="3" height="3"/>
+<rect x="190" y="190" width="3" height="3"/>
+<rect x="193" y="190" width="3" height="3"/>
+<rect x="196" y="190" width="3" height="3"/>
+<path d="M 202 190 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,203.5,191.5)"/>
+<path d="M 133 193 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,134.5,194.5)"/>
+<rect x="139" y="193" width="3" height="3"/>
+<path d="M 145 193 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,146.5,194.5)"/>
+<rect x="148" y="193" width="3" height="3"/>
+<rect x="151" y="193" width="3" height="3"/>
+<circle cx="161.5" cy="194.5" r="1.5"/>
+<path d="M 166 193 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,167.5,194.5)"/>
+<rect x="169" y="193" width="3" height="3"/>
+<path d="M 172 193 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<rect x="184" y="193" width="3" height="3"/>
+<rect x="187" y="193" width="3" height="3"/>
+<path d="M 193 193 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,194.5,194.5)"/>
+<path d="M 196 193 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,197.5,194.5)"/>
+<path d="M 121 196 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,122.5,197.5)"/>
+<path d="M 127 196 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,128.5,197.5)"/>
+<rect x="130" y="196" width="3" height="3"/>
+<rect x="133" y="196" width="3" height="3"/>
+<path d="M 139 196 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,140.5,197.5)"/>
+<path d="M 142 196 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<rect x="151" y="196" width="3" height="3"/>
+<path d="M 163 196 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,164.5,197.5)"/>
+<path d="M 166 196 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,167.5,197.5)"/>
+<path d="M 172 196 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,173.5,197.5)"/>
+<circle cx="179.5" cy="197.5" r="1.5"/>
+<rect x="184" y="196" width="3" height="3"/>
+<rect x="187" y="196" width="3" height="3"/>
+<path d="M 199 196 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,200.5,197.5)"/>
+<path d="M 118 199 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,119.5,200.5)"/>
+<rect x="121" y="199" width="3" height="3"/>
+<path d="M 124 199 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 133 199 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,134.5,200.5)"/>
+<path d="M 136 199 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<circle cx="146.5" cy="200.5" r="1.5"/>
+<path d="M 151 199 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,152.5,200.5)"/>
+<rect x="154" y="199" width="3" height="3"/>
+<path d="M 157 199 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 163 199 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,164.5,200.5)"/>
+<path d="M 175 199 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,176.5,200.5)"/>
+<path d="M 184 199 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,185.5,200.5)"/>
+<path d="M 187 199 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,188.5,200.5)"/>
+<path d="M 196 199 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,197.5,200.5)"/>
+<rect x="199" y="199" width="3" height="3"/>
+<path d="M 121 202 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,122.5,203.5)"/>
+<path d="M 124 202 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,125.5,203.5)"/>
+<circle cx="140.5" cy="203.5" r="1.5"/>
+<circle cx="149.5" cy="203.5" r="1.5"/>
+<path d="M 154 202 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,155.5,203.5)"/>
+<path d="M 157 202 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,158.5,203.5)"/>
+<path d="M 175 202 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,176.5,203.5)"/>
+<path d="M 196 202 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,197.5,203.5)"/>
+<rect x="199" y="202" width="3" height="3"/>
+<path d="M 202 202 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<circle cx="128.5" cy="56.5" r="1.5"/>
+<path d="M 136 55 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,137.5,56.5)"/>
+<path d="M 139 55 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 145 55 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,146.5,56.5)"/>
+<circle cx="155.5" cy="56.5" r="1.5"/>
+<path d="M 163 55 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,164.5,56.5)"/>
+<rect x="166" y="55" width="3" height="3"/>
+<path d="M 169 55 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 118 58 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,119.5,59.5)"/>
+<path d="M 121 58 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 130 58 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,131.5,59.5)"/>
+<path d="M 136 58 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,137.5,59.5)"/>
+<rect x="145" y="58" width="3" height="3"/>
+<path d="M 157 58 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,158.5,59.5)"/>
+<path d="M 160 58 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 169 58 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,170.5,59.5)"/>
+<circle cx="179.5" cy="59.5" r="1.5"/>
+<path d="M 109 61 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,110.5,62.5)"/>
+<rect x="121" y="61" width="3" height="3"/>
+<path d="M 127 61 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,128.5,62.5)"/>
+<path d="M 130 61 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,131.5,62.5)"/>
+<path d="M 139 61 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,140.5,62.5)"/>
+<rect x="142" y="61" width="3" height="3"/>
+<rect x="145" y="61" width="3" height="3"/>
+<path d="M 151 61 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,152.5,62.5)"/>
+<path d="M 181 61 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,182.5,62.5)"/>
+<rect x="184" y="61" width="3" height="3"/>
+<path d="M 187 61 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<circle cx="104.5" cy="65.5" r="1.5"/>
+<rect x="109" y="64" width="3" height="3"/>
+<path d="M 112 64 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 118 64 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,119.5,65.5)"/>
+<path d="M 121 64 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,122.5,65.5)"/>
+<rect x="127" y="64" width="3" height="3"/>
+<circle cx="134.5" cy="65.5" r="1.5"/>
+<rect x="142" y="64" width="3" height="3"/>
+<path d="M 145 64 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,146.5,65.5)"/>
+<rect x="151" y="64" width="3" height="3"/>
+<path d="M 154 64 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<circle cx="161.5" cy="65.5" r="1.5"/>
+<path d="M 169 64 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,170.5,65.5)"/>
+<rect x="172" y="64" width="3" height="3"/>
+<path d="M 175 64 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<rect x="184" y="64" width="3" height="3"/>
+<path d="M 187 64 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,188.5,65.5)"/>
+<path d="M 193 64 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,194.5,65.5)"/>
+<path d="M 196 64 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 100 67 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,101.5,68.5)"/>
+<path d="M 106 67 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,107.5,68.5)"/>
+<rect x="109" y="67" width="3" height="3"/>
+<rect x="112" y="67" width="3" height="3"/>
+<path d="M 124 67 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,125.5,68.5)"/>
+<rect x="127" y="67" width="3" height="3"/>
+<path d="M 130 67 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 136 67 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,137.5,68.5)"/>
+<rect x="139" y="67" width="3" height="3"/>
+<rect x="142" y="67" width="3" height="3"/>
+<path d="M 148 67 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,149.5,68.5)"/>
+<rect x="151" y="67" width="3" height="3"/>
+<rect x="154" y="67" width="3" height="3"/>
+<path d="M 163 67 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,164.5,68.5)"/>
+<rect x="166" y="67" width="3" height="3"/>
+<rect x="169" y="67" width="3" height="3"/>
+<rect x="172" y="67" width="3" height="3"/>
+<path d="M 178 67 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,179.5,68.5)"/>
+<rect x="181" y="67" width="3" height="3"/>
+<rect x="184" y="67" width="3" height="3"/>
+<path d="M 190 67 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,191.5,68.5)"/>
+<rect x="193" y="67" width="3" height="3"/>
+<rect x="196" y="67" width="3" height="3"/>
+<path d="M 94 70 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,95.5,71.5)"/>
+<path d="M 100 70 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,101.5,71.5)"/>
+<path d="M 106 70 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,107.5,71.5)"/>
+<rect x="112" y="70" width="3" height="3"/>
+<circle cx="119.5" cy="71.5" r="1.5"/>
+<rect x="124" y="70" width="3" height="3"/>
+<rect x="130" y="70" width="3" height="3"/>
+<rect x="136" y="70" width="3" height="3"/>
+<path d="M 142 70 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,143.5,71.5)"/>
+<path d="M 148 70 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,149.5,71.5)"/>
+<rect x="154" y="70" width="3" height="3"/>
+<circle cx="161.5" cy="71.5" r="1.5"/>
+<path d="M 166 70 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,167.5,71.5)"/>
+<path d="M 172 70 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,173.5,71.5)"/>
+<rect x="178" y="70" width="3" height="3"/>
+<path d="M 184 70 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,185.5,71.5)"/>
+<path d="M 190 70 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,191.5,71.5)"/>
+<rect x="196" y="70" width="3" height="3"/>
+<circle cx="203.5" cy="71.5" r="1.5"/>
+<path d="M 94 73 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,95.5,74.5)"/>
+<path d="M 97 73 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 112 73 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,113.5,74.5)"/>
+<path d="M 115 73 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 121 73 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,122.5,74.5)"/>
+<rect x="124" y="73" width="3" height="3"/>
+<rect x="130" y="73" width="3" height="3"/>
+<path d="M 136 73 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,137.5,74.5)"/>
+<path d="M 139 73 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 154 73 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,155.5,74.5)"/>
+<path d="M 157 73 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<circle cx="164.5" cy="74.5" r="1.5"/>
+<circle cx="170.5" cy="74.5" r="1.5"/>
+<path d="M 178 73 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,179.5,74.5)"/>
+<path d="M 181 73 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 196 73 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,197.5,74.5)"/>
+<path d="M 199 73 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 205 73 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,206.5,74.5)"/>
+<path d="M 208 73 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 100 76 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,101.5,77.5)"/>
+<path d="M 106 76 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,107.5,77.5)"/>
+<path d="M 109 76 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<rect x="115" y="76" width="3" height="3"/>
+<rect x="118" y="76" width="3" height="3"/>
+<rect x="121" y="76" width="3" height="3"/>
+<rect x="124" y="76" width="3" height="3"/>
+<rect x="127" y="76" width="3" height="3"/>
+<rect x="130" y="76" width="3" height="3"/>
+<path d="M 133 76 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 142 76 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,143.5,77.5)"/>
+<path d="M 148 76 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,149.5,77.5)"/>
+<path d="M 151 76 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<rect x="157" y="76" width="3" height="3"/>
+<path d="M 160 76 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 184 76 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,185.5,77.5)"/>
+<path d="M 190 76 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,191.5,77.5)"/>
+<path d="M 193 76 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<rect x="199" y="76" width="3" height="3"/>
+<rect x="202" y="76" width="3" height="3"/>
+<rect x="205" y="76" width="3" height="3"/>
+<rect x="208" y="76" width="3" height="3"/>
+<path d="M 211 76 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<circle cx="86.5" cy="80.5" r="1.5"/>
+<circle cx="92.5" cy="80.5" r="1.5"/>
+<path d="M 97 79 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,98.5,80.5)"/>
+<path d="M 100 79 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,101.5,80.5)"/>
+<path d="M 109 79 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,110.5,80.5)"/>
+<rect x="112" y="79" width="3" height="3"/>
+<rect x="115" y="79" width="3" height="3"/>
+<rect x="121" y="79" width="3" height="3"/>
+<path d="M 139 79 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,140.5,80.5)"/>
+<path d="M 142 79 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,143.5,80.5)"/>
+<path d="M 151 79 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,152.5,80.5)"/>
+<rect x="154" y="79" width="3" height="3"/>
+<rect x="157" y="79" width="3" height="3"/>
+<circle cx="164.5" cy="80.5" r="1.5"/>
+<circle cx="170.5" cy="80.5" r="1.5"/>
+<circle cx="176.5" cy="80.5" r="1.5"/>
+<path d="M 181 79 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,182.5,80.5)"/>
+<path d="M 184 79 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,185.5,80.5)"/>
+<path d="M 193 79 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,194.5,80.5)"/>
+<rect x="196" y="79" width="3" height="3"/>
+<rect x="199" y="79" width="3" height="3"/>
+<rect x="205" y="79" width="3" height="3"/>
+<circle cx="83.5" cy="83.5" r="1.5"/>
+<circle cx="89.5" cy="83.5" r="1.5"/>
+<path d="M 94 82 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,95.5,83.5)"/>
+<path d="M 103 82 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,104.5,83.5)"/>
+<rect x="115" y="82" width="3" height="3"/>
+<rect x="118" y="82" width="3" height="3"/>
+<rect x="121" y="82" width="3" height="3"/>
+<rect x="124" y="82" width="3" height="3"/>
+<rect x="127" y="82" width="3" height="3"/>
+<path d="M 130 82 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 136 82 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,137.5,83.5)"/>
+<path d="M 145 82 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,146.5,83.5)"/>
+<rect x="157" y="82" width="3" height="3"/>
+<path d="M 160 82 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<circle cx="167.5" cy="83.5" r="1.5"/>
+<circle cx="173.5" cy="83.5" r="1.5"/>
+<path d="M 178 82 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,179.5,83.5)"/>
+<path d="M 187 82 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,188.5,83.5)"/>
+<rect x="199" y="82" width="3" height="3"/>
+<rect x="202" y="82" width="3" height="3"/>
+<rect x="205" y="82" width="3" height="3"/>
+<rect x="208" y="82" width="3" height="3"/>
+<rect x="211" y="82" width="3" height="3"/>
+<path d="M 214 82 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 79 85 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,80.5,86.5)"/>
+<path d="M 85 85 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,86.5,86.5)"/>
+<path d="M 91 85 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,92.5,86.5)"/>
+<path d="M 94 85 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,95.5,86.5)"/>
+<path d="M 103 85 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,104.5,86.5)"/>
+<path d="M 106 85 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 112 85 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,113.5,86.5)"/>
+<rect x="115" y="85" width="3" height="3"/>
+<rect x="124" y="85" width="3" height="3"/>
+<path d="M 130 85 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,131.5,86.5)"/>
+<path d="M 136 85 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,137.5,86.5)"/>
+<path d="M 145 85 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,146.5,86.5)"/>
+<path d="M 148 85 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 154 85 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,155.5,86.5)"/>
+<rect x="157" y="85" width="3" height="3"/>
+<path d="M 163 85 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,164.5,86.5)"/>
+<path d="M 169 85 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,170.5,86.5)"/>
+<path d="M 175 85 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,176.5,86.5)"/>
+<path d="M 178 85 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,179.5,86.5)"/>
+<path d="M 187 85 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,188.5,86.5)"/>
+<path d="M 190 85 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 196 85 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,197.5,86.5)"/>
+<rect x="199" y="85" width="3" height="3"/>
+<rect x="208" y="85" width="3" height="3"/>
+<path d="M 214 85 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,215.5,86.5)"/>
+<rect x="79" y="88" width="3" height="3"/>
+<rect x="82" y="88" width="3" height="3"/>
+<rect x="85" y="88" width="3" height="3"/>
+<path d="M 88 88 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 109 88 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,110.5,89.5)"/>
+<rect x="112" y="88" width="3" height="3"/>
+<rect x="115" y="88" width="3" height="3"/>
+<path d="M 118 88 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 124 88 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,125.5,89.5)"/>
+<circle cx="134.5" cy="89.5" r="1.5"/>
+<path d="M 151 88 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,152.5,89.5)"/>
+<rect x="154" y="88" width="3" height="3"/>
+<rect x="157" y="88" width="3" height="3"/>
+<rect x="160" y="88" width="3" height="3"/>
+<rect x="163" y="88" width="3" height="3"/>
+<rect x="166" y="88" width="3" height="3"/>
+<rect x="169" y="88" width="3" height="3"/>
+<path d="M 172 88 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 193 88 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,194.5,89.5)"/>
+<rect x="196" y="88" width="3" height="3"/>
+<rect x="199" y="88" width="3" height="3"/>
+<path d="M 202 88 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 208 88 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,209.5,89.5)"/>
+<path d="M 217 88 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,218.5,89.5)"/>
+<path d="M 223 88 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,224.5,89.5)"/>
+<path d="M 76 91 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,77.5,92.5)"/>
+<rect x="79" y="91" width="3" height="3"/>
+<rect x="82" y="91" width="3" height="3"/>
+<path d="M 85 91 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,86.5,92.5)"/>
+<path d="M 211 91 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,212.5,92.5)"/>
+<rect x="214" y="91" width="3" height="3"/>
+<rect x="217" y="91" width="3" height="3"/>
+<path d="M 223 91 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,224.5,92.5)"/>
+<circle cx="71.5" cy="95.5" r="1.5"/>
+<path d="M 76 94 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,77.5,95.5)"/>
+<path d="M 82 94 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,83.5,95.5)"/>
+<circle cx="89.5" cy="95.5" r="1.5"/>
+<path d="M 211 94 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,212.5,95.5)"/>
+<rect x="217" y="94" width="3" height="3"/>
+<path d="M 226 94 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,227.5,95.5)"/>
+<path d="M 229 94 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 73 97 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,74.5,98.5)"/>
+<circle cx="80.5" cy="98.5" r="1.5"/>
+<path d="M 208 97 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,209.5,98.5)"/>
+<path d="M 217 97 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,218.5,98.5)"/>
+<rect x="226" y="97" width="3" height="3"/>
+<path d="M 67 100 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,68.5,101.5)"/>
+<rect x="70" y="100" width="3" height="3"/>
+<rect x="73" y="100" width="3" height="3"/>
+<path d="M 76 100 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 82 100 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,83.5,101.5)"/>
+<path d="M 85 100 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 208 100 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,209.5,101.5)"/>
+<path d="M 220 100 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,221.5,101.5)"/>
+<rect x="223" y="100" width="3" height="3"/>
+<rect x="226" y="100" width="3" height="3"/>
+<path d="M 229 100 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 64 103 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,65.5,104.5)"/>
+<rect x="67" y="103" width="3" height="3"/>
+<path d="M 79 103 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,80.5,104.5)"/>
+<rect x="82" y="103" width="3" height="3"/>
+<circle cx="89.5" cy="104.5" r="1.5"/>
+<path d="M 211 103 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,212.5,104.5)"/>
+<rect x="214" y="103" width="3" height="3"/>
+<rect x="217" y="103" width="3" height="3"/>
+<path d="M 220 103 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,221.5,104.5)"/>
+<rect x="229" y="103" width="3" height="3"/>
+<path d="M 232 103 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 67 106 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,68.5,107.5)"/>
+<rect x="70" y="106" width="3" height="3"/>
+<rect x="73" y="106" width="3" height="3"/>
+<rect x="76" y="106" width="3" height="3"/>
+<rect x="79" y="106" width="3" height="3"/>
+<rect x="82" y="106" width="3" height="3"/>
+<path d="M 211 106 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,212.5,107.5)"/>
+<rect x="217" y="106" width="3" height="3"/>
+<path d="M 226 106 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,227.5,107.5)"/>
+<rect x="229" y="106" width="3" height="3"/>
+<path d="M 61 109 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,62.5,110.5)"/>
+<rect x="82" y="109" width="3" height="3"/>
+<circle cx="89.5" cy="110.5" r="1.5"/>
+<path d="M 208 109 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,209.5,110.5)"/>
+<path d="M 214 109 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,215.5,110.5)"/>
+<rect x="217" y="109" width="3" height="3"/>
+<path d="M 220 109 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<rect x="226" y="109" width="3" height="3"/>
+<rect x="229" y="109" width="3" height="3"/>
+<path d="M 232 109 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 238 109 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,239.5,110.5)"/>
+<path d="M 61 112 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,62.5,113.5)"/>
+<path d="M 70 112 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,71.5,113.5)"/>
+<path d="M 73 112 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 79 112 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,80.5,113.5)"/>
+<rect x="82" y="112" width="3" height="3"/>
+<path d="M 85 112 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 208 112 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,209.5,113.5)"/>
+<path d="M 223 112 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,224.5,113.5)"/>
+<path d="M 226 112 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,227.5,113.5)"/>
+<path d="M 238 112 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,239.5,113.5)"/>
+<circle cx="65.5" cy="116.5" r="1.5"/>
+<rect x="73" y="115" width="3" height="3"/>
+<rect x="76" y="115" width="3" height="3"/>
+<rect x="79" y="115" width="3" height="3"/>
+<path d="M 217 115 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,218.5,116.5)"/>
+<circle cx="233.5" cy="116.5" r="1.5"/>
+<circle cx="59.5" cy="119.5" r="1.5"/>
+<path d="M 70 118 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,71.5,119.5)"/>
+<rect x="73" y="118" width="3" height="3"/>
+<rect x="76" y="118" width="3" height="3"/>
+<rect x="79" y="118" width="3" height="3"/>
+<rect x="82" y="118" width="3" height="3"/>
+<rect x="85" y="118" width="3" height="3"/>
+<path d="M 88 118 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 208 118 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,209.5,119.5)"/>
+<rect x="211" y="118" width="3" height="3"/>
+<rect x="214" y="118" width="3" height="3"/>
+<rect x="217" y="118" width="3" height="3"/>
+<path d="M 220 118 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 226 118 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,227.5,119.5)"/>
+<path d="M 235 118 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,236.5,119.5)"/>
+<circle cx="62.5" cy="122.5" r="1.5"/>
+<path d="M 67 121 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,68.5,122.5)"/>
+<path d="M 79 121 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,80.5,122.5)"/>
+<rect x="85" y="121" width="3" height="3"/>
+<rect x="211" y="121" width="3" height="3"/>
+<rect x="220" y="121" width="3" height="3"/>
+<rect x="223" y="121" width="3" height="3"/>
+<rect x="226" y="121" width="3" height="3"/>
+<path d="M 229 121 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 235 121 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,236.5,122.5)"/>
+<path d="M 238 121 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<circle cx="59.5" cy="125.5" r="1.5"/>
+<rect x="67" y="124" width="3" height="3"/>
+<rect x="70" y="124" width="3" height="3"/>
+<rect x="73" y="124" width="3" height="3"/>
+<path d="M 76 124 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 85 124 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,86.5,125.5)"/>
+<path d="M 208 124 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,209.5,125.5)"/>
+<rect x="211" y="124" width="3" height="3"/>
+<path d="M 217 124 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,218.5,125.5)"/>
+<rect x="220" y="124" width="3" height="3"/>
+<path d="M 223 124 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,224.5,125.5)"/>
+<path d="M 229 124 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,230.5,125.5)"/>
+<path d="M 232 124 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 238 124 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,239.5,125.5)"/>
+<path d="M 241 124 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<circle cx="56.5" cy="128.5" r="1.5"/>
+<path d="M 61 127 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,62.5,128.5)"/>
+<rect x="64" y="127" width="3" height="3"/>
+<rect x="67" y="127" width="3" height="3"/>
+<circle cx="80.5" cy="128.5" r="1.5"/>
+<circle cx="89.5" cy="128.5" r="1.5"/>
+<rect x="211" y="127" width="3" height="3"/>
+<path d="M 214 127 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<circle cx="227.5" cy="128.5" r="1.5"/>
+<path d="M 241 127 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,242.5,128.5)"/>
+<rect x="67" y="130" width="3" height="3"/>
+<path d="M 70 130 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 82 130 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,83.5,131.5)"/>
+<path d="M 208 130 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,209.5,131.5)"/>
+<rect x="211" y="130" width="3" height="3"/>
+<rect x="214" y="130" width="3" height="3"/>
+<path d="M 217 130 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<circle cx="224.5" cy="131.5" r="1.5"/>
+<path d="M 232 130 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,233.5,131.5)"/>
+<path d="M 58 133 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,59.5,134.5)"/>
+<rect x="61" y="133" width="3" height="3"/>
+<rect x="64" y="133" width="3" height="3"/>
+<rect x="67" y="133" width="3" height="3"/>
+<path d="M 76 133 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,77.5,134.5)"/>
+<rect x="79" y="133" width="3" height="3"/>
+<rect x="82" y="133" width="3" height="3"/>
+<path d="M 85 133 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 208 133 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,209.5,134.5)"/>
+<path d="M 214 133 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,215.5,134.5)"/>
+<rect x="217" y="133" width="3" height="3"/>
+<path d="M 220 133 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 226 133 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,227.5,134.5)"/>
+<rect x="229" y="133" width="3" height="3"/>
+<rect x="232" y="133" width="3" height="3"/>
+<rect x="235" y="133" width="3" height="3"/>
+<path d="M 238 133 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<circle cx="245.5" cy="134.5" r="1.5"/>
+<path d="M 55 136 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,56.5,137.5)"/>
+<rect x="58" y="136" width="3" height="3"/>
+<rect x="61" y="136" width="3" height="3"/>
+<rect x="64" y="136" width="3" height="3"/>
+<rect x="67" y="136" width="3" height="3"/>
+<path d="M 70 136 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 76 136 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,77.5,137.5)"/>
+<path d="M 82 136 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,83.5,137.5)"/>
+<circle cx="89.5" cy="137.5" r="1.5"/>
+<circle cx="212.5" cy="137.5" r="1.5"/>
+<rect x="217" y="136" width="3" height="3"/>
+<rect x="226" y="136" width="3" height="3"/>
+<rect x="229" y="136" width="3" height="3"/>
+<rect x="232" y="136" width="3" height="3"/>
+<rect x="235" y="136" width="3" height="3"/>
+<rect x="238" y="136" width="3" height="3"/>
+<path d="M 58 139 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,59.5,140.5)"/>
+<rect x="61" y="139" width="3" height="3"/>
+<rect x="64" y="139" width="3" height="3"/>
+<path d="M 73 139 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,74.5,140.5)"/>
+<circle cx="80.5" cy="140.5" r="1.5"/>
+<path d="M 208 139 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,209.5,140.5)"/>
+<path d="M 217 139 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,218.5,140.5)"/>
+<rect x="226" y="139" width="3" height="3"/>
+<rect x="238" y="139" width="3" height="3"/>
+<rect x="241" y="139" width="3" height="3"/>
+<path d="M 244 139 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 61 142 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,62.5,143.5)"/>
+<rect x="64" y="142" width="3" height="3"/>
+<rect x="67" y="142" width="3" height="3"/>
+<rect x="70" y="142" width="3" height="3"/>
+<rect x="73" y="142" width="3" height="3"/>
+<path d="M 76 142 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 82 142 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,83.5,143.5)"/>
+<path d="M 85 142 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 208 142 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,209.5,143.5)"/>
+<path d="M 220 142 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,221.5,143.5)"/>
+<rect x="223" y="142" width="3" height="3"/>
+<rect x="226" y="142" width="3" height="3"/>
+<path d="M 229 142 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 235 142 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,236.5,143.5)"/>
+<rect x="238" y="142" width="3" height="3"/>
+<path d="M 241 142 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,242.5,143.5)"/>
+<path d="M 55 145 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,56.5,146.5)"/>
+<path d="M 58 145 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 64 145 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,65.5,146.5)"/>
+<rect x="67" y="145" width="3" height="3"/>
+<path d="M 79 145 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,80.5,146.5)"/>
+<rect x="82" y="145" width="3" height="3"/>
+<circle cx="89.5" cy="146.5" r="1.5"/>
+<path d="M 211 145 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,212.5,146.5)"/>
+<rect x="214" y="145" width="3" height="3"/>
+<rect x="217" y="145" width="3" height="3"/>
+<path d="M 220 145 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,221.5,146.5)"/>
+<rect x="229" y="145" width="3" height="3"/>
+<path d="M 232 145 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 61 148 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,62.5,149.5)"/>
+<path d="M 67 148 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,68.5,149.5)"/>
+<rect x="70" y="148" width="3" height="3"/>
+<rect x="73" y="148" width="3" height="3"/>
+<rect x="76" y="148" width="3" height="3"/>
+<rect x="79" y="148" width="3" height="3"/>
+<rect x="82" y="148" width="3" height="3"/>
+<path d="M 211 148 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,212.5,149.5)"/>
+<rect x="217" y="148" width="3" height="3"/>
+<path d="M 226 148 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,227.5,149.5)"/>
+<rect x="229" y="148" width="3" height="3"/>
+<path d="M 55 151 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,56.5,152.5)"/>
+<rect x="58" y="151" width="3" height="3"/>
+<rect x="61" y="151" width="3" height="3"/>
+<rect x="82" y="151" width="3" height="3"/>
+<circle cx="89.5" cy="152.5" r="1.5"/>
+<path d="M 208 151 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,209.5,152.5)"/>
+<path d="M 214 151 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,215.5,152.5)"/>
+<rect x="217" y="151" width="3" height="3"/>
+<path d="M 220 151 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<rect x="226" y="151" width="3" height="3"/>
+<rect x="229" y="151" width="3" height="3"/>
+<path d="M 232 151 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 238 151 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,239.5,152.5)"/>
+<circle cx="245.5" cy="152.5" r="1.5"/>
+<path d="M 58 154 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,59.5,155.5)"/>
+<path d="M 61 154 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,62.5,155.5)"/>
+<path d="M 70 154 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,71.5,155.5)"/>
+<path d="M 73 154 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 79 154 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,80.5,155.5)"/>
+<rect x="82" y="154" width="3" height="3"/>
+<path d="M 85 154 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 208 154 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,209.5,155.5)"/>
+<path d="M 223 154 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,224.5,155.5)"/>
+<path d="M 226 154 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,227.5,155.5)"/>
+<path d="M 238 154 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,239.5,155.5)"/>
+<path d="M 241 154 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<circle cx="56.5" cy="158.5" r="1.5"/>
+<circle cx="65.5" cy="158.5" r="1.5"/>
+<rect x="73" y="157" width="3" height="3"/>
+<rect x="76" y="157" width="3" height="3"/>
+<rect x="79" y="157" width="3" height="3"/>
+<path d="M 217 157 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,218.5,158.5)"/>
+<circle cx="233.5" cy="158.5" r="1.5"/>
+<path d="M 241 157 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,242.5,158.5)"/>
+<path d="M 58 160 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,59.5,161.5)"/>
+<path d="M 70 160 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,71.5,161.5)"/>
+<rect x="73" y="160" width="3" height="3"/>
+<rect x="76" y="160" width="3" height="3"/>
+<rect x="79" y="160" width="3" height="3"/>
+<rect x="82" y="160" width="3" height="3"/>
+<rect x="85" y="160" width="3" height="3"/>
+<path d="M 88 160 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 208 160 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,209.5,161.5)"/>
+<rect x="211" y="160" width="3" height="3"/>
+<rect x="214" y="160" width="3" height="3"/>
+<rect x="217" y="160" width="3" height="3"/>
+<path d="M 220 160 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 226 160 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,227.5,161.5)"/>
+<circle cx="236.5" cy="161.5" r="1.5"/>
+<path d="M 58 163 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,59.5,164.5)"/>
+<circle cx="65.5" cy="164.5" r="1.5"/>
+<rect x="73" y="163" width="3" height="3"/>
+<rect x="76" y="163" width="3" height="3"/>
+<path d="M 79 163 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,80.5,164.5)"/>
+<path d="M 85 163 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,86.5,164.5)"/>
+<rect x="220" y="163" width="3" height="3"/>
+<rect x="223" y="163" width="3" height="3"/>
+<rect x="226" y="163" width="3" height="3"/>
+<rect x="229" y="163" width="3" height="3"/>
+<path d="M 232 163 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<circle cx="242.5" cy="164.5" r="1.5"/>
+<path d="M 55 166 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,56.5,167.5)"/>
+<path d="M 67 166 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,68.5,167.5)"/>
+<rect x="70" y="166" width="3" height="3"/>
+<rect x="73" y="166" width="3" height="3"/>
+<path d="M 76 166 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,77.5,167.5)"/>
+<circle cx="83.5" cy="167.5" r="1.5"/>
+<circle cx="89.5" cy="167.5" r="1.5"/>
+<path d="M 208 166 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,209.5,167.5)"/>
+<rect x="211" y="166" width="3" height="3"/>
+<path d="M 214 166 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 220 166 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,221.5,167.5)"/>
+<rect x="223" y="166" width="3" height="3"/>
+<path d="M 229 166 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,230.5,167.5)"/>
+<circle cx="236.5" cy="167.5" r="1.5"/>
+<path d="M 55 169 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,56.5,170.5)"/>
+<path d="M 58 169 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 64 169 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,65.5,170.5)"/>
+<path d="M 79 169 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,80.5,170.5)"/>
+<path d="M 85 169 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,86.5,170.5)"/>
+<rect x="208" y="169" width="3" height="3"/>
+<path d="M 214 169 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,215.5,170.5)"/>
+<rect x="223" y="169" width="3" height="3"/>
+<path d="M 238 169 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,239.5,170.5)"/>
+<path d="M 58 172 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,59.5,173.5)"/>
+<rect x="64" y="172" width="3" height="3"/>
+<rect x="67" y="172" width="3" height="3"/>
+<rect x="70" y="172" width="3" height="3"/>
+<path d="M 73 172 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<rect x="79" y="172" width="3" height="3"/>
+<rect x="82" y="172" width="3" height="3"/>
+<rect x="85" y="172" width="3" height="3"/>
+<path d="M 88 172 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 208 172 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,209.5,173.5)"/>
+<path d="M 217 172 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,218.5,173.5)"/>
+<rect x="223" y="172" width="3" height="3"/>
+<rect x="226" y="172" width="3" height="3"/>
+<path d="M 229 172 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 235 172 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,236.5,173.5)"/>
+<rect x="238" y="172" width="3" height="3"/>
+<circle cx="245.5" cy="173.5" r="1.5"/>
+<rect x="64" y="175" width="3" height="3"/>
+<rect x="67" y="175" width="3" height="3"/>
+<path d="M 76 175 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,77.5,176.5)"/>
+<rect x="79" y="175" width="3" height="3"/>
+<rect x="82" y="175" width="3" height="3"/>
+<path d="M 85 175 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,86.5,176.5)"/>
+<path d="M 211 175 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,212.5,176.5)"/>
+<rect x="214" y="175" width="3" height="3"/>
+<rect x="217" y="175" width="3" height="3"/>
+<path d="M 223 175 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,224.5,176.5)"/>
+<path d="M 232 175 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,233.5,176.5)"/>
+<rect x="238" y="175" width="3" height="3"/>
+<path d="M 58 178 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,59.5,179.5)"/>
+<rect x="61" y="178" width="3" height="3"/>
+<rect x="64" y="178" width="3" height="3"/>
+<rect x="67" y="178" width="3" height="3"/>
+<path d="M 70 178 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 76 178 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,77.5,179.5)"/>
+<path d="M 82 178 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,83.5,179.5)"/>
+<circle cx="89.5" cy="179.5" r="1.5"/>
+<path d="M 211 178 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,212.5,179.5)"/>
+<rect x="217" y="178" width="3" height="3"/>
+<path d="M 226 178 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,227.5,179.5)"/>
+<rect x="229" y="178" width="3" height="3"/>
+<rect x="232" y="178" width="3" height="3"/>
+<rect x="235" y="178" width="3" height="3"/>
+<rect x="238" y="178" width="3" height="3"/>
+<path d="M 58 181 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,59.5,182.5)"/>
+<rect x="61" y="181" width="3" height="3"/>
+<rect x="64" y="181" width="3" height="3"/>
+<path d="M 73 181 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,74.5,182.5)"/>
+<circle cx="80.5" cy="182.5" r="1.5"/>
+<path d="M 208 181 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,209.5,182.5)"/>
+<path d="M 217 181 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,218.5,182.5)"/>
+<rect x="226" y="181" width="3" height="3"/>
+<rect x="238" y="181" width="3" height="3"/>
+<path d="M 241 181 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 61 184 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,62.5,185.5)"/>
+<rect x="64" y="184" width="3" height="3"/>
+<rect x="67" y="184" width="3" height="3"/>
+<rect x="70" y="184" width="3" height="3"/>
+<rect x="73" y="184" width="3" height="3"/>
+<path d="M 76 184 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 82 184 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,83.5,185.5)"/>
+<path d="M 85 184 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 208 184 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,209.5,185.5)"/>
+<path d="M 220 184 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,221.5,185.5)"/>
+<rect x="223" y="184" width="3" height="3"/>
+<rect x="226" y="184" width="3" height="3"/>
+<path d="M 229 184 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 235 184 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,236.5,185.5)"/>
+<path d="M 238 184 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,239.5,185.5)"/>
+<path d="M 64 187 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,65.5,188.5)"/>
+<rect x="67" y="187" width="3" height="3"/>
+<path d="M 79 187 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,80.5,188.5)"/>
+<rect x="82" y="187" width="3" height="3"/>
+<circle cx="89.5" cy="188.5" r="1.5"/>
+<path d="M 211 187 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,212.5,188.5)"/>
+<rect x="214" y="187" width="3" height="3"/>
+<rect x="217" y="187" width="3" height="3"/>
+<path d="M 220 187 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,221.5,188.5)"/>
+<rect x="229" y="187" width="3" height="3"/>
+<path d="M 232 187 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<circle cx="62.5" cy="191.5" r="1.5"/>
+<path d="M 67 190 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,68.5,191.5)"/>
+<rect x="70" y="190" width="3" height="3"/>
+<rect x="73" y="190" width="3" height="3"/>
+<rect x="76" y="190" width="3" height="3"/>
+<rect x="79" y="190" width="3" height="3"/>
+<rect x="82" y="190" width="3" height="3"/>
+<path d="M 211 190 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,212.5,191.5)"/>
+<rect x="217" y="190" width="3" height="3"/>
+<path d="M 226 190 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,227.5,191.5)"/>
+<rect x="229" y="190" width="3" height="3"/>
+<rect x="82" y="193" width="3" height="3"/>
+<circle cx="89.5" cy="194.5" r="1.5"/>
+<path d="M 208 193 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,209.5,194.5)"/>
+<path d="M 214 193 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,215.5,194.5)"/>
+<rect x="217" y="193" width="3" height="3"/>
+<path d="M 220 193 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<rect x="226" y="193" width="3" height="3"/>
+<rect x="229" y="193" width="3" height="3"/>
+<path d="M 232 193 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 70 196 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,71.5,197.5)"/>
+<path d="M 73 196 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 79 196 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,80.5,197.5)"/>
+<rect x="82" y="196" width="3" height="3"/>
+<path d="M 85 196 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 208 196 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,209.5,197.5)"/>
+<path d="M 223 196 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,224.5,197.5)"/>
+<path d="M 226 196 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,227.5,197.5)"/>
+<rect x="73" y="199" width="3" height="3"/>
+<rect x="76" y="199" width="3" height="3"/>
+<rect x="79" y="199" width="3" height="3"/>
+<path d="M 217 199 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,218.5,200.5)"/>
+<circle cx="233.5" cy="200.5" r="1.5"/>
+<path d="M 70 202 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,71.5,203.5)"/>
+<rect x="73" y="202" width="3" height="3"/>
+<rect x="76" y="202" width="3" height="3"/>
+<rect x="79" y="202" width="3" height="3"/>
+<rect x="82" y="202" width="3" height="3"/>
+<rect x="85" y="202" width="3" height="3"/>
+<path d="M 88 202 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 208 202 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,209.5,203.5)"/>
+<rect x="211" y="202" width="3" height="3"/>
+<rect x="214" y="202" width="3" height="3"/>
+<rect x="217" y="202" width="3" height="3"/>
+<path d="M 220 202 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 226 202 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,227.5,203.5)"/>
+<path d="M 79 205 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,80.5,206.5)"/>
+<rect x="85" y="205" width="3" height="3"/>
+<rect x="211" y="205" width="3" height="3"/>
+<rect x="220" y="205" width="3" height="3"/>
+<rect x="223" y="205" width="3" height="3"/>
+<rect x="226" y="205" width="3" height="3"/>
+<path d="M 229 205 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 73 208 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,74.5,209.5)"/>
+<path d="M 76 208 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 85 208 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,86.5,209.5)"/>
+<circle cx="101.5" cy="209.5" r="1.5"/>
+<circle cx="107.5" cy="209.5" r="1.5"/>
+<path d="M 115 208 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,116.5,209.5)"/>
+<path d="M 121 208 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,122.5,209.5)"/>
+<rect x="124" y="208" width="3" height="3"/>
+<path d="M 127 208 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<circle cx="134.5" cy="209.5" r="1.5"/>
+<circle cx="143.5" cy="209.5" r="1.5"/>
+<circle cx="149.5" cy="209.5" r="1.5"/>
+<path d="M 157 208 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,158.5,209.5)"/>
+<circle cx="170.5" cy="209.5" r="1.5"/>
+<circle cx="185.5" cy="209.5" r="1.5"/>
+<circle cx="191.5" cy="209.5" r="1.5"/>
+<path d="M 199 208 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,200.5,209.5)"/>
+<path d="M 205 208 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,206.5,209.5)"/>
+<rect x="208" y="208" width="3" height="3"/>
+<rect x="211" y="208" width="3" height="3"/>
+<path d="M 217 208 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,218.5,209.5)"/>
+<rect x="220" y="208" width="3" height="3"/>
+<path d="M 223 208 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,224.5,209.5)"/>
+<circle cx="80.5" cy="212.5" r="1.5"/>
+<path d="M 88 211 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,89.5,212.5)"/>
+<path d="M 91 211 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 97 211 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,98.5,212.5)"/>
+<path d="M 103 211 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,104.5,212.5)"/>
+<path d="M 115 211 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,116.5,212.5)"/>
+<rect x="121" y="211" width="3" height="3"/>
+<rect x="127" y="211" width="3" height="3"/>
+<path d="M 130 211 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 139 211 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,140.5,212.5)"/>
+<path d="M 145 211 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,146.5,212.5)"/>
+<path d="M 157 211 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,158.5,212.5)"/>
+<circle cx="164.5" cy="212.5" r="1.5"/>
+<path d="M 172 211 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,173.5,212.5)"/>
+<path d="M 175 211 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 181 211 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,182.5,212.5)"/>
+<path d="M 187 211 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,188.5,212.5)"/>
+<path d="M 199 211 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,200.5,212.5)"/>
+<rect x="205" y="211" width="3" height="3"/>
+<rect x="211" y="211" width="3" height="3"/>
+<path d="M 214 211 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 82 214 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,83.5,215.5)"/>
+<path d="M 94 214 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,95.5,215.5)"/>
+<path d="M 97 214 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,98.5,215.5)"/>
+<path d="M 103 214 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,104.5,215.5)"/>
+<path d="M 112 214 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,113.5,215.5)"/>
+<path d="M 121 214 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,122.5,215.5)"/>
+<rect x="124" y="214" width="3" height="3"/>
+<rect x="127" y="214" width="3" height="3"/>
+<rect x="130" y="214" width="3" height="3"/>
+<rect x="133" y="214" width="3" height="3"/>
+<rect x="136" y="214" width="3" height="3"/>
+<path d="M 139 214 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,140.5,215.5)"/>
+<path d="M 145 214 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,146.5,215.5)"/>
+<path d="M 154 214 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,155.5,215.5)"/>
+<path d="M 166 214 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,167.5,215.5)"/>
+<path d="M 178 214 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,179.5,215.5)"/>
+<path d="M 181 214 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,182.5,215.5)"/>
+<path d="M 187 214 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,188.5,215.5)"/>
+<path d="M 196 214 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,197.5,215.5)"/>
+<path d="M 205 214 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,206.5,215.5)"/>
+<rect x="208" y="214" width="3" height="3"/>
+<rect x="211" y="214" width="3" height="3"/>
+<rect x="214" y="214" width="3" height="3"/>
+<path d="M 217 214 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 82 217 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,83.5,218.5)"/>
+<path d="M 85 217 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 91 217 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,92.5,218.5)"/>
+<path d="M 94 217 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,95.5,218.5)"/>
+<path d="M 106 217 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,107.5,218.5)"/>
+<rect x="112" y="217" width="3" height="3"/>
+<rect x="115" y="217" width="3" height="3"/>
+<path d="M 118 217 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 124 217 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,125.5,218.5)"/>
+<path d="M 130 217 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,131.5,218.5)"/>
+<rect x="133" y="217" width="3" height="3"/>
+<path d="M 136 217 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,137.5,218.5)"/>
+<path d="M 148 217 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,149.5,218.5)"/>
+<rect x="154" y="217" width="3" height="3"/>
+<rect x="157" y="217" width="3" height="3"/>
+<rect x="160" y="217" width="3" height="3"/>
+<rect x="163" y="217" width="3" height="3"/>
+<rect x="166" y="217" width="3" height="3"/>
+<path d="M 169 217 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 175 217 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,176.5,218.5)"/>
+<path d="M 178 217 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,179.5,218.5)"/>
+<path d="M 190 217 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,191.5,218.5)"/>
+<rect x="196" y="217" width="3" height="3"/>
+<rect x="199" y="217" width="3" height="3"/>
+<path d="M 202 217 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 208 217 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,209.5,218.5)"/>
+<path d="M 214 217 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,215.5,218.5)"/>
+<path d="M 217 217 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,218.5,218.5)"/>
+<path d="M 91 220 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,92.5,221.5)"/>
+<path d="M 103 220 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,104.5,221.5)"/>
+<rect x="106" y="220" width="3" height="3"/>
+<path d="M 112 220 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,113.5,221.5)"/>
+<rect x="115" y="220" width="3" height="3"/>
+<rect x="118" y="220" width="3" height="3"/>
+<path d="M 121 220 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 145 220 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,146.5,221.5)"/>
+<rect x="148" y="220" width="3" height="3"/>
+<path d="M 154 220 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,155.5,221.5)"/>
+<rect x="157" y="220" width="3" height="3"/>
+<path d="M 160 220 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,161.5,221.5)"/>
+<path d="M 175 220 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,176.5,221.5)"/>
+<path d="M 187 220 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,188.5,221.5)"/>
+<rect x="190" y="220" width="3" height="3"/>
+<path d="M 196 220 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,197.5,221.5)"/>
+<rect x="199" y="220" width="3" height="3"/>
+<rect x="202" y="220" width="3" height="3"/>
+<path d="M 205 220 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 94 223 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,95.5,224.5)"/>
+<circle cx="101.5" cy="224.5" r="1.5"/>
+<rect x="106" y="223" width="3" height="3"/>
+<rect x="121" y="223" width="3" height="3"/>
+<path d="M 127 223 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,128.5,224.5)"/>
+<path d="M 130 223 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 136 223 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,137.5,224.5)"/>
+<circle cx="143.5" cy="224.5" r="1.5"/>
+<rect x="148" y="223" width="3" height="3"/>
+<path d="M 166 223 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,167.5,224.5)"/>
+<path d="M 169 223 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 178 223 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,179.5,224.5)"/>
+<circle cx="185.5" cy="224.5" r="1.5"/>
+<rect x="190" y="223" width="3" height="3"/>
+<rect x="205" y="223" width="3" height="3"/>
+<circle cx="212.5" cy="224.5" r="1.5"/>
+<rect x="94" y="226" width="3" height="3"/>
+<path d="M 103 226 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,104.5,227.5)"/>
+<rect x="106" y="226" width="3" height="3"/>
+<rect x="109" y="226" width="3" height="3"/>
+<rect x="112" y="226" width="3" height="3"/>
+<rect x="115" y="226" width="3" height="3"/>
+<rect x="118" y="226" width="3" height="3"/>
+<rect x="121" y="226" width="3" height="3"/>
+<path d="M 124 226 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 130 226 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,131.5,227.5)"/>
+<rect x="136" y="226" width="3" height="3"/>
+<path d="M 145 226 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,146.5,227.5)"/>
+<rect x="148" y="226" width="3" height="3"/>
+<rect x="151" y="226" width="3" height="3"/>
+<rect x="154" y="226" width="3" height="3"/>
+<rect x="157" y="226" width="3" height="3"/>
+<path d="M 160 226 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<rect x="166" y="226" width="3" height="3"/>
+<circle cx="173.5" cy="227.5" r="1.5"/>
+<rect x="178" y="226" width="3" height="3"/>
+<path d="M 187 226 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,188.5,227.5)"/>
+<rect x="190" y="226" width="3" height="3"/>
+<rect x="193" y="226" width="3" height="3"/>
+<rect x="196" y="226" width="3" height="3"/>
+<rect x="199" y="226" width="3" height="3"/>
+<rect x="202" y="226" width="3" height="3"/>
+<rect x="205" y="226" width="3" height="3"/>
+<path d="M 208 226 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 94 229 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,95.5,230.5)"/>
+<path d="M 100 229 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,101.5,230.5)"/>
+<rect x="103" y="229" width="3" height="3"/>
+<rect x="106" y="229" width="3" height="3"/>
+<rect x="109" y="229" width="3" height="3"/>
+<path d="M 115 229 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,116.5,230.5)"/>
+<rect x="121" y="229" width="3" height="3"/>
+<path d="M 136 229 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,137.5,230.5)"/>
+<path d="M 142 229 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,143.5,230.5)"/>
+<rect x="145" y="229" width="3" height="3"/>
+<rect x="148" y="229" width="3" height="3"/>
+<rect x="151" y="229" width="3" height="3"/>
+<path d="M 157 229 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,158.5,230.5)"/>
+<path d="M 163 229 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,164.5,230.5)"/>
+<rect x="166" y="229" width="3" height="3"/>
+<path d="M 175 229 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,176.5,230.5)"/>
+<path d="M 178 229 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,179.5,230.5)"/>
+<path d="M 184 229 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,185.5,230.5)"/>
+<rect x="187" y="229" width="3" height="3"/>
+<rect x="190" y="229" width="3" height="3"/>
+<rect x="193" y="229" width="3" height="3"/>
+<path d="M 199 229 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,200.5,230.5)"/>
+<path d="M 205 229 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,206.5,230.5)"/>
+<rect x="109" y="232" width="3" height="3"/>
+<path d="M 112 232 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 121 232 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,122.5,233.5)"/>
+<path d="M 139 232 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,140.5,233.5)"/>
+<rect x="151" y="232" width="3" height="3"/>
+<path d="M 154 232 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 166 232 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,167.5,233.5)"/>
+<path d="M 169 232 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 181 232 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,182.5,233.5)"/>
+<rect x="193" y="232" width="3" height="3"/>
+<path d="M 196 232 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 103 235 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,104.5,236.5)"/>
+<rect x="106" y="235" width="3" height="3"/>
+<rect x="109" y="235" width="3" height="3"/>
+<circle cx="119.5" cy="236.5" r="1.5"/>
+<path d="M 124 235 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,125.5,236.5)"/>
+<rect x="127" y="235" width="3" height="3"/>
+<path d="M 130 235 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<rect x="139" y="235" width="3" height="3"/>
+<path d="M 145 235 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,146.5,236.5)"/>
+<rect x="148" y="235" width="3" height="3"/>
+<rect x="151" y="235" width="3" height="3"/>
+<circle cx="161.5" cy="236.5" r="1.5"/>
+<path d="M 175 235 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,176.5,236.5)"/>
+<rect x="181" y="235" width="3" height="3"/>
+<path d="M 187 235 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,188.5,236.5)"/>
+<rect x="190" y="235" width="3" height="3"/>
+<path d="M 193 235 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,194.5,236.5)"/>
+<path d="M 109 238 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,110.5,239.5)"/>
+<path d="M 121 238 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,122.5,239.5)"/>
+<path d="M 124 238 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,125.5,239.5)"/>
+<path d="M 130 238 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,131.5,239.5)"/>
+<path d="M 139 238 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,140.5,239.5)"/>
+<path d="M 142 238 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<rect x="151" y="238" width="3" height="3"/>
+<path d="M 163 238 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(-90,164.5,239.5)"/>
+<path d="M 169 238 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(180,170.5,239.5)"/>
+<rect x="172" y="238" width="3" height="3"/>
+<rect x="175" y="238" width="3" height="3"/>
+<path d="M 181 238 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,182.5,239.5)"/>
+<path d="M 184 238 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 121 241 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,122.5,242.5)"/>
+<path d="M 133 241 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(-90,134.5,242.5)"/>
+<path d="M 136 241 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<circle cx="146.5" cy="242.5" r="1.5"/>
+<path d="M 151 241 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,152.5,242.5)"/>
+<rect x="154" y="241" width="3" height="3"/>
+<path d="M 157 241 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<rect x="163" y="241" width="3" height="3"/>
+<path d="M 166 241 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5"/>
+<path d="M 175 241 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,176.5,242.5)"/>
+<path d="M 178 241 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3"/>
+<path d="M 133 244 v 3 h 1.5 a 1.5 1.5 0 0 0 0 -3" transform="rotate(90,134.5,245.5)"/>
+<circle cx="140.5" cy="245.5" r="1.5"/>
+<circle cx="149.5" cy="245.5" r="1.5"/>
+<path d="M 154 244 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,155.5,245.5)"/>
+<path d="M 157 244 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,158.5,245.5)"/>
+<path d="M 163 244 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(180,164.5,245.5)"/>
+<path d="M 166 244 v 3 h 3 v -1.5 a 1.5 1.5 0 0 0 -1.5 -1.5" transform="rotate(90,167.5,245.5)"/>
+
+</clipPath>
+<clipPath id="clip-path-corners-square-color-0-0-7">
+<path d="M 94 101.5 v 6 a 7.5 7.5 0 0 0 7.5 7.5 h 6 a 7.5 7.5 0 0 0 7.5 -7.5 v -6 a 7.5 7.5 0 0 0 -7.5 -7.5 h -6 a 7.5 7.5 0 0 0 -7.5 7.5 M 101.5 97 h 6 a 4.5 4.5 0 0 1 4.5 4.5 v 6 a 4.5 4.5 0 0 1 -4.5 4.5 h -6 a 4.5 4.5 0 0 1 -4.5 -4.5 v -6 a 4.5 4.5 0 0 1 4.5 -4.5" clip-rule="evenodd"/>
+</clipPath>
+<clipPath id="clip-path-corners-dot-color-0-0-7">
+<circle cx="104.5" cy="104.5" r="4.5"/>
+</clipPath>
+<clipPath id="clip-path-corners-square-color-1-0-7">
+<path d="M 184 101.5 v 6 a 7.5 7.5 0 0 0 7.5 7.5 h 6 a 7.5 7.5 0 0 0 7.5 -7.5 v -6 a 7.5 7.5 0 0 0 -7.5 -7.5 h -6 a 7.5 7.5 0 0 0 -7.5 7.5 M 191.5 97 h 6 a 4.5 4.5 0 0 1 4.5 4.5 v 6 a 4.5 4.5 0 0 1 -4.5 4.5 h -6 a 4.5 4.5 0 0 1 -4.5 -4.5 v -6 a 4.5 4.5 0 0 1 4.5 -4.5" clip-rule="evenodd" transform="rotate(90,194.5,104.5)"/>
+</clipPath>
+<clipPath id="clip-path-corners-dot-color-1-0-7">
+<circle cx="194.5" cy="104.5" r="4.5" transform="rotate(90,194.5,104.5)"/>
+</clipPath>
+<clipPath id="clip-path-corners-square-color-0-1-7">
+<path d="M 94 191.5 v 6 a 7.5 7.5 0 0 0 7.5 7.5 h 6 a 7.5 7.5 0 0 0 7.5 -7.5 v -6 a 7.5 7.5 0 0 0 -7.5 -7.5 h -6 a 7.5 7.5 0 0 0 -7.5 7.5 M 101.5 187 h 6 a 4.5 4.5 0 0 1 4.5 4.5 v 6 a 4.5 4.5 0 0 1 -4.5 4.5 h -6 a 4.5 4.5 0 0 1 -4.5 -4.5 v -6 a 4.5 4.5 0 0 1 4.5 -4.5" clip-rule="evenodd" transform="rotate(-90,104.5,194.5)"/>
+</clipPath>
+<clipPath id="clip-path-corners-dot-color-0-1-7">
+<circle cx="104.5" cy="194.5" r="4.5" transform="rotate(-90,104.5,194.5)"/>
+</clipPath>
+
+<path id="bottom-text-path" d="M 17.5,150 A 132.5,132.5 0 0 0 282.5,150" fill="none"/>
+<path id="top-text-path" d="M 17.5,150 A 132.5,132.5 0 0 1 282.5,150" fill="none"/>
+</defs>
+<rect x="0" y="0" width="300" height="300" fill="#FFFFFF" clip-path="url(#clip-path-background-color-7)"/>
+<rect x="0" y="0" width="300" height="300" fill="#E74C3C" clip-path="url(#clip-path-dot-color-7)"/>
+<rect x="94" y="94" width="21" height="21" fill="#E74C3C" clip-path="url(#clip-path-corners-square-color-0-0-7)"/>
+<rect x="100" y="100" width="9" height="9" fill="#E74C3C" clip-path="url(#clip-path-corners-dot-color-0-0-7)"/>
+<rect x="184" y="94" width="21" height="21" fill="#E74C3C" clip-path="url(#clip-path-corners-square-color-1-0-7)"/>
+<rect x="190" y="100" width="9" height="9" fill="#E74C3C" clip-path="url(#clip-path-corners-dot-color-1-0-7)"/>
+<rect x="94" y="184" width="21" height="21" fill="#E74C3C" clip-path="url(#clip-path-corners-square-color-0-1-7)"/>
+<rect x="100" y="190" width="9" height="9" fill="#E74C3C" clip-path="url(#clip-path-corners-dot-color-0-1-7)"/>
+<image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUUAAAFFCAMAAABMqg9vAAABLFBMVEUAAAAIaP8FZf8KZv8IZf8IZv8JZ/8IZ/8HZv8IZ/8JZv8IZv8IZv8IaP8QcP8HZf8HZf8IZf8IZv8IZv8GZv8IZv8HZ/8Iaf8HZv8QYP8HZv8HZv8IZf8YcP8nef9FjP9kn/90qP+Dsv+TvP+ixv+yz//B2f9Vlv/g7P/v9f/////R4/82g//Q4v8IZv8HZv8IZv+Ds/8HZv8IZ/82gv8JZv90qf8IZ/+Es/8IZP+ixf8JZf9GjP8GZ/8HZv83g//g6//B2P8HZf8JZv9ln/8AYP/Q4/9Vlf/w9f8HZv8GY/8HZ/8LZf8JZv8JZf8IZP8IaP/+/v8JZ/8Ucv/////////////////////////////////////////////+/v////////////////8feXTqAAAAZHRSTlMAIDBQYICQn6+/z9//QBBv779/X1Cgb1+PEO9wn///////////////////////3o7+/+6+/87/nv9A/4//T8////+Qr/8Q////zlCvMHCQoGD//xBAkL9vr88Q72CA398gUJ8w/pNQiAAACdVJREFUeAHs2VeC4yAMgGHEJBCQjCnpyf2vub28bB0rNkXfEX6brqoD+m23N/bgPCLSd4jonLNmv3ubQInfCXpnrEf6F+gO+90U1E8iTLP1kf5fdGb+2lICIi3jD/M0ckGTIjFxZsSfcsqJuDkzqXGEOUV6jXgooAYAOdFr+Rl6T4i0BjTdhgw50Xp8j0M7HBOtzRXVlclE2gJa6KdhomXkhww50raw+RkSTKQKWJChzNNRGnKwWhpysDBcQ+kIJ6qVBdnbcMhNdDxHqhsWmRA5oFY1Cydqg4WeB7MMa0jUEgRVoRypMVnVRntaSn7HM7Upy4zIwYOqxCXSQrJYhyu17XpTmwOk1iHIRpvB/aE2daU+XNV2wNNSslZrpH6glp02h4faQKal5CATntSf59oRPfXIg2y1GSA0FVEy6kj9uutmIkrGC/WuSEQORSJyKBKRQ6k8omTUNA5d8RZHNjwQaSR3kGMfAwSJyABvipun8XjujE8a0VOeBzhkeaji8JDd9kfyzWq9jSCGwnbDySljYBm8o9AYwmiX3/+Bysytdiop/m9993/SHI1mzYc9NuqP5yhO0iwv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" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUUAAAFFCAMAAABMqg9vAAABLFBMVEUAAAAIaP8FZf8KZv8IZf8IZv8JZ/8IZ/8HZv8IZ/8JZv8IZv8IZv8IaP8QcP8HZf8HZf8IZf8IZv8IZv8GZv8IZv8HZ/8Iaf8HZv8QYP8HZv8HZv8IZf8YcP8nef9FjP9kn/90qP+Dsv+TvP+ixv+yz//B2f9Vlv/g7P/v9f/////R4/82g//Q4v8IZv8HZv8IZv+Ds/8HZv8IZ/82gv8JZv90qf8IZ/+Es/8IZP+ixf8JZf9GjP8GZ/8HZv83g//g6//B2P8HZf8JZv9ln/8AYP/Q4/9Vlf/w9f8HZv8GY/8HZ/8LZf8JZv8JZf8IZP8IaP/+/v8JZ/8Ucv/////////////////////////////////////////////+/v////////////////8feXTqAAAAZHRSTlMAIDBQYICQn6+/z9//QBBv779/X1Cgb1+PEO9wn///////////////////////3o7+/+6+/87/nv9A/4//T8////+Qr/8Q////zlCvMHCQoGD//xBAkL9vr88Q72CA398gUJ8w/pNQiAAACdVJREFUeAHs2VeC4yAMgGHEJBCQjCnpyf2vub28bB0rNkXfEX6brqoD+m23N/bgPCLSd4jonLNmv3ubQInfCXpnrEf6F+gO+90U1E8iTLP1kf5fdGb+2lICIi3jD/M0ckGTIjFxZsSfcsqJuDkzqXGEOUV6jXgooAYAOdFr+Rl6T4i0BjTdhgw50Xp8j0M7HBOtzRXVlclE2gJa6KdhomXkhww50raw+RkSTKQKWJChzNNRGnKwWhpysDBcQ+kIJ6qVBdnbcMhNdDxHqhsWmRA5oFY1Cydqg4WeB7MMa0jUEgRVoRypMVnVRntaSn7HM7Upy4zIwYOqxCXSQrJYhyu17XpTmwOk1iHIRpvB/aE2daU+XNV2wNNSslZrpH6glp02h4faQKal5CATntSf59oRPfXIg2y1GSA0FVEy6kj9uutmIkrGC/WuSEQORSJyKBKRQ6k8omTUNA5d8RZHNjwQaSR3kGMfAwSJyABvipun8XjujE8a0VOeBzhkeaji8JDd9kfyzWq9jSCGwnbDySljYBm8o9AYwmiX3/+Bysytdiop/m9993/SHI1mzYc9NuqP5yhO0iwv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" x="141" y="141" width="17px" height="17px"/>
+
+<rect fill="none" x="17.5" y="17.5" width="265" height="265" stroke="#E74C3C" stroke-width="35" rx="132.5"/>
+<text style="font-size: 18px; font-family: Arial, sans-serif; fill: #FFFFFF; font-weight: bold;">
+  <textPath xlink:href="#bottom-text-path" href="#bottom-text-path" startOffset="50%" text-anchor="middle" dominant-baseline="central">qr-code-styling</textPath>
+</text>
+<text style="font-size: 18px; font-family: Arial, sans-serif; fill: #FFFFFF; font-weight: bold;">
+  <textPath xlink:href="#top-text-path" href="#top-text-path" startOffset="50%" text-anchor="middle" dominant-baseline="central">SCAN ME</textPath>
+</text>
+</svg>

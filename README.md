@@ -2,6 +2,34 @@
 
 A Rust library for generating styled QR codes with customizable dots, corners, gradients, and logo embedding.
 
+## Samples
+
+<p align="center">
+  <img src="assets/basic.png" width="200" alt="Basic" />
+  <img src="assets/rounded.png" width="200" alt="Rounded" />
+  <img src="assets/dots.png" width="200" alt="Dots" />
+</p>
+<p align="center">
+  <img src="assets/classy_rounded.png" width="200" alt="Classy Rounded" />
+  <img src="assets/gradient.png" width="200" alt="Gradient" />
+  <img src="assets/with_logo.png" width="200" alt="With Logo" />
+</p>
+<p align="center">
+  <img src="assets/circle.png" width="200" alt="Circle Shape" />
+  <img src="assets/with_border.svg" width="200" alt="With Border" />
+</p>
+
+| Style | Description |
+|-------|-------------|
+| **Basic** | Default square QR code |
+| **Rounded** | Rounded dot style with custom corners |
+| **Dots** | Circular dot style |
+| **Classy Rounded** | Classy rounded dot pattern |
+| **Gradient** | Linear gradient from purple to deep purple |
+| **With Logo** | Embedded logo with automatic dot hiding |
+| **Circle** | Circular QR code shape |
+| **With Border** | Circle shape with decorative text border |
+
 ## Features
 
 - **6 dot styles** — Square, Dots, Rounded, Classy, ClassyRounded, ExtraRounded
@@ -70,6 +98,28 @@ let qr = QRCodeStyling::builder()
     .unwrap();
 
 qr.save("styled.svg", OutputFormat::Svg).unwrap();
+```
+
+### With gradient
+
+```rust
+use qr_code_styling::QRCodeStyling;
+use qr_code_styling::config::{DotsOptions, Color, Gradient};
+use qr_code_styling::types::{DotType, OutputFormat};
+
+let qr = QRCodeStyling::builder()
+    .data("https://example.com")
+    .size(300)
+    .dots_options(DotsOptions::new(DotType::Rounded).with_gradient(
+        Gradient::simple_linear(
+            Color::from_hex("#8E2DE2").unwrap(),
+            Color::from_hex("#4A00E0").unwrap(),
+        ),
+    ))
+    .build()
+    .unwrap();
+
+qr.save("gradient.png", OutputFormat::Png).unwrap();
 ```
 
 ### With logo
