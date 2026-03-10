@@ -1490,8 +1490,8 @@
 <circle cx="104.5" cy="194.5" r="4.5" transform="rotate(-90,104.5,194.5)"/>
 </clipPath>
 
-<path id="bottom-text-path" d="M 17.5,150 A 132.5,132.5 0 0 0 282.5,150" fill="none"/>
 <path id="top-text-path" d="M 17.5,150 A 132.5,132.5 0 0 1 282.5,150" fill="none"/>
+<path id="bottom-text-path" d="M 17.5,150 A 132.5,132.5 0 0 0 282.5,150" fill="none"/>
 </defs>
 <rect x="0" y="0" width="300" height="300" fill="#FFFFFF" clip-path="url(#clip-path-background-color-7)"/>
 <rect x="0" y="0" width="300" height="300" fill="#E74C3C" clip-path="url(#clip-path-dot-color-7)"/>
@@ -1505,9 +1505,9 @@
 
 <rect fill="none" x="17.5" y="17.5" width="265" height="265" stroke="#E74C3C" stroke-width="35" rx="132.5"/>
 <text style="font-size: 18px; font-family: Arial, sans-serif; fill: #FFFFFF; font-weight: bold;">
-  <textPath xlink:href="#bottom-text-path" href="#bottom-text-path" startOffset="50%" text-anchor="middle" dominant-baseline="central">qr-code-styling</textPath>
+  <textPath xlink:href="#top-text-path" href="#top-text-path" startOffset="50%" text-anchor="middle" dominant-baseline="central">SCAN ME</textPath>
 </text>
 <text style="font-size: 18px; font-family: Arial, sans-serif; fill: #FFFFFF; font-weight: bold;">
-  <textPath xlink:href="#top-text-path" href="#top-text-path" startOffset="50%" text-anchor="middle" dominant-baseline="central">SCAN ME</textPath>
+  <textPath xlink:href="#bottom-text-path" href="#bottom-text-path" startOffset="50%" text-anchor="middle" dominant-baseline="central">qr-code-styling</textPath>
 </text>
 </svg>
