@@ -8,7 +8,7 @@ pub struct ImageOptions {
     pub image_size: f64,
     /// Whether to hide dots behind the image.
     pub hide_background_dots: bool,
-    /// Margin around the image in modules.
+    /// Margin around the image in pixels.
     pub margin: u32,
     /// Cross-origin setting for loading images (browser context).
     pub cross_origin: Option<String>,

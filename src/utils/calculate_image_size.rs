@@ -24,6 +24,15 @@ pub fn calculate_image_size(
     max_hidden_axis_dots: usize,
     dot_size: f64,
 ) -> ImageSizeResult {
+    if original_width == 0 || original_height == 0 || max_hidden_dots == 0 || dot_size <= 0.0 {
+        return ImageSizeResult {
+            width: 0.0,
+            height: 0.0,
+            hide_x_dots: 0,
+            hide_y_dots: 0,
+        };
+    }
+
     let k = original_height as f64 / original_width as f64; // aspect ratio
 
     // Calculate max X axis hidden dots
@@ -88,5 +97,13 @@ mod tests {
     fn test_odd_hide_dots() {
         let result = calculate_image_size(100, 100, 100, 15, 10.0);
         assert!(result.hide_x_dots % 2 == 1);
+    }
+
+    #[test]
+    fn test_degenerate_inputs() {
+        let result = calculate_image_size(0, 100, 100, 15, 10.0);
+        assert_eq!(result.hide_x_dots, 0);
+        let result = calculate_image_size(100, 100, 0, 15, 10.0);
+        assert_eq!(result.hide_y_dots, 0);
     }
 }

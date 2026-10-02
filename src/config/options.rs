@@ -173,11 +173,16 @@ impl QRCodeStylingBuilder {
             return Err(QRError::CanvasTooSmall { width, height });
         }
 
+        let margin = self.margin.unwrap_or(0);
+        if margin.saturating_mul(2) >= width.min(height) {
+            return Err(QRError::CanvasTooSmall { width, height });
+        }
+
         Ok(QRCodeStylingOptions {
             data,
             width,
             height,
-            margin: self.margin.unwrap_or(0),
+            margin,
             shape: self.shape.unwrap_or(ShapeType::Square),
             image: self.image,
             qr_options: self.qr_options.unwrap_or_default(),

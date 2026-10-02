@@ -14,14 +14,24 @@ impl RasterRenderer {
     /// Convert SVG string to raster image bytes.
     pub fn render(svg: &str, width: u32, height: u32, format: OutputFormat) -> Result<Vec<u8>> {
         // Parse the SVG with resvg/usvg
-        let image = Self::svg_to_image(svg, width, height)?;
+        // JPEG has no alpha channel, so composite onto white; other formats keep transparency.
+        let background = match format {
+            OutputFormat::Jpeg => Some(resvg::tiny_skia::Color::WHITE),
+            _ => None,
+        };
+        let image = Self::svg_to_image(svg, width, height, background)?;
 
         // Encode to target format
         Self::encode_image(&image, format)
     }
 
     /// Parse SVG and render to image buffer using resvg.
-    fn svg_to_image(svg: &str, width: u32, height: u32) -> Result<DynamicImage> {
+    fn svg_to_image(
+        svg: &str,
+        width: u32,
+        height: u32,
+        background: Option<resvg::tiny_skia::Color>,
+    ) -> Result<DynamicImage> {
         // Parse SVG using usvg
         let tree = Tree::from_str(svg, &Options::default())
             .map_err(|e| QRError::SvgError(e.to_string()))?;
@@ -33,8 +43,9 @@ impl RasterRenderer {
         let mut pixmap = Pixmap::new(width, height)
             .ok_or_else(|| QRError::SvgError("Failed to create pixmap".to_string()))?;
 
-        // Fill with white background (since QR codes typically have white background)
-        pixmap.fill(resvg::tiny_skia::Color::WHITE);
+        if let Some(color) = background {
+            pixmap.fill(color);
+        }
 
         // Calculate scale to fit the SVG into the target dimensions
         let scale_x = width as f32 / svg_size.width();
@@ -51,8 +62,16 @@ impl RasterRenderer {
         // Render the SVG
         resvg::render(&tree, transform, &mut pixmap.as_mut());
 
-        // Convert pixmap to image::RgbaImage
-        let img = RgbaImage::from_raw(width, height, pixmap.data().to_vec())
+        // Convert pixmap (premultiplied alpha) to image::RgbaImage (straight alpha)
+        let data: Vec<u8> = pixmap
+            .pixels()
+            .iter()
+            .flat_map(|p| {
+                let c = p.demultiply();
+                [c.red(), c.green(), c.blue(), c.alpha()]
+            })
+            .collect();
+        let img = RgbaImage::from_raw(width, height, data)
             .ok_or_else(|| QRError::SvgError("Failed to create image from pixmap".to_string()))?;
 
         Ok(DynamicImage::ImageRgba8(img))
@@ -78,8 +97,14 @@ impl RasterRenderer {
             }
         };
 
-        image
-            .write_to(&mut buffer, image_format)
+        let result = if image_format == ImageFormat::Jpeg {
+            // JPEG encoder doesn't support alpha
+            DynamicImage::ImageRgb8(image.to_rgb8()).write_to(&mut buffer, image_format)
+        } else {
+            image.write_to(&mut buffer, image_format)
+        };
+
+        result
             .map_err(|e| QRError::ImageEncodeError(e.to_string()))?;
 
         Ok(buffer.into_inner())
@@ -121,7 +146,7 @@ mod tests {
                 <rect x="25" y="25" width="50" height="50" fill="black"/>
             </svg>"#;
 
-        let result = RasterRenderer::svg_to_image(svg, 100, 100);
+        let result = RasterRenderer::svg_to_image(svg, 100, 100, None);
         assert!(result.is_ok());
     }
 

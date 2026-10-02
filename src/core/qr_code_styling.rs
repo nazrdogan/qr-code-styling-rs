@@ -190,4 +190,37 @@ mod tests {
         // PNG magic bytes
         assert_eq!(&png[0..4], &[0x89, 0x50, 0x4E, 0x47]);
     }
+
+    #[test]
+    fn test_oversized_margin_is_error_not_panic() {
+        let result = QRCodeStyling::builder().data("Test").size(100).margin(50).build();
+        assert!(result.is_err());
+
+        // Bypassing the builder must not panic either
+        let mut qr = QRCodeStyling::builder().data("Test").size(100).build().unwrap();
+        qr.options_mut().margin = 1000;
+        assert!(qr.render_svg().is_ok());
+    }
+
+    #[test]
+    fn test_png_keeps_transparency() {
+        use crate::config::{BackgroundOptions, Color};
+
+        let qr = QRCodeStyling::builder()
+            .data("Test")
+            .size(100)
+            .dots_options(DotsOptions::new(DotType::Square).with_color(Color::rgba(255, 0, 0, 128)))
+            .background_options(BackgroundOptions::transparent())
+            .build()
+            .unwrap();
+
+        let png = qr.render(OutputFormat::Png).unwrap();
+        let img = image::load_from_memory(&png).unwrap().to_rgba8();
+        assert_eq!(img.get_pixel(0, 0)[3], 0);
+        // Semi-transparent pixels must not be premultiplied
+        assert!(img.pixels().any(|p| p.0 == [255, 0, 0, 128]));
+
+        // JPEG still renders (alpha dropped)
+        assert!(qr.render(OutputFormat::Jpeg).is_ok());
+    }
 }
