@@ -42,7 +42,7 @@ pub fn calculate_image_size(
     }
 
     // Ensure odd number for center alignment
-    if hide_x_dots % 2 == 0 {
+    if hide_x_dots.is_multiple_of(2) {
         hide_x_dots -= 1;
     }
 

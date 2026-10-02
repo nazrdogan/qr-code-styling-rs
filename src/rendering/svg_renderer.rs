@@ -298,8 +298,8 @@ impl SvgRenderer {
 
         let mut fake_matrix = vec![vec![0u8; fake_count]; fake_count];
 
-        for row in 0..fake_count {
-            for col in 0..fake_count {
+        for (row, fake_row) in fake_matrix.iter_mut().enumerate() {
+            for (col, cell) in fake_row.iter_mut().enumerate() {
                 // Skip inner area
                 if row >= additional_dots.saturating_sub(1)
                     && row <= fake_count - additional_dots
@@ -332,7 +332,7 @@ impl SvgRenderer {
                 };
 
                 if source_row < count && source_col < count && matrix.is_dark(source_row, source_col) {
-                    fake_matrix[row][col] = 1;
+                    *cell = 1;
                 }
             }
         }
@@ -409,6 +409,7 @@ impl SvgRenderer {
         (defs, elements)
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn render_corner_square(
         &self,
         x: f64,
@@ -465,6 +466,7 @@ impl SvgRenderer {
         (defs, elements)
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn render_corner_dot(
         &self,
         x: f64,
@@ -560,6 +562,7 @@ impl SvgRenderer {
         )
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn create_color(
         &self,
         gradient: Option<&Gradient>,
@@ -610,7 +613,7 @@ impl SvgRenderer {
                         y + height / 2.0,
                     );
 
-                    if (positive_rotation >= 0.0 && positive_rotation <= 0.25 * PI)
+                    if (0.0..=0.25 * PI).contains(&positive_rotation)
                         || (positive_rotation > 1.75 * PI && positive_rotation <= 2.0 * PI)
                     {
                         x0 -= width / 2.0;
@@ -685,11 +688,10 @@ impl SvgRenderer {
 
         // Skip corner squares (finder patterns)
         // Top-left
-        if row < 7 && col < 7 {
-            if SQUARE_MASK[row][col] == 1 || DOT_MASK[row][col] == 1 {
+        if row < 7 && col < 7
+            && (SQUARE_MASK[row][col] == 1 || DOT_MASK[row][col] == 1) {
                 return false;
             }
-        }
 
         // Top-right
         if row < 7 && col >= count - 7 {

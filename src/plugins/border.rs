@@ -213,10 +213,8 @@ impl BorderPlugin {
                 inner_attrs.x - inner.thickness + self.options.border.thickness;
             inner_attrs.y =
                 inner_attrs.y - inner.thickness + self.options.border.thickness;
-            inner_attrs.width =
-                inner_attrs.width + 2.0 * (inner.thickness - self.options.border.thickness);
-            inner_attrs.height =
-                inner_attrs.height + 2.0 * (inner.thickness - self.options.border.thickness);
+            inner_attrs.width += 2.0 * (inner.thickness - self.options.border.thickness);
+            inner_attrs.height += 2.0 * (inner.thickness - self.options.border.thickness);
             inner_attrs.rx = (inner_attrs.rx + inner.thickness - self.options.border.thickness)
                 .max(0.0);
 

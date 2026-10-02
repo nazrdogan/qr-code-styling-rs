@@ -102,7 +102,7 @@ fn generate_qr_pdf_bytes(index: usize, logo_bytes: &[u8]) -> Result<Vec<u8>, Box
     let border_options = QRBorderOptions::new(30.0, color)
         .with_round(1.0)
         .with_styled_text(Position::Top, "SCAN ME", text_style)
-        .with_styled_text(Position::Bottom, &format!("#{:05}", index), text_style);
+        .with_styled_text(Position::Bottom, format!("#{:05}", index), text_style);
 
     let border_plugin = BorderPlugin::new(border_options);
     let svg_with_border = border_plugin.apply(&svg, 300, 300);
@@ -113,7 +113,9 @@ fn generate_qr_pdf_bytes(index: usize, logo_bytes: &[u8]) -> Result<Vec<u8>, Box
     Ok(pdf_data)
 }
 
-fn merge_pdfs(pdfs: Vec<(usize, Result<Vec<u8>, Box<dyn std::error::Error + Send + Sync>>)>) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+type PdfResult = Result<Vec<u8>, Box<dyn std::error::Error + Send + Sync>>;
+
+fn merge_pdfs(pdfs: Vec<(usize, PdfResult)>) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
     // Sort by index to ensure correct order
     let mut sorted_pdfs: Vec<_> = pdfs.into_iter()
         .filter_map(|(i, r)| r.ok().map(|data| (i, data)))
@@ -136,9 +138,9 @@ fn merge_pdfs(pdfs: Vec<(usize, Result<Vec<u8>, Box<dyn std::error::Error + Send
             // Get pages from source document
             let pages = doc.get_pages();
 
-            for (_, &page_id) in pages.iter() {
+            for &page_id in pages.values() {
                 // Clone page and its resources to merged document
-                if let Ok(_) = clone_page_to_document(&doc, &mut merged_doc, page_id) {
+                if clone_page_to_document(&doc, &mut merged_doc, page_id).is_ok() {
                     page_count += 1;
                 }
             }
@@ -186,28 +188,20 @@ fn clone_page_to_document(
 
     // Get target's pages object
     if let Ok(pages_id) = target.catalog()?.get(b"Pages")?.as_reference() {
-        if let Ok(pages) = target.get_object_mut(pages_id) {
-            if let Object::Dictionary(ref mut dict) = pages {
-                // Update Kids array
-                if let Ok(kids) = dict.get_mut(b"Kids") {
-                    if let Object::Array(ref mut arr) = kids {
-                        arr.push(Object::Reference(new_page_id));
-                    }
-                }
-                // Update Count
-                if let Ok(count) = dict.get_mut(b"Count") {
-                    if let Object::Integer(ref mut n) = count {
-                        *n += 1;
-                    }
-                }
+        if let Ok(Object::Dictionary(dict)) = target.get_object_mut(pages_id) {
+            // Update Kids array
+            if let Ok(Object::Array(arr)) = dict.get_mut(b"Kids") {
+                arr.push(Object::Reference(new_page_id));
+            }
+            // Update Count
+            if let Ok(Object::Integer(n)) = dict.get_mut(b"Count") {
+                *n += 1;
             }
         }
 
         // Update page's Parent reference
-        if let Ok(page) = target.get_object_mut(new_page_id) {
-            if let Object::Dictionary(ref mut dict) = page {
-                dict.set("Parent", Object::Reference(pages_id));
-            }
+        if let Ok(Object::Dictionary(dict)) = target.get_object_mut(new_page_id) {
+            dict.set("Parent", Object::Reference(pages_id));
         }
     }
 

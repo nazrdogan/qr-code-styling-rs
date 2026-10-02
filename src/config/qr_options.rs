@@ -10,7 +10,10 @@ pub struct QROptions {
     pub type_number: u8,
     /// Error correction level.
     pub error_correction_level: ErrorCorrectionLevel,
-    /// Encoding mode (None = auto-detect).
+    /// Encoding mode (None = auto, which may mix modes for the smallest code).
+    /// An explicit mode encodes all data in that single mode and fails if the
+    /// data contains characters the mode can't represent. `Kanji` expects
+    /// Shift JIS bytes, so it rejects ordinary UTF-8 strings.
     pub mode: Option<Mode>,
 }
 

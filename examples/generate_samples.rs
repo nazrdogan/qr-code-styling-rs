@@ -23,7 +23,7 @@ fn main() -> qr_code_styling::error::Result<()> {
         .data(SAMPLE_DATA)
         .size(300)
         .build()?;
-    qr.save(&format!("{}/basic.png", assets), OutputFormat::Png)?;
+    qr.save(format!("{}/basic.png", assets), OutputFormat::Png)?;
 
     // 2. Rounded dots
     println!("Generating rounded dots sample...");
@@ -43,7 +43,7 @@ fn main() -> qr_code_styling::error::Result<()> {
         )
         .background_options(BackgroundOptions::default().with_color(Color::from_hex("#FFFFFF").unwrap()))
         .build()?;
-    qr.save(&format!("{}/rounded.png", assets), OutputFormat::Png)?;
+    qr.save(format!("{}/rounded.png", assets), OutputFormat::Png)?;
 
     // 3. Dots style
     println!("Generating dots style sample...");
@@ -63,7 +63,7 @@ fn main() -> qr_code_styling::error::Result<()> {
         )
         .background_options(BackgroundOptions::default().with_color(Color::from_hex("#FFFFFF").unwrap()))
         .build()?;
-    qr.save(&format!("{}/dots.png", assets), OutputFormat::Png)?;
+    qr.save(format!("{}/dots.png", assets), OutputFormat::Png)?;
 
     // 4. Classy rounded
     println!("Generating classy rounded sample...");
@@ -85,7 +85,7 @@ fn main() -> qr_code_styling::error::Result<()> {
         .background_options(BackgroundOptions::default().with_color(Color::from_hex("#FFFFFF").unwrap()))
         .build()?;
     qr.save(
-        &format!("{}/classy_rounded.png", assets),
+        format!("{}/classy_rounded.png", assets),
         OutputFormat::Png,
     )?;
 
@@ -110,7 +110,7 @@ fn main() -> qr_code_styling::error::Result<()> {
         )
         .background_options(BackgroundOptions::default().with_color(Color::from_hex("#FFFFFF").unwrap()))
         .build()?;
-    qr.save(&format!("{}/gradient.png", assets), OutputFormat::Png)?;
+    qr.save(format!("{}/gradient.png", assets), OutputFormat::Png)?;
 
     // 6. With logo
     println!("Generating logo sample...");
@@ -141,7 +141,7 @@ fn main() -> qr_code_styling::error::Result<()> {
         )
         .background_options(BackgroundOptions::default().with_color(Color::from_hex("#FFFFFF").unwrap()))
         .build()?;
-    qr.save(&format!("{}/with_logo.png", assets), OutputFormat::Png)?;
+    qr.save(format!("{}/with_logo.png", assets), OutputFormat::Png)?;
 
     // 7. Circle shape
     println!("Generating circle shape sample...");
@@ -162,7 +162,7 @@ fn main() -> qr_code_styling::error::Result<()> {
         )
         .background_options(BackgroundOptions::default().with_color(Color::from_hex("#FFFFFF").unwrap()))
         .build()?;
-    qr.save(&format!("{}/circle.png", assets), OutputFormat::Png)?;
+    qr.save(format!("{}/circle.png", assets), OutputFormat::Png)?;
 
     // 8. With border
     println!("Generating border sample...");
@@ -204,7 +204,7 @@ fn main() -> qr_code_styling::error::Result<()> {
     let bordered_svg = BorderPlugin::new(border_options).apply(&svg, 300, 300);
 
     // Convert bordered SVG to PNG via saving as SVG then rendering
-    std::fs::write(&format!("{}/with_border.svg", assets), &bordered_svg)?;
+    std::fs::write(format!("{}/with_border.svg", assets), &bordered_svg)?;
 
     // Initialization of Style parameters.
     const QR_SIZE: u32 = 300;
@@ -406,7 +406,7 @@ fn sample_dots_colors(
     let yellow = Color::from_hex("#FFEE88").unwrap();
     let green = Color::from_hex("#00CC99").unwrap();
 
-    let solid_color = base_dot_options.clone().with_color(blue.clone());
+    let solid_color = base_dot_options.clone().with_color(blue);
     let color_stops = vec![
         ColorStop::new(0.0, blue),
         ColorStop::new(0.5, cherry),
@@ -423,13 +423,11 @@ fn sample_dots_colors(
         .with_gradient(gradient);
 
     let mut styles = Vec::new();
-    for (name, dot_options) in vec![
-        ("solid_color", solid_color),
+    for (name, dot_options) in [("solid_color", solid_color),
         ("gradient_color", gradient_color),
         ("round_whole_pixels_on", round_whole_pixels_on),
         ("round_whole_pixels_off", round_whole_pixels_off),
-        ("solid_and_gradient", solid_and_gradient),
-    ] {
+        ("solid_and_gradient", solid_and_gradient)] {
         let style = base_styling.clone().dots_options(dot_options).build()?;
         styles.push(Sample {
             name: name.to_string(),
