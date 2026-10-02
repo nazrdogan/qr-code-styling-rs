@@ -7,6 +7,7 @@ use crate::core::QRMatrix;
 use crate::error::Result;
 use crate::figures::{QRCornerDot, QRCornerSquare, QRDot};
 use crate::types::{CornerSquareType, GradientType, ShapeType};
+use crate::utils::calculate_image_size;
 
 /// SVG renderer for QR codes.
 pub struct SvgRenderer {
@@ -51,7 +52,7 @@ impl SvgRenderer {
     /// Render the QR code as SVG string.
     pub fn render(&self, matrix: &QRMatrix) -> Result<String> {
         let count = matrix.module_count();
-        let min_size = self.options.width.min(self.options.height) - self.options.margin * 2;
+        let min_size = self.min_size();
         let real_qr_size = if self.options.shape == ShapeType::Circle {
             min_size as f64 / 2.0_f64.sqrt()
         } else {
@@ -288,7 +289,7 @@ impl SvgRenderer {
         dot_drawer: &QRDot,
     ) -> String {
         let mut result = String::new();
-        let min_size = (self.options.width.min(self.options.height) - self.options.margin * 2) as f64;
+        let min_size = self.min_size() as f64;
         let additional_dots = self.round_size((min_size / dot_size - count as f64) / 2.0) as usize;
         let fake_count = count + additional_dots * 2;
         let x_fake_beginning = x_beginning - additional_dots as f64 * dot_size;
@@ -709,26 +710,44 @@ impl SvgRenderer {
         true
     }
 
-    fn calculate_image_hide_area(&self, count: usize, _dot_size: f64) -> (usize, usize) {
+    fn calculate_image_hide_area(&self, count: usize, dot_size: f64) -> (usize, usize) {
         // Calculate based on error correction level and image size
         let error_correction_percent = self.options.qr_options.error_correction_level.percentage();
         let cover_level = self.options.image_options.image_size * error_correction_percent;
         let max_hidden_dots = (cover_level * (count * count) as f64).floor() as usize;
         let max_hidden_axis_dots = count.saturating_sub(14);
 
-        // Simple calculation for image area
-        // Use aspect ratio 1:1 for simplicity (can be enhanced with actual image dimensions)
-        let mut hide_dots = (max_hidden_dots as f64).sqrt().floor() as usize;
+        // Use the image's real aspect ratio; fall back to 1:1 if it can't be decoded
+        let (img_width, img_height) = self
+            .options
+            .image
+            .as_deref()
+            .and_then(|data| {
+                image::ImageReader::new(std::io::Cursor::new(data))
+                    .with_guessed_format()
+                    .ok()?
+                    .into_dimensions()
+                    .ok()
+            })
+            .unwrap_or((1, 1));
 
-        // Ensure odd number for center alignment
-        if hide_dots % 2 == 0 {
-            hide_dots = hide_dots.saturating_sub(1);
-        }
+        let result = calculate_image_size(
+            img_width,
+            img_height,
+            max_hidden_dots,
+            max_hidden_axis_dots,
+            dot_size,
+        );
 
-        // Clamp to max
-        hide_dots = hide_dots.min(max_hidden_axis_dots);
+        (result.hide_x_dots, result.hide_y_dots)
+    }
 
-        (hide_dots, hide_dots)
+    /// Smallest canvas side minus margins (saturating, so oversized margins can't underflow).
+    fn min_size(&self) -> u32 {
+        self.options
+            .width
+            .min(self.options.height)
+            .saturating_sub(self.options.margin.saturating_mul(2))
     }
 
     fn round_size(&self, value: f64) -> f64 {

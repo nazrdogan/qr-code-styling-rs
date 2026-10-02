@@ -229,8 +229,12 @@ impl BorderPlugin {
             elements_content.push_str(&self.create_rect(&outer_attrs));
         }
 
-        // Add decorations
-        for (position, decoration) in &self.options.decorations {
+        // Add decorations (fixed order so output is deterministic)
+        let ordered = [Position::Top, Position::Right, Position::Bottom, Position::Left];
+        for (position, decoration) in ordered
+            .iter()
+            .filter_map(|p| self.options.decorations.get(p).map(|d| (p, d)))
+        {
             match &decoration.decoration_type {
                 DecorationType::Text(text) => {
                     let (path_def, text_elem) = self.create_text_decoration(
@@ -372,7 +376,7 @@ impl BorderPlugin {
 
             let text_elem = format!(
                 "<text style=\"{}\">\n  <textPath xlink:href=\"#{}\" href=\"#{}\" startOffset=\"50%\" text-anchor=\"middle\" dominant-baseline=\"central\">{}</textPath>\n</text>\n",
-                base_style, path_id, path_id, text
+                escape_xml(base_style), path_id, path_id, escape_xml(text)
             );
 
             (path_def, text_elem)
@@ -397,7 +401,7 @@ impl BorderPlugin {
             let text_elem = format!(
                 r#"<text x="{}" y="{}" text-anchor="middle" dominant-baseline="middle" style="{}"{}>{}</text>
 "#,
-                x, y, base_style, transform, text
+                x, y, escape_xml(base_style), transform, escape_xml(text)
             );
 
             (String::new(), text_elem)
@@ -436,12 +440,12 @@ impl BorderPlugin {
         }
 
         let style_attr = style
-            .map(|s| format!(r#" style="{}""#, s))
+            .map(|s| format!(r#" style="{}""#, escape_xml(s)))
             .unwrap_or_default();
 
         format!(
             r#"<image href="{}" xlink:href="{}" x="{}" y="{}"{}/>"#,
-            src, src, x, y, style_attr
+            escape_xml(src), escape_xml(src), x, y, style_attr
         )
     }
 
@@ -478,6 +482,22 @@ impl BorderPlugin {
             format!("{}\n{}", svg.trim_end(), elements_content)
         }
     }
+}
+
+/// Escape a string for safe use in SVG text content or attribute values.
+fn escape_xml(s: &str) -> String {
+    let mut out = String::with_capacity(s.len());
+    for c in s.chars() {
+        match c {
+            '&' => out.push_str("&amp;"),
+            '<' => out.push_str("&lt;"),
+            '>' => out.push_str("&gt;"),
+            '"' => out.push_str("&quot;"),
+            '\'' => out.push_str("&apos;"),
+            _ => out.push(c),
+        }
+    }
+    out
 }
 
 /// Internal struct for rectangle attributes.
@@ -553,5 +573,15 @@ mod tests {
         assert!(result.contains("SCAN ME"));
         assert!(result.contains("textPath"));
         assert!(result.contains("top-text-path"));
+    }
+
+    #[test]
+    fn test_text_decoration_is_escaped() {
+        let svg = r#"<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><defs></defs></svg>"#;
+        let options = QRBorderOptions::new(20.0, "#000000").with_text(Position::Top, "Fish & <Chips>");
+        let result = BorderPlugin::new(options).apply(svg, 300, 300);
+
+        assert!(result.contains("Fish &amp; &lt;Chips&gt;"));
+        assert!(resvg::usvg::Tree::from_str(&result, &Default::default()).is_ok());
     }
 }

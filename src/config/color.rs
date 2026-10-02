@@ -30,6 +30,9 @@ impl Color {
     /// Create a color from a hex string (e.g., "#FF0000" or "#FF0000FF").
     pub fn from_hex(hex: &str) -> Result<Self> {
         let hex = hex.trim_start_matches('#');
+        if !hex.is_ascii() {
+            return Err(QRError::InvalidColor(hex.to_string()));
+        }
 
         match hex.len() {
             3 => {
@@ -131,5 +134,11 @@ mod tests {
     fn test_to_hex() {
         assert_eq!(Color::rgb(255, 0, 0).to_hex(), "#FF0000");
         assert_eq!(Color::rgba(255, 0, 0, 128).to_hex(), "#FF000080");
+    }
+
+    #[test]
+    fn test_from_hex_non_ascii_is_error() {
+        assert!(Color::from_hex("aé").is_err());
+        assert!(Color::from_hex("#ééé").is_err());
     }
 }
