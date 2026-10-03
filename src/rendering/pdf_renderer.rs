@@ -12,11 +12,11 @@ impl PdfRenderer {
         // Create font database and load system fonts
         let mut fontdb = usvg::fontdb::Database::new();
         fontdb.load_system_fonts();
-        let fontdb = std::sync::Arc::new(fontdb);
-
         // Create options with the font database
-        let mut options = usvg::Options::default();
-        options.fontdb = fontdb;
+        let options = usvg::Options {
+            fontdb: std::sync::Arc::new(fontdb),
+            ..Default::default()
+        };
 
         // Parse SVG using usvg with font database (text will be converted to paths)
         let tree = usvg::Tree::from_str(svg, &options)
