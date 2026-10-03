@@ -7,7 +7,10 @@
 //!
 //! Text from the SVG-only `BorderPlugin` is not part of this output.
 
+use std::collections::HashMap;
 use std::f64::consts::PI;
+use std::fmt;
+use std::sync::Arc;
 
 use pdf_writer::types::FunctionShadingType;
 use pdf_writer::{Content, Filter, Finish, Name, Pdf, Rect, Ref};
@@ -83,15 +86,39 @@ impl Cmyk {
     }
 }
 
+/// A function converting an RGB color to CMYK, e.g. an ICC-based transform.
+pub type CmykConverter = Arc<dyn Fn(Color) -> Cmyk + Send + Sync>;
+
 /// Options for [`QRCodeStyling::render_pdf_cmyk`](crate::QRCodeStyling::render_pdf_cmyk).
 ///
-/// Colors from the styling options (dots, corners, background, gradient
-/// stops) are looked up in the color map by RGB value; unmapped colors are
-/// converted with [`Cmyk::from_rgb`]. Alpha is kept as PDF transparency.
-#[derive(Debug, Clone, Default)]
+/// Every RGB color in the output (dots, corners, background, gradient stops
+/// and logo pixels) is resolved in this order:
+/// 1. the color map ([`with_color`](Self::with_color)), compared by RGB value;
+/// 2. the custom converter ([`with_converter`](Self::with_converter)), if set;
+/// 3. [`Cmyk::from_rgb`].
+///
+/// Alpha is kept as PDF transparency.
+#[derive(Clone)]
 pub struct CmykPdfOptions {
     color_map: Vec<(Color, Cmyk)>,
+    converter: Option<CmykConverter>,
     compress: bool,
+}
+
+impl Default for CmykPdfOptions {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl fmt::Debug for CmykPdfOptions {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("CmykPdfOptions")
+            .field("color_map", &self.color_map)
+            .field("converter", &self.converter.as_ref().map(|_| "<fn>"))
+            .field("compress", &self.compress)
+            .finish()
+    }
 }
 
 impl CmykPdfOptions {
@@ -99,8 +126,18 @@ impl CmykPdfOptions {
     pub fn new() -> Self {
         Self {
             color_map: Vec::new(),
+            converter: None,
             compress: true,
         }
+    }
+
+    /// Convert colors that aren't in the color map with `converter`
+    /// instead of [`Cmyk::from_rgb`], e.g. an ICC (lcms) transform.
+    ///
+    /// The converter is called once per distinct color per render.
+    pub fn with_converter(mut self, converter: impl Fn(Color) -> Cmyk + Send + Sync + 'static) -> Self {
+        self.converter = Some(Arc::new(converter));
+        self
     }
 
     /// Use exactly `cmyk` wherever `color` (compared by RGB) appears.
@@ -122,7 +159,10 @@ impl CmykPdfOptions {
             .iter()
             .find(|(c, _)| same_rgb(*c, color))
             .map(|(_, cmyk)| *cmyk)
-            .unwrap_or_else(|| Cmyk::from_rgb(color))
+            .unwrap_or_else(|| match &self.converter {
+                Some(convert) => convert(Color::rgb(color.r, color.g, color.b)),
+                None => Cmyk::from_rgb(color),
+            })
     }
 }
 
@@ -389,10 +429,18 @@ impl<'o> CmykPdfWriter<'o> {
 
         let mut cmyk = Vec::with_capacity((iw * ih * 4) as usize);
         let mut alpha = Vec::with_capacity((iw * ih) as usize);
+        // Logos have few distinct colors; resolve each once (custom
+        // converters such as ICC transforms can be slow per call).
+        let mut cache: HashMap<[u8; 3], [u8; 4]> = HashMap::new();
         for p in decoded.pixels() {
             let [r, g, b, a] = p.0;
-            let v = self.options.resolve(Color::rgb(r, g, b)).components();
-            cmyk.extend(v.map(|x| (x * 255.0).round() as u8));
+            let v = *cache.entry([r, g, b]).or_insert_with(|| {
+                self.options
+                    .resolve(Color::rgb(r, g, b))
+                    .components()
+                    .map(|x| (x * 255.0).round() as u8)
+            });
+            cmyk.extend(v);
             alpha.push(a);
         }
         let has_alpha = alpha.iter().any(|&a| a != 255);
@@ -635,5 +683,36 @@ mod tests {
         let ops = String::from_utf8(c.finish()).unwrap();
         assert_eq!(ops.matches(" c").count(), 2);
         assert!(ops.trim_end().ends_with("10 5 c"));
+    }
+
+    #[test]
+    fn test_custom_converter() {
+        use std::sync::atomic::{AtomicUsize, Ordering};
+        let calls = Arc::new(AtomicUsize::new(0));
+        let counter = calls.clone();
+        let options = CmykPdfOptions::new()
+            .with_color(Color::BLACK, Cmyk::new(60.0, 40.0, 40.0, 100.0))
+            .with_converter(move |c| {
+                counter.fetch_add(1, Ordering::Relaxed);
+                // Pretend ICC transform: everything becomes 10% of each ink
+                assert_eq!(c.a, 255, "converter receives opaque colors");
+                Cmyk::new(10.0, 10.0, 10.0, 10.0)
+            });
+        // Color map wins over the converter
+        assert_eq!(options.resolve(Color::BLACK).c, 60.0);
+        assert_eq!(calls.load(Ordering::Relaxed), 0);
+        // Unmapped colors (alpha ignored) go through the converter
+        assert_eq!(options.resolve(Color::rgba(200, 10, 10, 50)), Cmyk::new(10.0, 10.0, 10.0, 10.0));
+        assert_eq!(calls.load(Ordering::Relaxed), 1);
+        // Options stay cloneable and debuggable
+        let cloned = options.clone();
+        assert!(format!("{:?}", cloned).contains("<fn>"));
+    }
+
+    #[test]
+    fn test_default_matches_new() {
+        let d = format!("{:?}", CmykPdfOptions::default());
+        assert_eq!(d, format!("{:?}", CmykPdfOptions::new()));
+        assert!(d.contains("compress: true"));
     }
 }

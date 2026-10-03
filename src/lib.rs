@@ -51,7 +51,7 @@ pub use config::{
 };
 pub use core::QRCodeStyling;
 #[cfg(feature = "cmyk")]
-pub use rendering::{Cmyk, CmykPdfOptions};
+pub use rendering::{Cmyk, CmykConverter, CmykPdfOptions};
 pub use error::{QRError, Result};
 pub use plugins::{BorderDecoration, BorderOptions, BorderPlugin, Position, QRBorderOptions};
 pub use types::{
