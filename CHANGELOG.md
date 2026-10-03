@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+### Features
+- New optional `cmyk` feature: `render_pdf_cmyk` / `save_pdf_cmyk` write a
+  print-ready PDF in DeviceCMYK directly from the QR geometry (no sRGB step).
+  `CmykPdfOptions::with_color` maps colors to exact CMYK values; other colors
+  are converted with full gray replacement, so black prints as 100% K.
+  Supports gradients (axial/radial shadings), transparency and logos.
+
 ## 0.2.0
 
 ### Performance

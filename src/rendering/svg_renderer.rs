@@ -2,13 +2,12 @@
 
 use std::borrow::Cow;
 use std::f64::consts::PI;
-use std::fmt::Write;
 
 use crate::config::{Color, Gradient, QRCodeStylingOptions};
 use crate::core::QRMatrix;
 use crate::error::Result;
-use crate::figures::traits::Num;
 use crate::figures::{QRCornerDot, QRCornerSquare, QRDot};
+use crate::rendering::scene::{Background, ImageItem, Paint, Scene, Shape};
 use crate::types::{GradientType, ShapeType};
 use crate::utils::calculate_image_size;
 
@@ -68,6 +67,11 @@ impl<'a> SvgRenderer<'a> {
 
     /// Render the QR code as SVG string.
     pub fn render(&self, matrix: &QRMatrix) -> Result<String> {
+        Ok(self.scene(matrix).to_svg())
+    }
+
+    /// Compute the backend-independent layout of the QR code.
+    pub(crate) fn scene(&self, matrix: &QRMatrix) -> Scene<'_> {
         let count = matrix.module_count();
         let min_size = self.min_size();
         let real_qr_size = if self.options.shape == ShapeType::Circle {
@@ -84,40 +88,27 @@ impl<'a> SvgRenderer<'a> {
             (0, 0)
         };
 
-        let mut defs = String::new();
-        // Rough upper bound: ~40 bytes of path data per dark module
-        let mut elements = String::with_capacity(count * count * 20 + 2048);
+        let mut shapes = Vec::with_capacity(7);
+        shapes.push(self.render_dots(matrix, count, dot_size, hide_x_dots, hide_y_dots));
+        self.render_corners(&mut shapes, count, dot_size);
 
-        self.render_background(&mut defs, &mut elements);
-        self.render_dots(&mut defs, &mut elements, matrix, count, dot_size, hide_x_dots, hide_y_dots);
-        self.render_corners(&mut defs, &mut elements, count, dot_size);
+        let image = self
+            .options
+            .image
+            .as_deref()
+            .map(|data| self.render_image(count, dot_size, hide_x_dots, hide_y_dots, data));
 
-        if let Some(ref image_data) = self.options.image {
-            self.render_image(&mut elements, count, dot_size, hide_x_dots, hide_y_dots, image_data);
+        Scene {
+            width: self.options.width,
+            height: self.options.height,
+            crisp_edges: !self.options.dots_options.round_size,
+            background: self.render_background(),
+            shapes,
+            image,
         }
-
-        let shape_rendering = if self.options.dots_options.round_size {
-            ""
-        } else {
-            r#" shape-rendering="crispEdges""#
-        };
-
-        let mut svg = String::with_capacity(defs.len() + elements.len() + 512);
-        let _ = write!(
-            svg,
-            r#"<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{w}" height="{h}" viewBox="0 0 {w} {h}"{shape_rendering}>
-<defs>
-{defs}</defs>
-{elements}</svg>"#,
-            w = self.options.width,
-            h = self.options.height,
-        );
-
-        Ok(svg)
     }
 
-    fn render_background(&self, defs: &mut String, elements: &mut String) {
+    fn render_background(&self) -> Background {
         let bg = &self.options.background_options;
         let name = format!("background-color-{}", self.instance_id);
 
@@ -137,8 +128,7 @@ impl<'a> SvgRenderer<'a> {
             0.0
         };
 
-        let fill = self.create_color(
-            defs,
+        let paint = self.create_paint(
             bg.gradient.as_ref(),
             &bg.color,
             0.0,
@@ -149,39 +139,31 @@ impl<'a> SvgRenderer<'a> {
             &name,
         );
 
-        let _ = write!(
-            elements,
-            r#"<rect x="{}" y="{}" width="{}" height="{}""#,
-            Num(x),
-            Num(y),
+        Background {
+            x,
+            y,
             width,
-            height
-        );
-        if rx > 0.0 {
-            let _ = write!(elements, r#" rx="{}""#, Num(rx));
+            height,
+            rx,
+            paint,
         }
-        let _ = writeln!(elements, r#" fill="{}"/>"#, fill);
     }
 
-    #[allow(clippy::too_many_arguments)]
     fn render_dots(
         &self,
-        defs: &mut String,
-        elements: &mut String,
         matrix: &QRMatrix,
         count: usize,
         dot_size: f64,
         hide_x_dots: usize,
         hide_y_dots: usize,
-    ) {
+    ) -> Shape {
         let x_beginning = self.round_size((self.options.width as f64 - count as f64 * dot_size) / 2.0);
         let y_beginning = self.round_size((self.options.height as f64 - count as f64 * dot_size) / 2.0);
 
         let dot_drawer = QRDot::new(self.options.dots_options.dot_type);
         let name = format!("dot-color-{}", self.instance_id);
 
-        let fill = self.create_color(
-            defs,
+        let paint = self.create_paint(
             self.options.dots_options.gradient.as_ref(),
             &self.options.dots_options.color,
             0.0,
@@ -194,7 +176,8 @@ impl<'a> SvgRenderer<'a> {
 
         // All dots go into one path. Dots never overlap, so the union is
         // filled exactly once: no seams and uniform alpha.
-        let _ = write!(elements, r#"<path fill="{}" d=""#, fill);
+        // Rough upper bound: ~20 bytes of path data per module
+        let mut d = String::with_capacity(count * count * 20);
 
         for row in 0..count {
             for col in 0..count {
@@ -228,16 +211,20 @@ impl<'a> SvgRenderer<'a> {
                     matrix.is_dark(new_row as usize, new_col as usize)
                 };
 
-                dot_drawer.push_path(elements, x, y, dot_size, Some(&neighbor_fn));
+                dot_drawer.push_path(&mut d, x, y, dot_size, Some(&neighbor_fn));
             }
         }
 
         // Handle circle shape with fake edge dots
         if self.options.shape == ShapeType::Circle {
-            self.render_circle_edge_dots(elements, matrix, count, dot_size, x_beginning, y_beginning, &dot_drawer);
+            self.render_circle_edge_dots(&mut d, matrix, count, dot_size, x_beginning, y_beginning, &dot_drawer);
         }
 
-        elements.push_str("\"/>\n");
+        Shape {
+            paint,
+            even_odd: false,
+            d,
+        }
     }
 
     #[allow(clippy::too_many_arguments)]
@@ -324,7 +311,7 @@ impl<'a> SvgRenderer<'a> {
     }
 
 
-    fn render_corners(&self, defs: &mut String, elements: &mut String, count: usize, dot_size: f64) {
+    fn render_corners(&self, shapes: &mut Vec<Shape>, count: usize, dot_size: f64) {
         let x_beginning = self.round_size((self.options.width as f64 - count as f64 * dot_size) / 2.0);
         let y_beginning = self.round_size((self.options.height as f64 - count as f64 * dot_size) / 2.0);
 
@@ -344,8 +331,7 @@ impl<'a> SvgRenderer<'a> {
             // Corner square (a ring, so even-odd fill)
             let sq = &self.options.corners_square_options;
             let name = format!("corners-square-color-{}-{}-{}", column, row, self.instance_id);
-            let fill = self.create_color(
-                defs,
+            let paint = self.create_paint(
                 sq.gradient.as_ref(),
                 &sq.color,
                 rotation,
@@ -355,16 +341,19 @@ impl<'a> SvgRenderer<'a> {
                 corners_square_size,
                 &name,
             );
-            let _ = write!(elements, r#"<path fill="{}" fill-rule="evenodd" d=""#, fill);
-            square_drawer.push_path(elements, x, y, corners_square_size, rotation);
-            elements.push_str("\"/>\n");
+            let mut d = String::new();
+            square_drawer.push_path(&mut d, x, y, corners_square_size, rotation);
+            shapes.push(Shape {
+                paint,
+                even_odd: true,
+                d,
+            });
 
             // Corner dot
             let (dx, dy) = (x + dot_size * 2.0, y + dot_size * 2.0);
             let dot = &self.options.corners_dot_options;
             let name = format!("corners-dot-color-{}-{}-{}", column, row, self.instance_id);
-            let fill = self.create_color(
-                defs,
+            let paint = self.create_paint(
                 dot.gradient.as_ref(),
                 &dot.color,
                 rotation,
@@ -374,21 +363,24 @@ impl<'a> SvgRenderer<'a> {
                 corners_dot_size,
                 &name,
             );
-            let _ = write!(elements, r#"<path fill="{}" d=""#, fill);
-            dot_drawer.push_path(elements, dx, dy, corners_dot_size, rotation);
-            elements.push_str("\"/>\n");
+            let mut d = String::new();
+            dot_drawer.push_path(&mut d, dx, dy, corners_dot_size, rotation);
+            shapes.push(Shape {
+                paint,
+                even_odd: false,
+                d,
+            });
         }
     }
 
-    fn render_image(
+    fn render_image<'d>(
         &self,
-        out: &mut String,
         count: usize,
         dot_size: f64,
         hide_x_dots: usize,
         hide_y_dots: usize,
-        image_data: &[u8],
-    ) {
+        image_data: &'d [u8],
+    ) -> ImageItem<'d> {
         let x_beginning = self.round_size((self.options.width as f64 - count as f64 * dot_size) / 2.0);
         let y_beginning = self.round_size((self.options.height as f64 - count as f64 * dot_size) / 2.0);
 
@@ -401,37 +393,18 @@ impl<'a> SvgRenderer<'a> {
         let dw = width - margin * 2.0;
         let dh = height - margin * 2.0;
 
-        // Encode image as base64 data URL
-        let base64_data = base64::Engine::encode(&base64::engine::general_purpose::STANDARD, image_data);
-
-        // Detect mime type from image data
-        let mime_type = if image_data.starts_with(&[0x89, 0x50, 0x4E, 0x47]) {
-            "image/png"
-        } else if image_data.starts_with(&[0xFF, 0xD8]) {
-            "image/jpeg"
-        } else if image_data.starts_with(b"RIFF") && image_data.len() > 12 && &image_data[8..12] == b"WEBP" {
-            "image/webp"
-        } else {
-            "image/png" // Default
-        };
-
-        // Plain `href` (SVG 2) avoids embedding the base64 payload twice
-        let _ = writeln!(
-            out,
-            r#"<image href="data:{};base64,{}" x="{}" y="{}" width="{}" height="{}"/>"#,
-            mime_type,
-            base64_data,
-            Num(dx),
-            Num(dy),
-            Num(dw),
-            Num(dh)
-        );
+        ImageItem {
+            x: dx,
+            y: dy,
+            width: dw,
+            height: dh,
+            data: image_data,
+        }
     }
 
     #[allow(clippy::too_many_arguments)]
-    fn create_color(
+    fn create_paint(
         &self,
-        defs: &mut String,
         gradient: Option<&Gradient>,
         color: &Color,
         additional_rotation: f64,
@@ -440,95 +413,64 @@ impl<'a> SvgRenderer<'a> {
         height: f64,
         width: f64,
         name: &str,
-    ) -> String {
+    ) -> Paint {
+        let Some(grad) = gradient else {
+            return Paint::Solid(*color);
+        };
 
-        if let Some(grad) = gradient {
-            let size = width.max(height);
+        let size = width.max(height);
+        match grad.gradient_type {
+            GradientType::Radial => Paint::Radial {
+                id: name.to_string(),
+                cx: x + width / 2.0,
+                cy: y + height / 2.0,
+                r: size / 2.0,
+                stops: grad.color_stops.clone(),
+            },
+            GradientType::Linear => {
+                let rotation = (grad.rotation + additional_rotation) % (2.0 * PI);
+                let positive_rotation = (rotation + 2.0 * PI) % (2.0 * PI);
 
-            match grad.gradient_type {
-                GradientType::Radial => {
-                    let cx = x + width / 2.0;
-                    let cy = y + height / 2.0;
-                    let r = size / 2.0;
+                let (mut x0, mut y0, mut x1, mut y1) = (
+                    x + width / 2.0,
+                    y + height / 2.0,
+                    x + width / 2.0,
+                    y + height / 2.0,
+                );
 
-                    defs.push_str(&format!(
-                        r#"<radialGradient id="{}" gradientUnits="userSpaceOnUse" fx="{}" fy="{}" cx="{}" cy="{}" r="{}">
-"#,
-                        name, cx, cy, cx, cy, r
-                    ));
-
-                    for stop in &grad.color_stops {
-                        defs.push_str(&format!(
-                            r#"<stop offset="{}%" stop-color="{}"/>
-"#,
-                            stop.offset * 100.0,
-                            stop.color.to_hex()
-                        ));
-                    }
-
-                    defs.push_str("</radialGradient>\n");
+                if (0.0..=0.25 * PI).contains(&positive_rotation)
+                    || (positive_rotation > 1.75 * PI && positive_rotation <= 2.0 * PI)
+                {
+                    x0 -= width / 2.0;
+                    y0 -= (height / 2.0) * rotation.tan();
+                    x1 += width / 2.0;
+                    y1 += (height / 2.0) * rotation.tan();
+                } else if positive_rotation > 0.25 * PI && positive_rotation <= 0.75 * PI {
+                    y0 -= height / 2.0;
+                    x0 -= (width / 2.0) / rotation.tan();
+                    y1 += height / 2.0;
+                    x1 += (width / 2.0) / rotation.tan();
+                } else if positive_rotation > 0.75 * PI && positive_rotation <= 1.25 * PI {
+                    x0 += width / 2.0;
+                    y0 += (height / 2.0) * rotation.tan();
+                    x1 -= width / 2.0;
+                    y1 -= (height / 2.0) * rotation.tan();
+                } else if positive_rotation > 1.25 * PI && positive_rotation <= 1.75 * PI {
+                    y0 += height / 2.0;
+                    x0 += (width / 2.0) / rotation.tan();
+                    y1 -= height / 2.0;
+                    x1 -= (width / 2.0) / rotation.tan();
                 }
-                GradientType::Linear => {
-                    let rotation = (grad.rotation + additional_rotation) % (2.0 * PI);
-                    let positive_rotation = (rotation + 2.0 * PI) % (2.0 * PI);
 
-                    let (mut x0, mut y0, mut x1, mut y1) = (
-                        x + width / 2.0,
-                        y + height / 2.0,
-                        x + width / 2.0,
-                        y + height / 2.0,
-                    );
-
-                    if (0.0..=0.25 * PI).contains(&positive_rotation)
-                        || (positive_rotation > 1.75 * PI && positive_rotation <= 2.0 * PI)
-                    {
-                        x0 -= width / 2.0;
-                        y0 -= (height / 2.0) * rotation.tan();
-                        x1 += width / 2.0;
-                        y1 += (height / 2.0) * rotation.tan();
-                    } else if positive_rotation > 0.25 * PI && positive_rotation <= 0.75 * PI {
-                        y0 -= height / 2.0;
-                        x0 -= (width / 2.0) / rotation.tan();
-                        y1 += height / 2.0;
-                        x1 += (width / 2.0) / rotation.tan();
-                    } else if positive_rotation > 0.75 * PI && positive_rotation <= 1.25 * PI {
-                        x0 += width / 2.0;
-                        y0 += (height / 2.0) * rotation.tan();
-                        x1 -= width / 2.0;
-                        y1 -= (height / 2.0) * rotation.tan();
-                    } else if positive_rotation > 1.25 * PI && positive_rotation <= 1.75 * PI {
-                        y0 += height / 2.0;
-                        x0 += (width / 2.0) / rotation.tan();
-                        y1 -= height / 2.0;
-                        x1 -= (width / 2.0) / rotation.tan();
-                    }
-
-                    defs.push_str(&format!(
-                        r#"<linearGradient id="{}" gradientUnits="userSpaceOnUse" x1="{}" y1="{}" x2="{}" y2="{}">
-"#,
-                        name,
-                        x0.round(),
-                        y0.round(),
-                        x1.round(),
-                        y1.round()
-                    ));
-
-                    for stop in &grad.color_stops {
-                        defs.push_str(&format!(
-                            r#"<stop offset="{}%" stop-color="{}"/>
-"#,
-                            stop.offset * 100.0,
-                            stop.color.to_hex()
-                        ));
-                    }
-
-                    defs.push_str("</linearGradient>\n");
+                Paint::Linear {
+                    id: name.to_string(),
+                    x1: x0.round(),
+                    y1: y0.round(),
+                    x2: x1.round(),
+                    y2: y1.round(),
+                    stops: grad.color_stops.clone(),
                 }
             }
-
-            format!("url(#{})", name)
-        } else {
-            color.to_hex()
         }
     }
 

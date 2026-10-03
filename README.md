@@ -190,6 +190,30 @@ let bordered_svg = BorderPlugin::new(border_options).apply(&svg, 400, 400);
 std::fs::write("bordered.svg", &bordered_svg).unwrap();
 ```
 
+## CMYK PDF for print
+
+With the `cmyk` feature, `render_pdf_cmyk` writes the QR code straight to a
+PDF in the DeviceCMYK color space instead of converting the SVG (sRGB).
+Black prints as 100% K by default, which keeps small modules sharp on press.
+Map brand colors to exact CMYK values:
+
+```toml
+qr-code-styling = { version = "0.2", features = ["cmyk"] }
+```
+
+```rust,ignore
+use qr_code_styling::{Cmyk, CmykPdfOptions, Color};
+
+let options = CmykPdfOptions::new()
+    .with_color(Color::rgb(0, 59, 209), Cmyk::new(100.0, 72.0, 0.0, 18.0));
+qr.save_pdf_cmyk("qr_cmyk.pdf", &options)?;
+```
+
+Colors not in the map are converted without an ICC profile: neutral colors use
+only K, and other colors are an approximation. Gradients, transparency and logos
+are supported; `BorderPlugin` text is not, because it is applied to the SVG
+string.
+
 ## Output Formats
 
 | Format | Method | Feature |
@@ -199,6 +223,7 @@ std::fs::write("bordered.svg", &bordered_svg).unwrap();
 | JPEG | `save(_, Jpeg)` | `jpeg` (default) |
 | WebP | `save(_, WebP)` | `webp` (default) |
 | PDF | `save(_, Pdf)` | `pdf` (default) |
+| PDF (CMYK) | `render_pdf_cmyk()` / `save_pdf_cmyk()` | `cmyk` |
 
 ## Feature Flags
 
@@ -208,6 +233,7 @@ std::fs::write("bordered.svg", &bordered_svg).unwrap();
 | `jpeg` | yes | JPEG raster output |
 | `webp` | yes | WebP raster output |
 | `pdf` | yes | PDF vector output (`PdfRenderer`) |
+| `cmyk` | no | Print-ready CMYK PDF output (`render_pdf_cmyk`) |
 | `serde` | no | Serialize/deserialize support |
 
 ## License

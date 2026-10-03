@@ -93,6 +93,33 @@ impl QRCodeStyling {
         }
     }
 
+    /// Render a print-ready PDF in the DeviceCMYK color space.
+    ///
+    /// Shapes are written directly (no SVG/sRGB step), so every color is an
+    /// exact CMYK value: map brand colors with
+    /// [`CmykPdfOptions::with_color`](crate::CmykPdfOptions::with_color);
+    /// others are converted with [`Cmyk::from_rgb`](crate::Cmyk::from_rgb),
+    /// which prints black as 100% K. `BorderPlugin` decorations aren't
+    /// included, since they are applied to the SVG string.
+    #[cfg(feature = "cmyk")]
+    pub fn render_pdf_cmyk(&self, options: &crate::rendering::CmykPdfOptions) -> Result<Vec<u8>> {
+        let renderer = SvgRenderer::from_ref(&self.options);
+        let scene = renderer.scene(&self.matrix);
+        crate::rendering::cmyk_pdf_write(&scene, options)
+    }
+
+    /// Save a CMYK PDF (see [`render_pdf_cmyk`](Self::render_pdf_cmyk)).
+    #[cfg(feature = "cmyk")]
+    pub fn save_pdf_cmyk<P: AsRef<Path>>(
+        &self,
+        path: P,
+        options: &crate::rendering::CmykPdfOptions,
+    ) -> Result<()> {
+        let data = self.render_pdf_cmyk(options)?;
+        std::fs::write(path, data)?;
+        Ok(())
+    }
+
     /// Save the QR code to a file.
     pub fn save<P: AsRef<Path>>(&self, path: P, format: OutputFormat) -> Result<()> {
         let data = self.render(format)?;
@@ -233,5 +260,40 @@ mod tests {
 
         // JPEG still renders (alpha dropped)
         assert!(qr.render(OutputFormat::Jpeg).is_ok());
+    }
+
+    #[test]
+    #[cfg(feature = "cmyk")]
+    fn test_render_pdf_cmyk() {
+        use crate::config::{BackgroundOptions, Color, CornersSquareOptions, Gradient};
+        use crate::rendering::{Cmyk, CmykPdfOptions};
+        use crate::types::CornerSquareType;
+
+        let qr = QRCodeStyling::builder()
+            .data("Test")
+            .size(200)
+            .dots_options(DotsOptions::new(DotType::Rounded))
+            .corners_square_options(
+                CornersSquareOptions::new(CornerSquareType::ExtraRounded)
+                    .with_gradient(Gradient::simple_linear(Color::BLACK, Color::rgb(0, 0, 255))),
+            )
+            .background_options(BackgroundOptions::new(Color::WHITE).with_round(0.2))
+            .build()
+            .unwrap();
+
+        let options = CmykPdfOptions::new()
+            .with_color(Color::rgb(0, 0, 255), Cmyk::new(100.0, 80.0, 0.0, 0.0))
+            .with_compression(false);
+        let pdf = qr.render_pdf_cmyk(&options).unwrap();
+        let text = String::from_utf8_lossy(&pdf);
+
+        assert!(pdf.starts_with(b"%PDF"));
+        assert!(text.contains("/MediaBox [0 0 200 200]"));
+        // Dots in 100% K, no RGB anywhere
+        assert!(text.contains("0 0 0 1 k"));
+        assert!(text.contains("/DeviceCMYK"));
+        assert!(!text.contains(" rg\n") && !text.contains("/ICCBased"));
+        // Mapped gradient stop uses the exact CMYK value
+        assert!(text.contains("/C1 [1 0.8 0 0]"));
     }
 }
