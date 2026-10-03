@@ -4,7 +4,7 @@ use crate::error::{QRError, Result};
 use crate::types::OutputFormat;
 use image::{DynamicImage, ImageFormat, RgbaImage};
 use resvg::tiny_skia::Pixmap;
-use resvg::usvg::{Options, Transform, Tree};
+use resvg::usvg::{Transform, Tree};
 use std::io::Cursor;
 
 /// Raster renderer for converting SVG to raster formats.
@@ -33,7 +33,8 @@ impl RasterRenderer {
         background: Option<resvg::tiny_skia::Color>,
     ) -> Result<DynamicImage> {
         // Parse SVG using usvg
-        let tree = Tree::from_str(svg, &Options::default())
+        // Shared font database so text (e.g. border decorations) renders
+        let tree = Tree::from_str(svg, &super::usvg_options(svg))
             .map_err(|e| QRError::SvgError(e.to_string()))?;
 
         // Get the SVG's original size
@@ -116,6 +117,7 @@ mod tests {
     use super::*;
 
     #[test]
+    #[cfg(feature = "png")]
     fn test_encode_png() {
         let img = DynamicImage::ImageRgba8(RgbaImage::new(100, 100));
         let result = RasterRenderer::encode_image(&img, OutputFormat::Png);
@@ -127,6 +129,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(feature = "jpeg")]
     fn test_encode_jpeg() {
         let img = DynamicImage::ImageRgba8(RgbaImage::new(100, 100));
         let result = RasterRenderer::encode_image(&img, OutputFormat::Jpeg);
@@ -151,6 +154,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(feature = "png")]
     fn test_full_render() {
         let svg = r#"<?xml version="1.0" encoding="UTF-8"?>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">

@@ -7,7 +7,9 @@ use std::path::Path;
 use crate::config::{QRCodeStylingBuilder, QRCodeStylingOptions};
 use crate::core::QRMatrix;
 use crate::error::Result;
-use crate::rendering::{PdfRenderer, RasterRenderer, SvgRenderer};
+#[cfg(feature = "pdf")]
+use crate::rendering::PdfRenderer;
+use crate::rendering::{RasterRenderer, SvgRenderer};
 use crate::types::OutputFormat;
 
 /// Main QR code styling struct.
@@ -63,7 +65,7 @@ impl QRCodeStyling {
 
     /// Render the QR code as an SVG string.
     pub fn render_svg(&self) -> Result<String> {
-        let renderer = SvgRenderer::new(self.options.clone());
+        let renderer = SvgRenderer::from_ref(&self.options);
         renderer.render(&self.matrix)
     }
 
@@ -78,11 +80,16 @@ impl QRCodeStyling {
                 let svg = self.render_svg()?;
                 RasterRenderer::render(&svg, self.options.width, self.options.height, format)
             }
+            #[cfg(feature = "pdf")]
             OutputFormat::Pdf => {
                 // Convert SVG directly to PDF (vector quality preserved)
                 let svg = self.render_svg()?;
                 PdfRenderer::render_from_svg(&svg, self.options.width, self.options.height)
             }
+            #[cfg(not(feature = "pdf"))]
+            OutputFormat::Pdf => Err(crate::error::QRError::ImageEncodeError(
+                "PDF output requires the `pdf` feature".to_string(),
+            )),
         }
     }
 
@@ -174,10 +181,13 @@ mod tests {
             .unwrap();
 
         let svg = qr.render_svg().unwrap();
-        assert!(svg.contains("circle"));
+        // Lone dots are drawn as two-arc circles inside the shared dots path
+        assert!(svg.contains(" 0 1 0 "));
+        assert!(!svg.contains("clipPath"));
     }
 
     #[test]
+    #[cfg(feature = "png")]
     fn test_render_png() {
         let qr = QRCodeStyling::builder()
             .data("Test")
@@ -203,6 +213,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(all(feature = "png", feature = "jpeg"))]
     fn test_png_keeps_transparency() {
         use crate::config::{BackgroundOptions, Color};
 

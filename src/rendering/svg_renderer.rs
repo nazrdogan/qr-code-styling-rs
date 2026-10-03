@@ -1,17 +1,23 @@
 //! SVG renderer for QR codes.
 
+use std::borrow::Cow;
 use std::f64::consts::PI;
+use std::fmt::Write;
 
 use crate::config::{Color, Gradient, QRCodeStylingOptions};
 use crate::core::QRMatrix;
 use crate::error::Result;
+use crate::figures::traits::Num;
 use crate::figures::{QRCornerDot, QRCornerSquare, QRDot};
-use crate::types::{CornerSquareType, GradientType, ShapeType};
+use crate::types::{GradientType, ShapeType};
 use crate::utils::calculate_image_size;
 
 /// SVG renderer for QR codes.
-pub struct SvgRenderer {
-    options: QRCodeStylingOptions,
+///
+/// Each layer (background, dots, each corner square and corner dot) is a
+/// single filled element, so rasterizers don't need per-layer clip masks.
+pub struct SvgRenderer<'a> {
+    options: Cow<'a, QRCodeStylingOptions>,
     instance_id: u64,
 }
 
@@ -39,10 +45,21 @@ const DOT_MASK: [[u8; 7]; 7] = [
 
 static INSTANCE_COUNTER: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
 
-impl SvgRenderer {
-    /// Create a new SVG renderer.
+impl SvgRenderer<'static> {
+    /// Create a new SVG renderer that owns its options.
     pub fn new(options: QRCodeStylingOptions) -> Self {
-        let instance_id = INSTANCE_COUNTER.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+        SvgRenderer::with_options(Cow::Owned(options))
+    }
+}
+
+impl<'a> SvgRenderer<'a> {
+    /// Create a new SVG renderer that borrows its options (no copy of image data).
+    pub fn from_ref(options: &'a QRCodeStylingOptions) -> Self {
+        Self::with_options(Cow::Borrowed(options))
+    }
+
+    fn with_options(options: Cow<'a, QRCodeStylingOptions>) -> Self {
+        let instance_id = INSTANCE_COUNTER.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
         Self {
             options,
             instance_id,
@@ -67,68 +84,40 @@ impl SvgRenderer {
             (0, 0)
         };
 
-        let mut svg_content = String::with_capacity(10000);
-        let mut defs_content = String::new();
-        let mut elements_content = String::new();
+        let mut defs = String::new();
+        // Rough upper bound: ~40 bytes of path data per dark module
+        let mut elements = String::with_capacity(count * count * 20 + 2048);
 
-        // Draw background
-        let (bg_defs, bg_elements) = self.render_background();
-        defs_content.push_str(&bg_defs);
-        elements_content.push_str(&bg_elements);
+        self.render_background(&mut defs, &mut elements);
+        self.render_dots(&mut defs, &mut elements, matrix, count, dot_size, hide_x_dots, hide_y_dots);
+        self.render_corners(&mut defs, &mut elements, count, dot_size);
 
-        // Draw dots
-        let (dots_defs, dots_elements) = self.render_dots(
-            matrix,
-            count,
-            dot_size,
-            hide_x_dots,
-            hide_y_dots,
-        );
-        defs_content.push_str(&dots_defs);
-        elements_content.push_str(&dots_elements);
-
-        // Draw corners
-        let (corners_defs, corners_elements) = self.render_corners(count, dot_size);
-        defs_content.push_str(&corners_defs);
-        elements_content.push_str(&corners_elements);
-
-        // Draw image if present
         if let Some(ref image_data) = self.options.image {
-            let image_svg = self.render_image(count, dot_size, hide_x_dots, hide_y_dots, image_data);
-            elements_content.push_str(&image_svg);
+            self.render_image(&mut elements, count, dot_size, hide_x_dots, hide_y_dots, image_data);
         }
 
-        // Build final SVG
         let shape_rendering = if self.options.dots_options.round_size {
             ""
         } else {
             r#" shape-rendering="crispEdges""#
         };
 
-        svg_content.push_str(&format!(
+        let mut svg = String::with_capacity(defs.len() + elements.len() + 512);
+        let _ = write!(
+            svg,
             r#"<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{}" height="{}" viewBox="0 0 {} {}"{}>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{w}" height="{h}" viewBox="0 0 {w} {h}"{shape_rendering}>
 <defs>
-{}
-</defs>
-{}
-</svg>"#,
-            self.options.width,
-            self.options.height,
-            self.options.width,
-            self.options.height,
-            shape_rendering,
-            defs_content,
-            elements_content
-        ));
+{defs}</defs>
+{elements}</svg>"#,
+            w = self.options.width,
+            h = self.options.height,
+        );
 
-        Ok(svg_content)
+        Ok(svg)
     }
 
-    fn render_background(&self) -> (String, String) {
-        let mut defs = String::new();
-        let mut elements = String::new();
-
+    fn render_background(&self, defs: &mut String, elements: &mut String) {
         let bg = &self.options.background_options;
         let name = format!("background-color-{}", self.instance_id);
 
@@ -142,30 +131,14 @@ impl SvgRenderer {
         let x = self.round_size((self.options.width - width) as f64 / 2.0);
         let y = self.round_size((self.options.height - height) as f64 / 2.0);
 
-        // Create clip path
         let rx = if bg.round > 0.0 {
             (height as f64 / 2.0) * bg.round
         } else {
             0.0
         };
 
-        defs.push_str(&format!(
-            r#"<clipPath id="clip-path-{}"><rect x="{}" y="{}" width="{}" height="{}"{}/></clipPath>
-"#,
-            name,
-            x,
-            y,
-            width,
-            height,
-            if rx > 0.0 {
-                format!(r#" rx="{}""#, rx)
-            } else {
-                String::new()
-            }
-        ));
-
-        // Create color/gradient rect
-        let (grad_defs, fill) = self.create_color(
+        let fill = self.create_color(
+            defs,
             bg.gradient.as_ref(),
             &bg.color,
             0.0,
@@ -175,38 +148,56 @@ impl SvgRenderer {
             self.options.width as f64,
             &name,
         );
-        defs.push_str(&grad_defs);
 
-        elements.push_str(&format!(
-            r#"<rect x="{}" y="{}" width="{}" height="{}" fill="{}" clip-path="url(#clip-path-{})"/>
-"#,
-            0, 0, self.options.width, self.options.height, fill, name
-        ));
-
-        (defs, elements)
+        let _ = write!(
+            elements,
+            r#"<rect x="{}" y="{}" width="{}" height="{}""#,
+            Num(x),
+            Num(y),
+            width,
+            height
+        );
+        if rx > 0.0 {
+            let _ = write!(elements, r#" rx="{}""#, Num(rx));
+        }
+        let _ = writeln!(elements, r#" fill="{}"/>"#, fill);
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn render_dots(
         &self,
+        defs: &mut String,
+        elements: &mut String,
         matrix: &QRMatrix,
         count: usize,
         dot_size: f64,
         hide_x_dots: usize,
         hide_y_dots: usize,
-    ) -> (String, String) {
-        let mut defs = String::new();
-        let mut clip_path_elements = String::new();
-
+    ) {
         let x_beginning = self.round_size((self.options.width as f64 - count as f64 * dot_size) / 2.0);
         let y_beginning = self.round_size((self.options.height as f64 - count as f64 * dot_size) / 2.0);
 
         let dot_drawer = QRDot::new(self.options.dots_options.dot_type);
         let name = format!("dot-color-{}", self.instance_id);
 
-        // Create dots clip path
+        let fill = self.create_color(
+            defs,
+            self.options.dots_options.gradient.as_ref(),
+            &self.options.dots_options.color,
+            0.0,
+            0.0,
+            0.0,
+            self.options.height as f64,
+            self.options.width as f64,
+            &name,
+        );
+
+        // All dots go into one path. Dots never overlap, so the union is
+        // filled exactly once: no seams and uniform alpha.
+        let _ = write!(elements, r#"<path fill="{}" d=""#, fill);
+
         for row in 0..count {
             for col in 0..count {
-                // Apply filter
                 if !self.should_draw_dot(row, col, count, hide_x_dots, hide_y_dots) {
                     continue;
                 }
@@ -237,58 +228,29 @@ impl SvgRenderer {
                     matrix.is_dark(new_row as usize, new_col as usize)
                 };
 
-                let svg = dot_drawer.draw(x, y, dot_size, Some(&neighbor_fn));
-                clip_path_elements.push_str(&svg);
-                clip_path_elements.push('\n');
+                dot_drawer.push_path(elements, x, y, dot_size, Some(&neighbor_fn));
             }
         }
 
         // Handle circle shape with fake edge dots
         if self.options.shape == ShapeType::Circle {
-            let circle_dots = self.render_circle_edge_dots(matrix, count, dot_size, x_beginning, y_beginning, &dot_drawer);
-            clip_path_elements.push_str(&circle_dots);
+            self.render_circle_edge_dots(elements, matrix, count, dot_size, x_beginning, y_beginning, &dot_drawer);
         }
 
-        defs.push_str(&format!(
-            r#"<clipPath id="clip-path-{}">
-{}
-</clipPath>
-"#,
-            name, clip_path_elements
-        ));
-
-        // Create color rect
-        let (grad_defs, fill) = self.create_color(
-            self.options.dots_options.gradient.as_ref(),
-            &self.options.dots_options.color,
-            0.0,
-            0.0,
-            0.0,
-            self.options.height as f64,
-            self.options.width as f64,
-            &name,
-        );
-        defs.push_str(&grad_defs);
-
-        let elements = format!(
-            r#"<rect x="0" y="0" width="{}" height="{}" fill="{}" clip-path="url(#clip-path-{})"/>
-"#,
-            self.options.width, self.options.height, fill, name
-        );
-
-        (defs, elements)
+        elements.push_str("\"/>\n");
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn render_circle_edge_dots(
         &self,
+        out: &mut String,
         matrix: &QRMatrix,
         count: usize,
         dot_size: f64,
         x_beginning: f64,
         y_beginning: f64,
         dot_drawer: &QRDot,
-    ) -> String {
-        let mut result = String::new();
+    ) {
         let min_size = self.min_size() as f64;
         let additional_dots = self.round_size((min_size / dot_size - count as f64) / 2.0) as usize;
         let fake_count = count + additional_dots * 2;
@@ -355,178 +317,78 @@ impl SvgRenderer {
                     fake_matrix[new_row as usize][new_col as usize] == 1
                 };
 
-                let svg = dot_drawer.draw(x, y, dot_size, Some(&neighbor_fn));
-                result.push_str(&svg);
-                result.push('\n');
+                dot_drawer.push_path(out, x, y, dot_size, Some(&neighbor_fn));
             }
         }
 
-        result
     }
 
-    fn render_corners(&self, count: usize, dot_size: f64) -> (String, String) {
-        let mut defs = String::new();
-        let mut elements = String::new();
 
+    fn render_corners(&self, defs: &mut String, elements: &mut String, count: usize, dot_size: f64) {
         let x_beginning = self.round_size((self.options.width as f64 - count as f64 * dot_size) / 2.0);
         let y_beginning = self.round_size((self.options.height as f64 - count as f64 * dot_size) / 2.0);
 
         let corners_square_size = dot_size * 7.0;
         let corners_dot_size = dot_size * 3.0;
 
+        let square_drawer = QRCornerSquare::new(self.options.corners_square_options.square_type);
+        let dot_drawer = QRCornerDot::new(self.options.corners_dot_options.dot_type);
+
         // Three corners: top-left, top-right, bottom-left
-        let corner_positions = [
-            (0, 0, 0.0),
-            (1, 0, PI / 2.0),
-            (0, 1, -PI / 2.0),
-        ];
+        let corner_positions = [(0, 0, 0.0), (1, 0, PI / 2.0), (0, 1, -PI / 2.0)];
 
         for (column, row, rotation) in corner_positions {
             let x = x_beginning + column as f64 * dot_size * (count - 7) as f64;
             let y = y_beginning + row as f64 * dot_size * (count - 7) as f64;
 
-            // Render corner square
-            let (sq_defs, sq_elements) = self.render_corner_square(
-                x, y, corners_square_size, dot_size, rotation, column, row,
-            );
-            defs.push_str(&sq_defs);
-            elements.push_str(&sq_elements);
-
-            // Render corner dot
-            let (dot_defs, dot_elements) = self.render_corner_dot(
-                x + dot_size * 2.0,
-                y + dot_size * 2.0,
-                corners_dot_size,
-                dot_size,
+            // Corner square (a ring, so even-odd fill)
+            let sq = &self.options.corners_square_options;
+            let name = format!("corners-square-color-{}-{}-{}", column, row, self.instance_id);
+            let fill = self.create_color(
+                defs,
+                sq.gradient.as_ref(),
+                &sq.color,
                 rotation,
-                column,
-                row,
+                x,
+                y,
+                corners_square_size,
+                corners_square_size,
+                &name,
             );
-            defs.push_str(&dot_defs);
-            elements.push_str(&dot_elements);
+            let _ = write!(elements, r#"<path fill="{}" fill-rule="evenodd" d=""#, fill);
+            square_drawer.push_path(elements, x, y, corners_square_size, rotation);
+            elements.push_str("\"/>\n");
+
+            // Corner dot
+            let (dx, dy) = (x + dot_size * 2.0, y + dot_size * 2.0);
+            let dot = &self.options.corners_dot_options;
+            let name = format!("corners-dot-color-{}-{}-{}", column, row, self.instance_id);
+            let fill = self.create_color(
+                defs,
+                dot.gradient.as_ref(),
+                &dot.color,
+                rotation,
+                dx,
+                dy,
+                corners_dot_size,
+                corners_dot_size,
+                &name,
+            );
+            let _ = write!(elements, r#"<path fill="{}" d=""#, fill);
+            dot_drawer.push_path(elements, dx, dy, corners_dot_size, rotation);
+            elements.push_str("\"/>\n");
         }
-
-        (defs, elements)
-    }
-
-    #[allow(clippy::too_many_arguments)]
-    fn render_corner_square(
-        &self,
-        x: f64,
-        y: f64,
-        size: f64,
-        _dot_size: f64,
-        rotation: f64,
-        column: usize,
-        row: usize,
-    ) -> (String, String) {
-        let mut defs = String::new();
-        let mut clip_path_content = String::new();
-
-        let name = format!("corners-square-color-{}-{}-{}", column, row, self.instance_id);
-
-        let sq_options = &self.options.corners_square_options;
-
-        // Use corner square drawer if specific type is set
-        match sq_options.square_type {
-            CornerSquareType::Square | CornerSquareType::Dot | CornerSquareType::ExtraRounded => {
-                let drawer = QRCornerSquare::new(sq_options.square_type);
-                let svg = drawer.draw(x, y, size, rotation);
-                clip_path_content.push_str(&svg);
-            }
-        }
-
-        defs.push_str(&format!(
-            r#"<clipPath id="clip-path-{}">
-{}
-</clipPath>
-"#,
-            name, clip_path_content
-        ));
-
-        // Create color
-        let (grad_defs, fill) = self.create_color(
-            sq_options.gradient.as_ref(),
-            &sq_options.color,
-            rotation,
-            x,
-            y,
-            size,
-            size,
-            &name,
-        );
-        defs.push_str(&grad_defs);
-
-        let elements = format!(
-            r#"<rect x="{}" y="{}" width="{}" height="{}" fill="{}" clip-path="url(#clip-path-{})"/>
-"#,
-            x, y, size, size, fill, name
-        );
-
-        (defs, elements)
-    }
-
-    #[allow(clippy::too_many_arguments)]
-    fn render_corner_dot(
-        &self,
-        x: f64,
-        y: f64,
-        size: f64,
-        _dot_size: f64,
-        rotation: f64,
-        column: usize,
-        row: usize,
-    ) -> (String, String) {
-        let mut defs = String::new();
-        let mut clip_path_content = String::new();
-
-        let name = format!("corners-dot-color-{}-{}-{}", column, row, self.instance_id);
-
-        let dot_options = &self.options.corners_dot_options;
-
-        // Use corner dot drawer
-        let drawer = QRCornerDot::new(dot_options.dot_type);
-        let svg = drawer.draw(x, y, size, rotation);
-        clip_path_content.push_str(&svg);
-
-        defs.push_str(&format!(
-            r#"<clipPath id="clip-path-{}">
-{}
-</clipPath>
-"#,
-            name, clip_path_content
-        ));
-
-        // Create color
-        let (grad_defs, fill) = self.create_color(
-            dot_options.gradient.as_ref(),
-            &dot_options.color,
-            rotation,
-            x,
-            y,
-            size,
-            size,
-            &name,
-        );
-        defs.push_str(&grad_defs);
-
-        let elements = format!(
-            r#"<rect x="{}" y="{}" width="{}" height="{}" fill="{}" clip-path="url(#clip-path-{})"/>
-"#,
-            x, y, size, size, fill, name
-        );
-
-        (defs, elements)
     }
 
     fn render_image(
         &self,
+        out: &mut String,
         count: usize,
         dot_size: f64,
         hide_x_dots: usize,
         hide_y_dots: usize,
         image_data: &[u8],
-    ) -> String {
+    ) {
         let x_beginning = self.round_size((self.options.width as f64 - count as f64 * dot_size) / 2.0);
         let y_beginning = self.round_size((self.options.height as f64 - count as f64 * dot_size) / 2.0);
 
@@ -553,18 +415,23 @@ impl SvgRenderer {
             "image/png" // Default
         };
 
-        let data_url = format!("data:{};base64,{}", mime_type, base64_data);
-
-        format!(
-            r#"<image href="{}" xlink:href="{}" x="{}" y="{}" width="{}px" height="{}px"/>
-"#,
-            data_url, data_url, dx, dy, dw, dh
-        )
+        // Plain `href` (SVG 2) avoids embedding the base64 payload twice
+        let _ = writeln!(
+            out,
+            r#"<image href="data:{};base64,{}" x="{}" y="{}" width="{}" height="{}"/>"#,
+            mime_type,
+            base64_data,
+            Num(dx),
+            Num(dy),
+            Num(dw),
+            Num(dh)
+        );
     }
 
     #[allow(clippy::too_many_arguments)]
     fn create_color(
         &self,
+        defs: &mut String,
         gradient: Option<&Gradient>,
         color: &Color,
         additional_rotation: f64,
@@ -573,8 +440,7 @@ impl SvgRenderer {
         height: f64,
         width: f64,
         name: &str,
-    ) -> (String, String) {
-        let mut defs = String::new();
+    ) -> String {
 
         if let Some(grad) = gradient {
             let size = width.max(height);
@@ -660,9 +526,9 @@ impl SvgRenderer {
                 }
             }
 
-            (defs, format!("url(#{})", name))
+            format!("url(#{})", name)
         } else {
-            (String::new(), color.to_hex())
+            color.to_hex()
         }
     }
 

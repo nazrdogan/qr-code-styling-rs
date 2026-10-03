@@ -21,32 +21,42 @@ qrcode = "0.14"
 thiserror = "2.0"
 base64 = "0.22"
 
-# Image processing
-image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp"] }
+# Image processing (raster encoders are enabled by the png/jpeg/webp features)
+image = { version = "0.25", default-features = false }
 
-# SVG rendering
-resvg = "0.44"
-tiny-skia = "0.11"
+# SVG rendering (must share the usvg version used by svg2pdf)
+resvg = "0.45"
 
 # PDF generation (SVG to PDF vector conversion)
-svg2pdf = "0.12"
-lopdf = "0.34"
+svg2pdf = { version = "0.13", optional = true }
 
 # Optional serde support
 serde = { version = "1.0", features = ["derive"], optional = true }
-serde_json = { version = "1.0", optional = true }
 
 [dev-dependencies]
 criterion = "0.5"
-proptest = "1.4"
+lopdf = "0.34"
 rayon = "1.10"
 
 [features]
-default = ["png", "jpeg", "webp"]
-serde = ["dep:serde", "dep:serde_json"]
-png = []
-jpeg = []
-webp = []
+default = ["png", "jpeg", "webp", "pdf"]
+pdf = ["dep:svg2pdf"]
+serde = ["dep:serde"]
+png = ["image/png"]
+jpeg = ["image/jpeg"]
+webp = ["image/webp"]
+
+[[example]]
+name = "with_border"
+required-features = ["pdf"]
+
+[[example]]
+name = "bulk_pdf"
+required-features = ["pdf"]
+
+[[bench]]
+name = "render"
+harness = false
 
 [profile.release]
 lto = true
