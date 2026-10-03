@@ -1,28 +1,30 @@
 //! Rendering modules for QR code output.
 
-use resvg::usvg;
-
 #[cfg(feature = "cmyk")]
 mod cmyk_pdf;
 pub(crate) mod scene;
 mod svg_renderer;
+#[cfg(feature = "raster")]
 mod raster_renderer;
 #[cfg(feature = "pdf")]
 mod pdf_renderer;
 
 pub use svg_renderer::SvgRenderer;
+#[cfg(feature = "raster")]
 pub use raster_renderer::RasterRenderer;
 #[cfg(feature = "cmyk")]
 pub use cmyk_pdf::{Cmyk, CmykConverter, CmykPdfOptions, CmykXObject};
 #[cfg(feature = "pdf")]
 pub use pdf_renderer::PdfRenderer;
 
+#[cfg(any(feature = "raster", feature = "pdf"))]
 use std::sync::{Arc, OnceLock};
 
 #[cfg(feature = "cmyk")]
 pub(crate) use cmyk_pdf::{write_pdf as cmyk_pdf_write, write_xobject as cmyk_xobject_write};
 
 /// System font database, loaded once per process.
+#[cfg(any(feature = "raster", feature = "pdf"))]
 ///
 /// Scanning system fonts takes milliseconds, so it must not happen per render.
 /// Fonts are only needed for text, e.g. border decorations.
@@ -46,6 +48,7 @@ pub(crate) fn font_db() -> Arc<usvg::fontdb::Database> {
         .clone()
 }
 
+#[cfg(any(feature = "raster", feature = "pdf"))]
 /// usvg parse options for `svg`. Fonts are only loaded (once) when the SVG has text.
 pub(crate) fn usvg_options(svg: &str) -> usvg::Options<'static> {
     if svg.contains("<text") {

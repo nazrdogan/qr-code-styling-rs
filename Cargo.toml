@@ -27,8 +27,9 @@ base64 = "0.22"
 # Image processing (raster encoders are enabled by the png/jpeg/webp features)
 image = { version = "0.25", default-features = false }
 
-# SVG rendering (must share the usvg version used by svg2pdf)
-resvg = "0.45"
+# SVG parsing/rasterizing (must share the usvg version used by svg2pdf)
+usvg = { version = "0.45", optional = true }
+resvg = { version = "0.45", optional = true }
 
 # PDF generation (SVG to PDF vector conversion)
 svg2pdf = { version = "0.13", optional = true }
@@ -47,12 +48,26 @@ rayon = "1.10"
 
 [features]
 default = ["png", "jpeg", "webp", "pdf"]
-pdf = ["dep:svg2pdf"]
+pdf = ["dep:svg2pdf", "dep:usvg"]
 cmyk = ["dep:pdf-writer", "dep:miniz_oxide"]
 serde = ["dep:serde"]
-png = ["image/png"]
-jpeg = ["image/jpeg"]
-webp = ["image/webp"]
+# Rasterizing SVG (enabled by any raster format)
+raster = ["dep:resvg", "dep:usvg"]
+png = ["raster", "image/png"]
+jpeg = ["raster", "image/jpeg"]
+webp = ["raster", "image/webp"]
+
+[[example]]
+name = "basic"
+required-features = ["png", "pdf"]
+
+[[example]]
+name = "with_logo"
+required-features = ["png"]
+
+[[example]]
+name = "generate_samples"
+required-features = ["png"]
 
 [[example]]
 name = "with_border"
@@ -68,11 +83,12 @@ required-features = ["cmyk"]
 
 [[example]]
 name = "bulk_pdf"
-required-features = ["pdf"]
+required-features = ["pdf", "png"]
 
 [[bench]]
 name = "render"
 harness = false
+required-features = ["png", "pdf"]
 
 [profile.release]
 lto = true
