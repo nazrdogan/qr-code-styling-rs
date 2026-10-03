@@ -1,36 +1,43 @@
 # Changelog
 
-## Unreleased
+## 0.2.2
 
-- `CmykPdfOptions::with_converter`: plug in your own RGB→CMYK conversion
-  (e.g. an ICC/lcms transform) for colors that aren't in the color map,
-  including gradient stops and logo pixels.
-- Fix: `CmykPdfOptions::default()` now compresses streams like `new()`.
-- `QRCodeStyling::write_cmyk_xobject` writes a QR code as a self-contained
-  CMYK Form XObject into your own `pdf_writer` document (e.g. many codes on
-  one sheet). `pdf_writer` is re-exported with the `cmyk` feature. See
+### CMYK
+- **Borders in CMYK:** `CmykPdfOptions::with_border` draws a `BorderPlugin`
+  (frame, inner/outer/dashed borders, curved or straight text, image
+  decorations) in DeviceCMYK. Text is converted to outlines, so no fonts
+  are embedded. `with_fonts` supplies fonts on servers without them, and
+  `with_overlay_svg` draws any SVG on top. `BorderPlugin::overlay_svg`
+  returns the border as a standalone SVG.
+- **Sheet layouts:** `QRCodeStyling::write_cmyk_xobject` writes a QR code as
+  a self-contained CMYK Form XObject into your own `pdf_writer` document.
+  `pdf_writer` is re-exported with the `cmyk` feature. See
   `examples/cmyk_sheet.rs`.
-- Opt-in JS compatibility: `QRCodeStylingBuilder::js_compatible(true)`
-  produces output identical to JS `qr-code-styling` 1.9.2: the same matrix as
-  `qrcode-generator` (single-mode encoding, its mask penalty) and the same
-  circle-shape dot ring (rounded center, transposed sampling). Verified
-  against 2,224 `qrcode-generator` matrices and 96 pixel-identical JS renders.
-  Also available as `QRMatrix::new_js_compatible` and
-  `SvgRenderer::js_compatible`.
-- `resvg`/`usvg` are now optional. They come in only with the raster
-  formats (`png`, `jpeg`, `webp`, via a new `raster` feature) or `pdf`. A
-  build with just `cmyk` needs neither. Default features are unchanged.
-  Note: with `default-features = false`, `RasterRenderer` now needs one of
-  the raster features.
-- CMYK PDFs can include the border: `CmykPdfOptions::with_border` draws a
-  `BorderPlugin` (frame, inner/outer/dashed borders, curved or straight
-  text, image decorations) in CMYK, with text converted to outlines. Also
-  `with_overlay_svg` for any SVG drawn on top, and `with_fonts` to supply
-  fonts on servers without them. `BorderPlugin::overlay_svg` returns the
-  border as a standalone SVG. The `cmyk` feature now uses `usvg` (not
-  `resvg`).
-- Fix: straight border text (`round < 0.5`) was centered on the canvas
-  edge, so half of it was cut off. It now sits on the border stroke.
+- **Custom conversion:** `CmykPdfOptions::with_converter` plugs in your own
+  RGB→CMYK conversion (e.g. an ICC/lcms transform) for colors not in the
+  color map, including gradient stops and logo pixels.
+
+### JS compatibility (opt-in)
+- `QRCodeStylingBuilder::js_compatible(true)` produces output identical to
+  JS `qr-code-styling` 1.9.2: the same matrix as `qrcode-generator`
+  (single-mode encoding, its own mask penalty) and the same circle-shape dot
+  ring (rounded center, transposed sampling). Verified against 2,224
+  `qrcode-generator` matrices and 96 pixel-identical JS renders. Characters
+  above U+00FF are encoded as UTF-8; JS would corrupt them. Also available as
+  `QRMatrix::new_js_compatible` and `SvgRenderer::js_compatible`.
+
+### Fixes
+- Straight border text (`round < 0.5`) was centered on the canvas edge, so
+  half of it was cut off. It now sits on the border stroke. This changes
+  SVG output for such borders.
+- `CmykPdfOptions::default()` now compresses streams like `new()`.
+
+### Dependencies
+- `resvg` is optional. It comes in only with the raster formats (`png`,
+  `jpeg`, `webp`, via the new `raster` feature). `usvg` is used by `pdf` and
+  `cmyk`. Default features are unchanged.
+- **Upgrade note:** with `default-features = false`, `RasterRenderer` now
+  needs one of the raster features.
 
 ## 0.2.1
 
