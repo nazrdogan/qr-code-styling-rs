@@ -35,6 +35,15 @@ pub(crate) fn font_db() -> Arc<usvg::fontdb::Database> {
         .get_or_init(|| {
             let mut db = usvg::fontdb::Database::new();
             db.load_system_fonts();
+            // Map each font file once and keep it. Otherwise every text layout
+            // re-maps the file, and parallel renders contend on the OS mmap lock.
+            let ids: Vec<_> = db.faces().map(|f| f.id).collect();
+            for id in ids {
+                // SAFETY: system font files are not modified while the process runs.
+                unsafe {
+                    db.make_shared_face_data(id);
+                }
+            }
             Arc::new(db)
         })
         .clone()
