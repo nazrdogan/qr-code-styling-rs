@@ -1,7 +1,7 @@
 //! PDF renderer for QR codes using SVG to PDF vector conversion.
 
 use crate::error::{QRError, Result};
-use svg2pdf::usvg;
+use resvg::usvg;
 
 /// PDF renderer for converting SVG to PDF format (vector).
 pub struct PdfRenderer;
@@ -9,14 +9,8 @@ pub struct PdfRenderer;
 impl PdfRenderer {
     /// Render SVG string directly to PDF format (preserves vector quality).
     pub fn render_from_svg(svg: &str, _width: u32, _height: u32) -> Result<Vec<u8>> {
-        // Create font database and load system fonts
-        let mut fontdb = usvg::fontdb::Database::new();
-        fontdb.load_system_fonts();
-        // Create options with the font database
-        let options = usvg::Options {
-            fontdb: std::sync::Arc::new(fontdb),
-            ..Default::default()
-        };
+        // Fonts are loaded once and shared (text will be converted to paths)
+        let options = super::usvg_options(svg);
 
         // Parse SVG using usvg with font database (text will be converted to paths)
         let tree = usvg::Tree::from_str(svg, &options)

@@ -198,7 +198,7 @@ std::fs::write("bordered.svg", &bordered_svg).unwrap();
 | PNG | `save(_, Png)` | `png` (default) |
 | JPEG | `save(_, Jpeg)` | `jpeg` (default) |
 | WebP | `save(_, WebP)` | `webp` (default) |
-| PDF | `save(_, Pdf)` | always available |
+| PDF | `save(_, Pdf)` | `pdf` (default) |
 
 ## Feature Flags
 
@@ -207,6 +207,7 @@ std::fs::write("bordered.svg", &bordered_svg).unwrap();
 | `png` | yes | PNG raster output |
 | `jpeg` | yes | JPEG raster output |
 | `webp` | yes | WebP raster output |
+| `pdf` | yes | PDF vector output (`PdfRenderer`) |
 | `serde` | no | Serialize/deserialize support |
 
 ## License
