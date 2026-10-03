@@ -217,7 +217,7 @@ Black prints as 100% K by default, which keeps small modules sharp on press.
 Map brand colors to exact CMYK values:
 
 ```toml
-qr-code-styling = { version = "0.2", features = ["cmyk"] }
+qr-code-styling = { version = "0.2.2", features = ["cmyk"] }
 ```
 
 ```rust,ignore
