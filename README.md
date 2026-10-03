@@ -190,6 +190,25 @@ let bordered_svg = BorderPlugin::new(border_options).apply(&svg, 400, 400);
 std::fs::write("bordered.svg", &bordered_svg).unwrap();
 ```
 
+## Matching the JavaScript library
+
+By default the Rust encoder picks the smallest QR code it can, mixing
+encoding modes. That can give a different (equally valid) matrix than the
+JavaScript `qr-code-styling` library. If you render the same codes in both
+(for example a browser preview and a server-side print file), turn on JS
+compatibility:
+
+```rust,ignore
+let qr = QRCodeStyling::builder()
+    .data("https://example.com")
+    .js_compatible(true)
+    .build()?;
+```
+
+The output then matches JS `qr-code-styling` 1.9.2: the same matrix as
+`qrcode-generator` and the same `circle`-shape dot ring. Text with characters
+above U+00FF is encoded as UTF-8; JS would truncate those characters.
+
 ## CMYK PDF for print
 
 With the `cmyk` feature, `render_pdf_cmyk` writes the QR code straight to a
