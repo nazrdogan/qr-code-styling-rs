@@ -51,7 +51,11 @@ pub use config::{
 };
 pub use core::QRCodeStyling;
 #[cfg(feature = "cmyk")]
-pub use rendering::{Cmyk, CmykConverter, CmykPdfOptions};
+pub use rendering::{Cmyk, CmykConverter, CmykPdfOptions, CmykXObject};
+/// Re-export of the `pdf-writer` version used for CMYK output, so
+/// [`QRCodeStyling::write_cmyk_xobject`] can write into your own documents.
+#[cfg(feature = "cmyk")]
+pub use pdf_writer;
 pub use error::{QRError, Result};
 pub use plugins::{BorderDecoration, BorderOptions, BorderPlugin, Position, QRBorderOptions};
 pub use types::{

@@ -13,17 +13,14 @@ mod pdf_renderer;
 pub use svg_renderer::SvgRenderer;
 pub use raster_renderer::RasterRenderer;
 #[cfg(feature = "cmyk")]
-pub use cmyk_pdf::{Cmyk, CmykConverter, CmykPdfOptions};
+pub use cmyk_pdf::{Cmyk, CmykConverter, CmykPdfOptions, CmykXObject};
 #[cfg(feature = "pdf")]
 pub use pdf_renderer::PdfRenderer;
 
 use std::sync::{Arc, OnceLock};
 
-/// Write a scene as a CMYK PDF.
 #[cfg(feature = "cmyk")]
-pub(crate) fn cmyk_pdf_write(scene: &scene::Scene<'_>, options: &CmykPdfOptions) -> crate::error::Result<Vec<u8>> {
-    cmyk_pdf::CmykPdfWriter::new(options).write(scene)
-}
+pub(crate) use cmyk_pdf::{write_pdf as cmyk_pdf_write, write_xobject as cmyk_xobject_write};
 
 /// System font database, loaded once per process.
 ///
