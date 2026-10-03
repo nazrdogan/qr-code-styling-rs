@@ -229,9 +229,22 @@ qr.save_pdf_cmyk("qr_cmyk.pdf", &options)?;
 ```
 
 Colors not in the map are converted without an ICC profile: neutral colors use
-only K, and other colors are an approximation. Gradients, transparency and logos
-are supported; `BorderPlugin` text is not, because it is applied to the SVG
-string.
+only K, and other colors are an approximation. Pass your own conversion (e.g.
+an lcms/ICC transform) with `with_converter`. Gradients, transparency and
+logos are supported.
+
+Borders work too. Text is converted to outlines, so no fonts are embedded:
+
+```rust,ignore
+let options = CmykPdfOptions::new()
+    .with_border(BorderPlugin::new(border_options))
+    // Optional: your own fonts instead of the system's (useful on servers)
+    .with_fonts(my_font_db);
+```
+
+To lay out many codes on one sheet, write each as a Form XObject into your own
+`pdf_writer` document with `write_cmyk_xobject` (see
+`examples/cmyk_sheet.rs`).
 
 ## Output Formats
 
