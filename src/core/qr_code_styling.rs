@@ -467,4 +467,38 @@ mod tests {
         qr.set_js_compatible(false).unwrap();
         assert_ne!(qr.render_svg().unwrap(), compat_svg);
     }
+
+    #[test]
+    #[cfg(feature = "cmyk")]
+    fn test_cmyk_pdf_with_border() {
+        use crate::plugins::{BorderOptions, BorderPlugin, Position, QRBorderOptions};
+        use crate::rendering::CmykPdfOptions;
+        use std::sync::Arc;
+
+        let qr = QRCodeStyling::builder().data("Test").size(300).margin(40).build().unwrap();
+        let border = BorderPlugin::new(
+            QRBorderOptions::new(30.0, "#1D4ED8")
+                .with_round(0.5)
+                .with_outer_border(BorderOptions::new(3.0, "#000000").with_dasharray("6,3"))
+                .with_styled_text(Position::Top, "SCAN ME", "font-size: 16px; font-family: sans-serif; fill: #FFFFFF;"),
+        );
+        let pdf = |opts: CmykPdfOptions| String::from_utf8_lossy(&qr.render_pdf_cmyk(&opts.with_compression(false)).unwrap()).to_string();
+
+        let plain = pdf(CmykPdfOptions::new());
+        let bordered = pdf(CmykPdfOptions::new().with_border(border.clone()));
+        let no_fonts = pdf(CmykPdfOptions::new().with_border(border).with_fonts(Arc::new(usvg::fontdb::Database::new())));
+
+        // Border strokes in CMYK (blue frame, dashed black outline), no RGB
+        assert!(!plain.contains("\nS\n"));
+        assert_eq!(bordered.matches("\nS\n").count(), 2);
+        assert!(bordered.contains("[6 3] 0 d"));
+        assert!(bordered.contains(" K\n"));
+        assert!(!bordered.contains(" rg\n") && !bordered.contains(" RG\n"));
+        // Text becomes outlines when fonts are available; with an empty
+        // font database it is skipped but the frame still renders
+        assert_eq!(no_fonts.matches("\nS\n").count(), 2);
+        if !crate::rendering::font_db().is_empty() {
+            assert!(bordered.matches(" c\n").count() > no_fonts.matches(" c\n").count() + 20);
+        }
+    }
 }

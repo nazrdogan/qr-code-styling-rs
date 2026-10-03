@@ -22,6 +22,15 @@
   build with just `cmyk` needs neither. Default features are unchanged.
   Note: with `default-features = false`, `RasterRenderer` now needs one of
   the raster features.
+- CMYK PDFs can include the border: `CmykPdfOptions::with_border` draws a
+  `BorderPlugin` (frame, inner/outer/dashed borders, curved or straight
+  text, image decorations) in CMYK, with text converted to outlines. Also
+  `with_overlay_svg` for any SVG drawn on top, and `with_fonts` to supply
+  fonts on servers without them. `BorderPlugin::overlay_svg` returns the
+  border as a standalone SVG. The `cmyk` feature now uses `usvg` (not
+  `resvg`).
+- Fix: straight border text (`round < 0.5`) was centered on the canvas
+  edge, so half of it was cut off. It now sits on the border stroke.
 
 ## 0.2.1
 

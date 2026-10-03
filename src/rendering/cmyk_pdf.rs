@@ -12,12 +12,13 @@ use std::f64::consts::PI;
 use std::fmt;
 use std::sync::Arc;
 
-use pdf_writer::types::FunctionShadingType;
+use pdf_writer::types::{FunctionShadingType, LineCapStyle, LineJoinStyle};
 use pdf_writer::writers::Resources;
 use pdf_writer::{Chunk, Content, Filter, Finish, Name, Pdf, Rect, Ref};
 
 use super::scene::{Background, ImageItem, Paint, Scene};
 use crate::config::{Color, ColorStop};
+use crate::plugins::BorderPlugin;
 use crate::error::{QRError, Result};
 
 /// A CMYK color with components in percent (0–100).
@@ -104,6 +105,15 @@ pub struct CmykPdfOptions {
     color_map: Vec<(Color, Cmyk)>,
     converter: Option<CmykConverter>,
     compress: bool,
+    overlays: Vec<Overlay>,
+    fonts: Option<Arc<usvg::fontdb::Database>>,
+}
+
+/// SVG content drawn on top of the QR code.
+#[derive(Debug, Clone)]
+enum Overlay {
+    Svg(String),
+    Border(BorderPlugin),
 }
 
 impl Default for CmykPdfOptions {
@@ -118,6 +128,8 @@ impl fmt::Debug for CmykPdfOptions {
             .field("color_map", &self.color_map)
             .field("converter", &self.converter.as_ref().map(|_| "<fn>"))
             .field("compress", &self.compress)
+            .field("overlays", &self.overlays)
+            .field("fonts", &self.fonts.as_ref().map(|db| db.len()))
             .finish()
     }
 }
@@ -129,7 +141,38 @@ impl CmykPdfOptions {
             color_map: Vec::new(),
             converter: None,
             compress: true,
+            overlays: Vec::new(),
+            fonts: None,
         }
+    }
+
+    /// Draw a [`BorderPlugin`] (frame, curved or straight text, image
+    /// decorations) on top of the QR code, in CMYK.
+    ///
+    /// Text is converted to outlines with the font database (system fonts
+    /// unless [`with_fonts`](Self::with_fonts) is set), so the PDF needs no
+    /// embedded fonts.
+    pub fn with_border(mut self, border: BorderPlugin) -> Self {
+        self.overlays.push(Overlay::Border(border));
+        self
+    }
+
+    /// Draw an arbitrary SVG document on top of the QR code, in CMYK.
+    /// Its user space should match the QR code's size (width × height px).
+    ///
+    /// Supported: filled/stroked paths (solid colors and linear/radial
+    /// gradient fills), text (as outlines), raster images, opacity.
+    /// Not supported: clip paths, masks, filters, patterns.
+    pub fn with_overlay_svg(mut self, svg: impl Into<String>) -> Self {
+        self.overlays.push(Overlay::Svg(svg.into()));
+        self
+    }
+
+    /// Fonts for overlay text, instead of the system fonts. Use this on
+    /// servers without the fonts your border styles name.
+    pub fn with_fonts(mut self, fonts: Arc<usvg::fontdb::Database>) -> Self {
+        self.fonts = Some(fonts);
+        self
     }
 
     /// Convert colors that aren't in the color map with `converter`
@@ -318,6 +361,13 @@ impl<'a> CmykPdfWriter<'a> {
         if let Some(image) = &scene.image {
             self.draw_image(&mut content, image)?;
         }
+        for overlay in &self.options.overlays {
+            let svg = match overlay {
+                Overlay::Svg(svg) => svg.clone(),
+                Overlay::Border(border) => border.overlay_svg(scene.width, scene.height),
+            };
+            self.draw_overlay(&mut content, &svg)?;
+        }
         Ok(content.finish())
     }
 
@@ -470,27 +520,61 @@ impl<'a> CmykPdfWriter<'a> {
     }
 
     fn set_alpha(&mut self, c: &mut Content, alpha: u8) {
+        self.set_alpha_for(c, alpha, false);
+    }
+
+    /// Set fill (`ca`) or stroke (`CA`) opacity via a shared ExtGState.
+    fn set_alpha_for(&mut self, c: &mut Content, alpha: u8, stroke: bool) {
         if alpha == 255 {
             return;
         }
-        let name = format!("Gs{}", alpha);
+        let name = format!("{}{}", if stroke { "GS" } else { "Gs" }, alpha);
         if !self.names.ext_states.iter().any(|(n, _)| *n == name) {
             let id = self.alloc();
-            self.chunk
-                .ext_graphics(id)
-                .non_stroking_alpha(alpha as f32 / 255.0);
+            let mut gs = self.chunk.ext_graphics(id);
+            if stroke {
+                gs.stroking_alpha(alpha as f32 / 255.0);
+            } else {
+                gs.non_stroking_alpha(alpha as f32 / 255.0);
+            }
+            gs.finish();
             self.names.ext_states.push((name.clone(), id));
         }
         c.set_parameters(Name(name.as_bytes()));
     }
 
     fn draw_image(&mut self, c: &mut Content, image: &ImageItem<'_>) -> Result<()> {
-        let decoded = image::load_from_memory(image.data)
+        if image.width <= 0.0 || image.height <= 0.0 {
+            return Ok(());
+        }
+        let Some((name, iw, ih)) = self.embed_image(image.data)? else {
+            return Ok(());
+        };
+
+        // Fit inside the box, centered (SVG `xMidYMid meet`)
+        let scale = (image.width / iw as f64).min(image.height / ih as f64);
+        let (dw, dh) = (iw as f64 * scale, ih as f64 * scale);
+        let dx = image.x + (image.width - dw) / 2.0;
+        let dy = image.y + (image.height - dh) / 2.0;
+
+        c.save_state();
+        // The page is y-flipped, so flip the unit square back: the image's
+        // top row lands at `dy`.
+        c.transform([dw as f32, 0.0, 0.0, -dh as f32, dx as f32, (dy + dh) as f32]);
+        c.x_object(Name(name.as_bytes()));
+        c.restore_state();
+        Ok(())
+    }
+
+    /// Embed raster image data as a CMYK image XObject (with an alpha soft
+    /// mask if needed). Returns its resource name and pixel size.
+    fn embed_image(&mut self, data: &[u8]) -> Result<Option<(String, u32, u32)>> {
+        let decoded = image::load_from_memory(data)
             .map_err(|e| QRError::ImageLoadError(e.to_string()))?
             .to_rgba8();
         let (iw, ih) = decoded.dimensions();
-        if iw == 0 || ih == 0 || image.width <= 0.0 || image.height <= 0.0 {
-            return Ok(());
+        if iw == 0 || ih == 0 {
+            return Ok(None);
         }
 
         let mut cmyk = Vec::with_capacity((iw * ih * 4) as usize);
@@ -545,20 +629,266 @@ impl<'a> CmykPdfWriter<'a> {
 
         let name = format!("Im{}", self.names.images.len());
         self.names.images.push((name.clone(), image_id));
+        Ok(Some((name, iw, ih)))
+    }
 
-        // Fit inside the box, centered (SVG `xMidYMid meet`)
-        let scale = (image.width / iw as f64).min(image.height / ih as f64);
-        let (dw, dh) = (iw as f64 * scale, ih as f64 * scale);
-        let dx = image.x + (image.width - dw) / 2.0;
-        let dy = image.y + (image.height - dh) / 2.0;
+    /// Parse `svg` with usvg (text becomes outlines) and draw it in CMYK.
+    fn draw_overlay(&mut self, c: &mut Content, svg: &str) -> Result<()> {
+        let fonts = if svg.contains("<text") {
+            self.options.fonts.clone().unwrap_or_else(super::font_db)
+        } else {
+            Arc::new(usvg::fontdb::Database::new())
+        };
+        let options = usvg::Options {
+            fontdb: fonts,
+            ..Default::default()
+        };
+        let tree = usvg::Tree::from_str(svg, &options).map_err(|e| QRError::SvgError(e.to_string()))?;
+        self.draw_usvg_group(c, tree.root(), 1.0, usvg::Transform::identity())
+    }
 
+    /// Draw a group, accumulating group transforms like resvg does.
+    /// (`abs_transform` of a text's flattened paths lacks the text's own
+    /// transform, e.g. the rotation of vertical border text.)
+    fn draw_usvg_group(&mut self, c: &mut Content, group: &usvg::Group, opacity: f32, parent: usvg::Transform) -> Result<()> {
+        let ts = parent.pre_concat(group.transform());
+        let opacity = opacity * group.opacity().get();
+        for node in group.children() {
+            match node {
+                usvg::Node::Group(g) => self.draw_usvg_group(c, g, opacity, ts)?,
+                usvg::Node::Path(path) => self.draw_usvg_path(c, path, opacity, ts),
+                usvg::Node::Text(text) => self.draw_usvg_group(c, text.flattened(), opacity, ts)?,
+                usvg::Node::Image(image) => self.draw_usvg_image(c, image, ts, opacity)?,
+            }
+        }
+        Ok(())
+    }
+
+    fn draw_usvg_path(&mut self, c: &mut Content, path: &usvg::Path, opacity: f32, ts: usvg::Transform) {
+        if !path.is_visible() {
+            return;
+        }
+        let matrix = [ts.sx, ts.ky, ts.kx, ts.sy, ts.tx, ts.ty];
+        let fill_first = path.paint_order() == usvg::PaintOrder::FillAndStroke;
+
+        let draw_fill = |w: &mut Self, c: &mut Content| {
+            if let Some(fill) = path.fill() {
+                let alpha = to_alpha(opacity * fill.opacity().get());
+                w.fill_usvg(c, fill.paint(), alpha, fill.rule() == usvg::FillRule::EvenOdd, matrix, path.data());
+            }
+        };
+        let draw_stroke = |w: &mut Self, c: &mut Content| {
+            if let Some(stroke) = path.stroke() {
+                w.stroke_usvg(c, stroke, opacity, matrix, path.data());
+            }
+        };
+
+        if fill_first {
+            draw_fill(self, c);
+            draw_stroke(self, c);
+        } else {
+            draw_stroke(self, c);
+            draw_fill(self, c);
+        }
+    }
+
+    fn fill_usvg(
+        &mut self,
+        c: &mut Content,
+        paint: &usvg::Paint,
+        alpha: u8,
+        even_odd: bool,
+        matrix: [f32; 6],
+        data: &usvg::tiny_skia_path::Path,
+    ) {
+        if alpha == 0 {
+            return;
+        }
+        match paint {
+            usvg::Paint::LinearGradient(g) => {
+                let stops = usvg_stops(g.stops());
+                let coords = [g.x1(), g.y1(), g.x2(), g.y2()];
+                self.fill_usvg_gradient(c, FunctionShadingType::Axial, &coords, &stops, g.transform(), alpha, even_odd, matrix, data);
+            }
+            usvg::Paint::RadialGradient(g) => {
+                let stops = usvg_stops(g.stops());
+                let coords = [g.fx(), g.fy(), 0.0, g.cx(), g.cy(), g.r().get()];
+                self.fill_usvg_gradient(c, FunctionShadingType::Radial, &coords, &stops, g.transform(), alpha, even_odd, matrix, data);
+            }
+            other => {
+                c.save_state();
+                c.transform(matrix);
+                self.set_alpha_for(c, alpha, false);
+                let [cy, m, y, k] = self.options.resolve(solid_color(other)).components();
+                c.set_fill_cmyk(cy, m, y, k);
+                emit_usvg_path(c, data);
+                if even_odd {
+                    c.fill_even_odd();
+                } else {
+                    c.fill_nonzero();
+                }
+                c.restore_state();
+            }
+        }
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn fill_usvg_gradient(
+        &mut self,
+        c: &mut Content,
+        kind: FunctionShadingType,
+        coords: &[f32],
+        stops: &[ColorStop],
+        gradient_transform: usvg::Transform,
+        alpha: u8,
+        even_odd: bool,
+        matrix: [f32; 6],
+        data: &usvg::tiny_skia_path::Path,
+    ) {
+        let Some(function) = self.write_gradient_function(stops) else {
+            return;
+        };
+        let shading_id = self.alloc();
+        let mut shading = self.chunk.function_shading(shading_id);
+        shading.shading_type(kind);
+        shading.color_space().device_cmyk();
+        shading.coords(coords.iter().copied());
+        shading.function(function);
+        shading.extend([true, true]);
+        shading.finish();
+        let name = format!("Sh{}", self.names.shadings.len());
+        self.names.shadings.push((name.clone(), shading_id));
+
+        let g = gradient_transform;
         c.save_state();
-        // The page is y-flipped, so flip the unit square back: the image's
-        // top row lands at `dy`.
-        c.transform([dw as f32, 0.0, 0.0, -dh as f32, dx as f32, (dy + dh) as f32]);
+        c.transform(matrix);
+        self.set_alpha_for(c, alpha, false);
+        emit_usvg_path(c, data);
+        if even_odd {
+            c.clip_even_odd();
+        } else {
+            c.clip_nonzero();
+        }
+        c.end_path();
+        c.transform([g.sx, g.ky, g.kx, g.sy, g.tx, g.ty]);
+        c.shading(Name(name.as_bytes()));
+        c.restore_state();
+    }
+
+    fn stroke_usvg(
+        &mut self,
+        c: &mut Content,
+        stroke: &usvg::Stroke,
+        opacity: f32,
+        matrix: [f32; 6],
+        data: &usvg::tiny_skia_path::Path,
+    ) {
+        let alpha = to_alpha(opacity * stroke.opacity().get());
+        if alpha == 0 {
+            return;
+        }
+        c.save_state();
+        c.transform(matrix);
+        self.set_alpha_for(c, alpha, true);
+        // Gradient strokes are drawn in their first stop's color
+        let [cy, m, y, k] = self.options.resolve(solid_color(stroke.paint())).components();
+        c.set_stroke_cmyk(cy, m, y, k);
+        c.set_line_width(stroke.width().get());
+        c.set_line_cap(match stroke.linecap() {
+            usvg::LineCap::Butt => LineCapStyle::ButtCap,
+            usvg::LineCap::Round => LineCapStyle::RoundCap,
+            usvg::LineCap::Square => LineCapStyle::ProjectingSquareCap,
+        });
+        c.set_line_join(match stroke.linejoin() {
+            usvg::LineJoin::Round => LineJoinStyle::RoundJoin,
+            usvg::LineJoin::Bevel => LineJoinStyle::BevelJoin,
+            _ => LineJoinStyle::MiterJoin,
+        });
+        c.set_miter_limit(stroke.miterlimit().get());
+        if let Some(dashes) = stroke.dasharray() {
+            c.set_dash_pattern(dashes.iter().copied(), stroke.dashoffset());
+        }
+        emit_usvg_path(c, data);
+        c.stroke();
+        c.restore_state();
+    }
+
+    fn draw_usvg_image(&mut self, c: &mut Content, image: &usvg::Image, ts: usvg::Transform, opacity: f32) -> Result<()> {
+        if !image.is_visible() {
+            return Ok(());
+        }
+        let data = match image.kind() {
+            usvg::ImageKind::JPEG(d) | usvg::ImageKind::PNG(d) | usvg::ImageKind::GIF(d) | usvg::ImageKind::WEBP(d) => d,
+            usvg::ImageKind::SVG(_) => return Ok(()),
+        };
+        let Some((name, _, _)) = self.embed_image(data)? else {
+            return Ok(());
+        };
+        let size = image.size();
+        c.save_state();
+        c.transform([ts.sx, ts.ky, ts.kx, ts.sy, ts.tx, ts.ty]);
+        self.set_alpha_for(c, to_alpha(opacity), false);
+        // Unit square -> image box, top row first in the y-flipped space
+        c.transform([size.width(), 0.0, 0.0, -size.height(), 0.0, size.height()]);
         c.x_object(Name(name.as_bytes()));
         c.restore_state();
         Ok(())
+    }
+}
+
+fn to_alpha(opacity: f32) -> u8 {
+    (opacity.clamp(0.0, 1.0) * 255.0).round() as u8
+}
+
+fn usvg_color(color: usvg::Color) -> Color {
+    Color::rgb(color.red, color.green, color.blue)
+}
+
+/// A paint's color for solid drawing; gradients/patterns use their first stop.
+fn solid_color(paint: &usvg::Paint) -> Color {
+    match paint {
+        usvg::Paint::Color(color) => usvg_color(*color),
+        usvg::Paint::LinearGradient(g) => g.stops().first().map_or(Color::BLACK, |s| usvg_color(s.color())),
+        usvg::Paint::RadialGradient(g) => g.stops().first().map_or(Color::BLACK, |s| usvg_color(s.color())),
+        usvg::Paint::Pattern(_) => Color::BLACK,
+    }
+}
+
+fn usvg_stops(stops: &[usvg::Stop]) -> Vec<ColorStop> {
+    stops
+        .iter()
+        .map(|s| ColorStop::new(s.offset().get() as f64, usvg_color(s.color())))
+        .collect()
+}
+
+/// Emit a usvg (tiny-skia) path; quadratic segments become cubics.
+fn emit_usvg_path(c: &mut Content, path: &usvg::tiny_skia_path::Path) {
+    use usvg::tiny_skia_path::PathSegment;
+    let mut last = (0.0f32, 0.0f32);
+    for segment in path.segments() {
+        match segment {
+            PathSegment::MoveTo(p) => {
+                c.move_to(p.x, p.y);
+                last = (p.x, p.y);
+            }
+            PathSegment::LineTo(p) => {
+                c.line_to(p.x, p.y);
+                last = (p.x, p.y);
+            }
+            PathSegment::QuadTo(p1, p) => {
+                let c1 = (last.0 + 2.0 / 3.0 * (p1.x - last.0), last.1 + 2.0 / 3.0 * (p1.y - last.1));
+                let c2 = (p.x + 2.0 / 3.0 * (p1.x - p.x), p.y + 2.0 / 3.0 * (p1.y - p.y));
+                c.cubic_to(c1.0, c1.1, c2.0, c2.1, p.x, p.y);
+                last = (p.x, p.y);
+            }
+            PathSegment::CubicTo(p1, p2, p) => {
+                c.cubic_to(p1.x, p1.y, p2.x, p2.y, p.x, p.y);
+                last = (p.x, p.y);
+            }
+            PathSegment::Close => {
+                c.close_path();
+            }
+        }
     }
 }
 

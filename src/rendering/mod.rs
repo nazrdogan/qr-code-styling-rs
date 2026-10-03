@@ -17,14 +17,14 @@ pub use cmyk_pdf::{Cmyk, CmykConverter, CmykPdfOptions, CmykXObject};
 #[cfg(feature = "pdf")]
 pub use pdf_renderer::PdfRenderer;
 
-#[cfg(any(feature = "raster", feature = "pdf"))]
+#[cfg(any(feature = "raster", feature = "pdf", feature = "cmyk"))]
 use std::sync::{Arc, OnceLock};
 
 #[cfg(feature = "cmyk")]
 pub(crate) use cmyk_pdf::{write_pdf as cmyk_pdf_write, write_xobject as cmyk_xobject_write};
 
 /// System font database, loaded once per process.
-#[cfg(any(feature = "raster", feature = "pdf"))]
+#[cfg(any(feature = "raster", feature = "pdf", feature = "cmyk"))]
 ///
 /// Scanning system fonts takes milliseconds, so it must not happen per render.
 /// Fonts are only needed for text, e.g. border decorations.

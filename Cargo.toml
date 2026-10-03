@@ -49,7 +49,7 @@ rayon = "1.10"
 [features]
 default = ["png", "jpeg", "webp", "pdf"]
 pdf = ["dep:svg2pdf", "dep:usvg"]
-cmyk = ["dep:pdf-writer", "dep:miniz_oxide"]
+cmyk = ["dep:pdf-writer", "dep:miniz_oxide", "dep:usvg"]
 serde = ["dep:serde"]
 # Rasterizing SVG (enabled by any raster format)
 raster = ["dep:resvg", "dep:usvg"]

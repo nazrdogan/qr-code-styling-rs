@@ -181,6 +181,7 @@ impl QRBorderOptions {
 }
 
 /// Border plugin for adding borders and decorations to QR codes.
+#[derive(Debug, Clone)]
 pub struct BorderPlugin {
     options: QRBorderOptions,
 }
@@ -260,6 +261,21 @@ impl BorderPlugin {
 
         // Inject into existing SVG
         self.inject_into_svg(svg, &defs_content, &elements_content)
+    }
+
+    /// The border and decorations alone, as a standalone SVG document of
+    /// the given size (e.g. for
+    /// [`CmykPdfOptions::with_border`](crate::CmykPdfOptions::with_border)).
+    pub fn overlay_svg(&self, width: u32, height: u32) -> String {
+        let empty = format!(
+            r#"<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{w}" height="{h}" viewBox="0 0 {w} {h}">
+<defs>
+</defs>
+</svg>"#,
+            w = width,
+            h = height
+        );
+        self.apply(&empty, width, height)
     }
 
     fn generate_rect_attributes(&self, width: f64, height: f64, options: &BorderOptions) -> RectAttributes {
@@ -379,15 +395,16 @@ impl BorderPlugin {
 
             (path_def, text_elem)
         } else {
-            // For rectangular borders, use straight text
-            let border_offset = thickness / 2.0;
+            // For rectangular borders, use straight text centered on the
+            // border stroke (the stroke's centerline is `half_size` from the
+            // center).
             let half_size = (size - thickness) / 2.0;
 
             let (x, y, rotation) = match position {
-                Position::Top => (cx, cy - half_size - border_offset, 0.0),
-                Position::Bottom => (cx, cy + half_size + border_offset, 0.0),
-                Position::Left => (cx - half_size - border_offset, cy, -90.0),
-                Position::Right => (cx + half_size + border_offset, cy, 90.0),
+                Position::Top => (cx, cy - half_size, 0.0),
+                Position::Bottom => (cx, cy + half_size, 0.0),
+                Position::Left => (cx - half_size, cy, -90.0),
+                Position::Right => (cx + half_size, cy, 90.0),
             };
 
             let transform = if rotation != 0.0 {
@@ -582,5 +599,24 @@ mod tests {
 
         assert!(result.contains("Fish &amp; &lt;Chips&gt;"));
         assert!(usvg::Tree::from_str(&result, &Default::default()).is_ok());
+    }
+
+    #[test]
+    fn test_straight_text_sits_on_border_stroke() {
+        // 300px canvas, 40px border: stroke centerline is 20px from each edge
+        let svg = BorderPlugin::new(QRBorderOptions::new(40.0, "#000").with_text(Position::Top, "T").with_text(Position::Left, "L"))
+            .overlay_svg(300, 300);
+        assert!(svg.contains(r#"<text x="150" y="20""#), "{svg}");
+        assert!(svg.contains(r#"<text x="20" y="150""#), "{svg}");
+        assert!(svg.contains("rotate(-90,20,150)"));
+    }
+
+    #[test]
+    fn test_overlay_svg_is_standalone() {
+        let svg = BorderPlugin::new(QRBorderOptions::new(10.0, "#FF0000")).overlay_svg(200, 100);
+        assert!(svg.starts_with("<svg"));
+        assert!(svg.contains(r#"viewBox="0 0 200 100""#));
+        assert!(svg.contains(r##"stroke="#FF0000""##));
+        assert!(svg.trim_end().ends_with("</svg>"));
     }
 }
