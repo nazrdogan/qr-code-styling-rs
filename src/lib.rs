@@ -50,6 +50,8 @@ pub use config::{
     Gradient, ImageOptions, QRCodeStylingBuilder, QRCodeStylingOptions, QROptions,
 };
 pub use core::QRCodeStyling;
+#[cfg(feature = "cmyk")]
+pub use rendering::{Cmyk, CmykPdfOptions};
 pub use error::{QRError, Result};
 pub use plugins::{BorderDecoration, BorderOptions, BorderPlugin, Position, QRBorderOptions};
 pub use types::{

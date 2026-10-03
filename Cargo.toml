@@ -30,6 +30,10 @@ resvg = "0.45"
 # PDF generation (SVG to PDF vector conversion)
 svg2pdf = { version = "0.13", optional = true }
 
+# Native CMYK PDF output (optional)
+pdf-writer = { version = "0.12", optional = true }
+miniz_oxide = { version = "0.8", optional = true }
+
 # Optional serde support
 serde = { version = "1.0", features = ["derive"], optional = true }
 
@@ -41,6 +45,7 @@ rayon = "1.10"
 [features]
 default = ["png", "jpeg", "webp", "pdf"]
 pdf = ["dep:svg2pdf"]
+cmyk = ["dep:pdf-writer", "dep:miniz_oxide"]
 serde = ["dep:serde"]
 png = ["image/png"]
 jpeg = ["image/jpeg"]
@@ -49,6 +54,10 @@ webp = ["image/webp"]
 [[example]]
 name = "with_border"
 required-features = ["pdf"]
+
+[[example]]
+name = "cmyk_pdf"
+required-features = ["cmyk"]
 
 [[example]]
 name = "bulk_pdf"
