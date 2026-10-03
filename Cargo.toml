@@ -1,6 +1,6 @@
 [package]
 name = "qr-code-styling"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 authors = ["Nazir Dogan <nazrdogan@gmail.com>"]
 description = "Styled QR code generation with customizable dots, corners, gradients, and logo embedding"
@@ -12,6 +12,9 @@ homepage = "https://github.com/nazrdogan/qr-code-styling-rs"
 documentation = "https://docs.rs/qr-code-styling"
 readme = "README.md"
 exclude = [".claude", "*.svg", "*.pdf", "*.png", "*.jpg", "*.webp", "!examples/logo.png"]
+
+[package.metadata.docs.rs]
+all-features = true
 
 [lib]
 crate-type = ["lib"]
