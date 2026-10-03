@@ -46,7 +46,7 @@ A Rust library for generating styled QR codes with customizable dots, corners, g
 
 ```toml
 [dependencies]
-qr-code-styling = "0.1"
+qr-code-styling = "0.2"
 ```
 
 ## Quick Start
