@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.1
 
 ### Features
 - New optional `cmyk` feature: `render_pdf_cmyk` / `save_pdf_cmyk` write a
@@ -8,6 +8,14 @@
   `CmykPdfOptions::with_color` maps colors to exact CMYK values; other colors
   are converted with full gray replacement, so black prints as 100% K.
   Supports gradients (axial/radial shadings), transparency and logos.
+
+### Performance
+- System font files are memory-mapped once instead of on every text
+  layout. Parallel PDF generation with border text: about +70% throughput
+  (1,049 → 1,776 PDF/s on 10 cores).
+
+### Docs
+- docs.rs builds with all features, so the CMYK API is documented.
 
 ## 0.2.0
 
