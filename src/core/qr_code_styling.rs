@@ -108,6 +108,56 @@ impl QRCodeStyling {
         crate::rendering::cmyk_pdf_write(&scene, options)
     }
 
+    /// Write the QR code as a CMYK Form XObject into your own PDF, e.g. to
+    /// lay out many codes on one sheet.
+    ///
+    /// Objects are allocated from `alloc` (advanced past the last id used).
+    /// The form is self-contained (it carries its own resources) and its
+    /// bounding box is `[0 0 width height]` in points; place it with a
+    /// `cm` transform followed by `Do`. Colors work as in
+    /// [`render_pdf_cmyk`](Self::render_pdf_cmyk).
+    ///
+    /// ```
+    /// use qr_code_styling::pdf_writer::{Content, Finish, Name, Pdf, Rect, Ref};
+    /// use qr_code_styling::{CmykPdfOptions, QRCodeStyling};
+    ///
+    /// let mut pdf = Pdf::new();
+    /// let mut alloc = Ref::new(1);
+    /// let (catalog, tree, page, contents) = (alloc.bump(), alloc.bump(), alloc.bump(), alloc.bump());
+    ///
+    /// let options = CmykPdfOptions::new();
+    /// let qr = QRCodeStyling::builder().data("https://example.com").size(100).build().unwrap();
+    /// let form = qr.write_cmyk_xobject(&mut pdf, &mut alloc, &options).unwrap();
+    ///
+    /// // Draw it at (50, 50), scaled to 72 pt
+    /// let mut content = Content::new();
+    /// content.save_state();
+    /// content.transform([72.0 / form.width, 0.0, 0.0, 72.0 / form.height, 50.0, 50.0]);
+    /// content.x_object(Name(b"Qr0"));
+    /// content.restore_state();
+    /// pdf.stream(contents, &content.finish());
+    ///
+    /// pdf.catalog(catalog).pages(tree);
+    /// pdf.pages(tree).kids([page]).count(1);
+    /// let mut p = pdf.page(page);
+    /// p.media_box(Rect::new(0.0, 0.0, 595.0, 842.0)).parent(tree).contents(contents);
+    /// p.resources().x_objects().pair(Name(b"Qr0"), form.id);
+    /// p.finish();
+    /// let bytes = pdf.finish();
+    /// assert!(bytes.starts_with(b"%PDF"));
+    /// ```
+    #[cfg(feature = "cmyk")]
+    pub fn write_cmyk_xobject(
+        &self,
+        chunk: &mut crate::pdf_writer::Chunk,
+        alloc: &mut crate::pdf_writer::Ref,
+        options: &crate::rendering::CmykPdfOptions,
+    ) -> Result<crate::rendering::CmykXObject> {
+        let renderer = SvgRenderer::from_ref(&self.options);
+        let scene = renderer.scene(&self.matrix);
+        crate::rendering::cmyk_xobject_write(&scene, options, chunk, alloc)
+    }
+
     /// Save a CMYK PDF (see [`render_pdf_cmyk`](Self::render_pdf_cmyk)).
     #[cfg(feature = "cmyk")]
     pub fn save_pdf_cmyk<P: AsRef<Path>>(
@@ -295,5 +345,55 @@ mod tests {
         assert!(!text.contains(" rg\n") && !text.contains("/ICCBased"));
         // Mapped gradient stop uses the exact CMYK value
         assert!(text.contains("/C1 [1 0.8 0 0]"));
+    }
+
+    #[test]
+    #[cfg(feature = "cmyk")]
+    fn test_cmyk_xobjects_share_one_document() {
+        use crate::config::{Color, Gradient};
+        use crate::pdf_writer::{Finish, Name, Pdf, Rect, Ref};
+        use crate::rendering::CmykPdfOptions;
+
+        let mut pdf = Pdf::new();
+        let mut alloc = Ref::new(1);
+        let (catalog, tree, page) = (alloc.bump(), alloc.bump(), alloc.bump());
+        let options = CmykPdfOptions::new().with_compression(false);
+
+        let mut forms = Vec::new();
+        for i in 0..3 {
+            // Gradients force each form to carry its own shading resources
+            let qr = QRCodeStyling::builder()
+                .data(format!("item {}", i))
+                .size(120)
+                .dots_options(DotsOptions::new(DotType::Rounded).with_gradient(Gradient::simple_radial(Color::BLACK, Color::rgb(0, 0, 200))))
+                .build()
+                .unwrap();
+            forms.push(qr.write_cmyk_xobject(&mut pdf, &mut alloc, &options).unwrap());
+        }
+        // Ids are unique and the allocator moved past all of them
+        let ids: std::collections::HashSet<_> = forms.iter().map(|f| f.id).collect();
+        assert_eq!(ids.len(), 3);
+        assert!(forms.iter().all(|f| f.id.get() < alloc.get()));
+        assert_eq!((forms[0].width, forms[0].height), (120.0, 120.0));
+
+        pdf.catalog(catalog).pages(tree);
+        pdf.pages(tree).kids([page]).count(1);
+        let mut p = pdf.page(page);
+        p.media_box(Rect::new(0.0, 0.0, 400.0, 200.0)).parent(tree);
+        let mut res = p.resources();
+        let mut xo = res.x_objects();
+        for (i, f) in forms.iter().enumerate() {
+            xo.pair(Name(format!("Q{}", i).as_bytes()), f.id);
+        }
+        xo.finish();
+        res.finish();
+        p.finish();
+        let bytes = pdf.finish();
+        let text = String::from_utf8_lossy(&bytes);
+
+        assert_eq!(text.matches("/Subtype /Form").count(), 3);
+        assert_eq!(text.matches("/BBox [0 0 120 120]").count(), 3);
+        // Each form has its own resources with its own shading named Sh0
+        assert_eq!(text.matches("/Sh0").count(), 6); // resource entry + `sh` use, per form
     }
 }

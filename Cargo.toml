@@ -63,6 +63,10 @@ name = "cmyk_pdf"
 required-features = ["cmyk"]
 
 [[example]]
+name = "cmyk_sheet"
+required-features = ["cmyk"]
+
+[[example]]
 name = "bulk_pdf"
 required-features = ["pdf"]
 

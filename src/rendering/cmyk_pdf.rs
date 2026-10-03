@@ -13,7 +13,8 @@ use std::fmt;
 use std::sync::Arc;
 
 use pdf_writer::types::FunctionShadingType;
-use pdf_writer::{Content, Filter, Finish, Name, Pdf, Rect, Ref};
+use pdf_writer::writers::Resources;
+use pdf_writer::{Chunk, Content, Filter, Finish, Name, Pdf, Rect, Ref};
 
 use super::scene::{Background, ImageItem, Paint, Scene};
 use crate::config::{Color, ColorStop};
@@ -170,43 +171,143 @@ fn same_rgb(a: Color, b: Color) -> bool {
     (a.r, a.g, a.b) == (b.r, b.g, b.b)
 }
 
-/// Writes a [`Scene`] as a single-page CMYK PDF.
-pub(crate) struct CmykPdfWriter<'o> {
-    options: &'o CmykPdfOptions,
-    pdf: Pdf,
-    next_id: i32,
+/// A QR code written as a PDF Form XObject by
+/// [`QRCodeStyling::write_cmyk_xobject`](crate::QRCodeStyling::write_cmyk_xobject).
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct CmykXObject {
+    /// Reference of the Form XObject in the chunk.
+    pub id: Ref,
+    /// Width of the form's bounding box in points (the QR code's width in px).
+    pub width: f32,
+    /// Height of the form's bounding box in points.
+    pub height: f32,
+}
+
+/// Write `scene` as a complete single-page PDF.
+pub(crate) fn write_pdf(scene: &Scene<'_>, options: &CmykPdfOptions) -> Result<Vec<u8>> {
+    let mut pdf = Pdf::new();
+    let mut alloc = Ref::new(1);
+    let (catalog_id, tree_id, page_id) = (alloc.bump(), alloc.bump(), alloc.bump());
+
+    let mut writer = CmykPdfWriter::new(options, &mut pdf, &mut alloc);
+    let content = writer.draw_scene(scene)?;
+    let content_id = writer.write_stream(&content);
+    let resources = writer.into_resources();
+
+    pdf.catalog(catalog_id).pages(tree_id);
+    pdf.pages(tree_id).kids([page_id]).count(1);
+    let mut page = pdf.page(page_id);
+    page.media_box(Rect::new(0.0, 0.0, scene.width as f32, scene.height as f32));
+    page.parent(tree_id);
+    page.contents(content_id);
+    resources.write(page.resources());
+    page.finish();
+
+    Ok(pdf.finish())
+}
+
+/// Write `scene` as a self-contained Form XObject into `chunk`.
+pub(crate) fn write_xobject(
+    scene: &Scene<'_>,
+    options: &CmykPdfOptions,
+    chunk: &mut Chunk,
+    alloc: &mut Ref,
+) -> Result<CmykXObject> {
+    let id = alloc.bump();
+    let mut writer = CmykPdfWriter::new(options, chunk, alloc);
+    let content = writer.draw_scene(scene)?;
+    let (data, compressed) = writer.maybe_compress(&content);
+    let resources = writer.into_resources();
+
+    let (width, height) = (scene.width as f32, scene.height as f32);
+    let mut form = chunk.form_xobject(id, &data);
+    if compressed {
+        form.filter(Filter::FlateDecode);
+    }
+    form.bbox(Rect::new(0.0, 0.0, width, height));
+    resources.write(form.resources());
+    form.finish();
+
+    Ok(CmykXObject { id, width, height })
+}
+
+/// Named resources a drawing refers to.
+#[derive(Default)]
+struct ResourceNames {
     ext_states: Vec<(String, Ref)>,
     shadings: Vec<(String, Ref)>,
     images: Vec<(String, Ref)>,
 }
 
-impl<'o> CmykPdfWriter<'o> {
-    pub fn new(options: &'o CmykPdfOptions) -> Self {
+impl ResourceNames {
+    fn write(&self, mut resources: Resources<'_>) {
+        for (kind, entries) in [
+            (0, &self.ext_states),
+            (1, &self.shadings),
+            (2, &self.images),
+        ] {
+            if entries.is_empty() {
+                continue;
+            }
+            let mut dict = match kind {
+                0 => resources.ext_g_states(),
+                1 => resources.shadings(),
+                _ => resources.x_objects(),
+            };
+            for (name, id) in entries {
+                dict.pair(Name(name.as_bytes()), *id);
+            }
+            dict.finish();
+        }
+        resources.finish();
+    }
+}
+
+/// Draws a [`Scene`] in DeviceCMYK, writing its resources (shadings,
+/// functions, images, graphics states) into a chunk.
+struct CmykPdfWriter<'a> {
+    options: &'a CmykPdfOptions,
+    chunk: &'a mut Chunk,
+    alloc: &'a mut Ref,
+    names: ResourceNames,
+}
+
+impl<'a> CmykPdfWriter<'a> {
+    fn new(options: &'a CmykPdfOptions, chunk: &'a mut Chunk, alloc: &'a mut Ref) -> Self {
         Self {
             options,
-            pdf: Pdf::new(),
-            // 1–4 are reserved for catalog, page tree, page and content
-            next_id: 5,
-            ext_states: Vec::new(),
-            shadings: Vec::new(),
-            images: Vec::new(),
+            chunk,
+            alloc,
+            names: ResourceNames::default(),
         }
     }
 
     fn alloc(&mut self) -> Ref {
-        let id = Ref::new(self.next_id);
-        self.next_id += 1;
+        self.alloc.bump()
+    }
+
+    fn into_resources(self) -> ResourceNames {
+        self.names
+    }
+
+    /// Write a content stream (compressed if enabled) and return its id.
+    fn write_stream(&mut self, content: &[u8]) -> Ref {
+        let id = self.alloc();
+        let (data, compressed) = self.maybe_compress(content);
+        let mut stream = self.chunk.stream(id, &data);
+        if compressed {
+            stream.filter(Filter::FlateDecode);
+        }
+        stream.finish();
         id
     }
 
-    pub fn write(mut self, scene: &Scene<'_>) -> Result<Vec<u8>> {
-        let (catalog_id, tree_id, page_id, content_id) =
-            (Ref::new(1), Ref::new(2), Ref::new(3), Ref::new(4));
-        let (w, h) = (scene.width as f32, scene.height as f32);
-
+    /// Draw the scene; returns the uncompressed content stream. Coordinates
+    /// are flipped so the drawing fills `[0 0 width height]` upright.
+    fn draw_scene(&mut self, scene: &Scene<'_>) -> Result<Vec<u8>> {
         let mut content = Content::new();
         // PDF's origin is bottom-left; flip so scene (SVG) coordinates apply.
-        content.transform([1.0, 0.0, 0.0, -1.0, 0.0, h]);
+        content.transform([1.0, 0.0, 0.0, -1.0, 0.0, scene.height as f32]);
 
         self.draw_background(&mut content, &scene.background);
         for shape in &scene.shapes {
@@ -217,42 +318,7 @@ impl<'o> CmykPdfWriter<'o> {
         if let Some(image) = &scene.image {
             self.draw_image(&mut content, image)?;
         }
-
-        let content = content.finish();
-        let (data, compressed) = self.maybe_compress(&content);
-        let mut stream = self.pdf.stream(content_id, &data);
-        if compressed {
-            stream.filter(Filter::FlateDecode);
-        }
-        stream.finish();
-
-        self.pdf.catalog(catalog_id).pages(tree_id);
-        self.pdf.pages(tree_id).kids([page_id]).count(1);
-
-        let mut page = self.pdf.page(page_id);
-        page.media_box(Rect::new(0.0, 0.0, w, h));
-        page.parent(tree_id);
-        page.contents(content_id);
-        let mut resources = page.resources();
-        let mut dict = resources.ext_g_states();
-        for (name, id) in &self.ext_states {
-            dict.pair(Name(name.as_bytes()), *id);
-        }
-        dict.finish();
-        let mut dict = resources.shadings();
-        for (name, id) in &self.shadings {
-            dict.pair(Name(name.as_bytes()), *id);
-        }
-        dict.finish();
-        let mut dict = resources.x_objects();
-        for (name, id) in &self.images {
-            dict.pair(Name(name.as_bytes()), *id);
-        }
-        dict.finish();
-        resources.finish();
-        page.finish();
-
-        Ok(self.pdf.finish())
+        Ok(content.finish())
     }
 
     fn maybe_compress(&self, data: &[u8]) -> (Vec<u8>, bool) {
@@ -329,7 +395,7 @@ impl<'o> CmykPdfWriter<'o> {
             return;
         };
         let shading_id = self.alloc();
-        let mut shading = self.pdf.function_shading(shading_id);
+        let mut shading = self.chunk.function_shading(shading_id);
         shading.shading_type(kind);
         shading.color_space().device_cmyk();
         shading.coords(coords.iter().copied());
@@ -337,8 +403,8 @@ impl<'o> CmykPdfWriter<'o> {
         shading.extend([true, true]);
         shading.finish();
 
-        let name = format!("Sh{}", self.shadings.len());
-        self.shadings.push((name.clone(), shading_id));
+        let name = format!("Sh{}", self.names.shadings.len());
+        self.names.shadings.push((name.clone(), shading_id));
 
         // Paint the shading clipped to the shape
         c.save_state();
@@ -378,7 +444,7 @@ impl<'o> CmykPdfWriter<'o> {
             .windows(2)
             .map(|pair| {
                 let id = self.alloc();
-                let mut f = self.pdf.exponential_function(id);
+                let mut f = self.chunk.exponential_function(id);
                 f.domain([0.0, 1.0]);
                 f.c0(pair[0].1);
                 f.c1(pair[1].1);
@@ -394,7 +460,7 @@ impl<'o> CmykPdfWriter<'o> {
 
         let id = self.alloc();
         let bounds: Vec<f32> = points[1..points.len() - 1].iter().map(|p| p.0).collect();
-        let mut f = self.pdf.stitching_function(id);
+        let mut f = self.chunk.stitching_function(id);
         f.domain([0.0, 1.0]);
         f.functions(segments.iter().copied());
         f.bounds(bounds);
@@ -408,12 +474,12 @@ impl<'o> CmykPdfWriter<'o> {
             return;
         }
         let name = format!("Gs{}", alpha);
-        if !self.ext_states.iter().any(|(n, _)| *n == name) {
+        if !self.names.ext_states.iter().any(|(n, _)| *n == name) {
             let id = self.alloc();
-            self.pdf
+            self.chunk
                 .ext_graphics(id)
                 .non_stroking_alpha(alpha as f32 / 255.0);
-            self.ext_states.push((name.clone(), id));
+            self.names.ext_states.push((name.clone(), id));
         }
         c.set_parameters(Name(name.as_bytes()));
     }
@@ -448,7 +514,7 @@ impl<'o> CmykPdfWriter<'o> {
         let mask_id = if has_alpha {
             let id = self.alloc();
             let (data, compressed) = self.maybe_compress(&alpha);
-            let mut mask = self.pdf.image_xobject(id, &data);
+            let mut mask = self.chunk.image_xobject(id, &data);
             if compressed {
                 mask.filter(Filter::FlateDecode);
             }
@@ -464,7 +530,7 @@ impl<'o> CmykPdfWriter<'o> {
 
         let image_id = self.alloc();
         let (data, compressed) = self.maybe_compress(&cmyk);
-        let mut xobj = self.pdf.image_xobject(image_id, &data);
+        let mut xobj = self.chunk.image_xobject(image_id, &data);
         if compressed {
             xobj.filter(Filter::FlateDecode);
         }
@@ -477,8 +543,8 @@ impl<'o> CmykPdfWriter<'o> {
         }
         xobj.finish();
 
-        let name = format!("Im{}", self.images.len());
-        self.images.push((name.clone(), image_id));
+        let name = format!("Im{}", self.names.images.len());
+        self.names.images.push((name.clone(), image_id));
 
         // Fit inside the box, centered (SVG `xMidYMid meet`)
         let scale = (image.width / iw as f64).min(image.height / ih as f64);

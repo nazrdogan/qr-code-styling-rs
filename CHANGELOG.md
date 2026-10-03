@@ -6,6 +6,10 @@
   (e.g. an ICC/lcms transform) for colors that aren't in the color map,
   including gradient stops and logo pixels.
 - Fix: `CmykPdfOptions::default()` now compresses streams like `new()`.
+- `QRCodeStyling::write_cmyk_xobject` writes a QR code as a self-contained
+  CMYK Form XObject into your own `pdf_writer` document (e.g. many codes on
+  one sheet). `pdf_writer` is re-exported with the `cmyk` feature. See
+  `examples/cmyk_sheet.rs`.
 
 ## 0.2.1
 
