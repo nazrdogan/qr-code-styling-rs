@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- `CmykPdfOptions::with_converter`: plug in your own RGB→CMYK conversion
+  (e.g. an ICC/lcms transform) for colors that aren't in the color map,
+  including gradient stops and logo pixels.
+- Fix: `CmykPdfOptions::default()` now compresses streams like `new()`.
+
 ## 0.2.1
 
 ### Features
