@@ -9,7 +9,9 @@ use crate::core::QRMatrix;
 use crate::error::Result;
 #[cfg(feature = "pdf")]
 use crate::rendering::PdfRenderer;
-use crate::rendering::{RasterRenderer, SvgRenderer};
+#[cfg(feature = "raster")]
+use crate::rendering::RasterRenderer;
+use crate::rendering::SvgRenderer;
 use crate::types::OutputFormat;
 
 /// Main QR code styling struct.
@@ -111,9 +113,18 @@ impl QRCodeStyling {
                 let svg = self.render_svg()?;
                 Ok(svg.into_bytes())
             }
+            #[cfg(feature = "raster")]
             OutputFormat::Png | OutputFormat::Jpeg | OutputFormat::WebP => {
                 let svg = self.render_svg()?;
                 RasterRenderer::render(&svg, self.options.width, self.options.height, format)
+            }
+            #[cfg(not(feature = "raster"))]
+            OutputFormat::Png | OutputFormat::Jpeg | OutputFormat::WebP => {
+                Err(crate::error::QRError::ImageEncodeError(format!(
+                    "{:?} output requires the `{}` feature",
+                    format,
+                    format!("{:?}", format).to_lowercase()
+                )))
             }
             #[cfg(feature = "pdf")]
             OutputFormat::Pdf => {

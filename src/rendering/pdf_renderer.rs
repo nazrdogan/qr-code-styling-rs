@@ -1,7 +1,6 @@
 //! PDF renderer for QR codes using SVG to PDF vector conversion.
 
 use crate::error::{QRError, Result};
-use resvg::usvg;
 
 /// PDF renderer for converting SVG to PDF format (vector).
 pub struct PdfRenderer;

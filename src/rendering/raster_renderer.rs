@@ -4,7 +4,7 @@ use crate::error::{QRError, Result};
 use crate::types::OutputFormat;
 use image::{DynamicImage, ImageFormat, RgbaImage};
 use resvg::tiny_skia::Pixmap;
-use resvg::usvg::{Transform, Tree};
+use usvg::{Transform, Tree};
 use std::io::Cursor;
 
 /// Raster renderer for converting SVG to raster formats.

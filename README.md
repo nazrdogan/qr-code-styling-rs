@@ -248,9 +248,10 @@ string.
 
 | Feature | Default | Description |
 |---------|---------|-------------|
-| `png` | yes | PNG raster output |
-| `jpeg` | yes | JPEG raster output |
-| `webp` | yes | WebP raster output |
+| `png` | yes | PNG raster output (enables `raster`) |
+| `jpeg` | yes | JPEG raster output (enables `raster`) |
+| `webp` | yes | WebP raster output (enables `raster`) |
+| `raster` | via png/jpeg/webp | SVG rasterizing with `resvg` (`RasterRenderer`) |
 | `pdf` | yes | PDF vector output (`PdfRenderer`) |
 | `cmyk` | no | Print-ready CMYK PDF output (`render_pdf_cmyk`) |
 | `serde` | no | Serialize/deserialize support |

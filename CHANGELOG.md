@@ -17,6 +17,11 @@
   against 2,224 `qrcode-generator` matrices and 96 pixel-identical JS renders.
   Also available as `QRMatrix::new_js_compatible` and
   `SvgRenderer::js_compatible`.
+- `resvg`/`usvg` are now optional. They come in only with the raster
+  formats (`png`, `jpeg`, `webp`, via a new `raster` feature) or `pdf`. A
+  build with just `cmyk` needs neither. Default features are unchanged.
+  Note: with `default-features = false`, `RasterRenderer` now needs one of
+  the raster features.
 
 ## 0.2.1
 

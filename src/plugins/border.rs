@@ -574,12 +574,13 @@ mod tests {
     }
 
     #[test]
+    #[cfg(any(feature = "raster", feature = "pdf"))]
     fn test_text_decoration_is_escaped() {
         let svg = r#"<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><defs></defs></svg>"#;
         let options = QRBorderOptions::new(20.0, "#000000").with_text(Position::Top, "Fish & <Chips>");
         let result = BorderPlugin::new(options).apply(svg, 300, 300);
 
         assert!(result.contains("Fish &amp; &lt;Chips&gt;"));
-        assert!(resvg::usvg::Tree::from_str(&result, &Default::default()).is_ok());
+        assert!(usvg::Tree::from_str(&result, &Default::default()).is_ok());
     }
 }
