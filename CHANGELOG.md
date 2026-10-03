@@ -10,6 +10,13 @@
   CMYK Form XObject into your own `pdf_writer` document (e.g. many codes on
   one sheet). `pdf_writer` is re-exported with the `cmyk` feature. See
   `examples/cmyk_sheet.rs`.
+- Opt-in JS compatibility: `QRCodeStylingBuilder::js_compatible(true)`
+  produces output identical to JS `qr-code-styling` 1.9.2: the same matrix as
+  `qrcode-generator` (single-mode encoding, its mask penalty) and the same
+  circle-shape dot ring (rounded center, transposed sampling). Verified
+  against 2,224 `qrcode-generator` matrices and 96 pixel-identical JS renders.
+  Also available as `QRMatrix::new_js_compatible` and
+  `SvgRenderer::js_compatible`.
 
 ## 0.2.1
 

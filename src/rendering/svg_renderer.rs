@@ -18,6 +18,7 @@ use crate::utils::calculate_image_size;
 pub struct SvgRenderer<'a> {
     options: Cow<'a, QRCodeStylingOptions>,
     instance_id: u64,
+    js_compatible: bool,
 }
 
 /// Square mask for corner squares (7x7 pattern).
@@ -62,7 +63,16 @@ impl<'a> SvgRenderer<'a> {
         Self {
             options,
             instance_id,
+            js_compatible: false,
         }
+    }
+
+    /// Draw like the JavaScript `qr-code-styling` library where the two
+    /// differ: for [`ShapeType::Circle`], the extra ring of dots uses a
+    /// rounded center and samples the QR matrix transposed, as JS does.
+    pub fn js_compatible(mut self, on: bool) -> Self {
+        self.js_compatible = on;
+        self
     }
 
     /// Render the QR code as SVG string.
@@ -243,7 +253,11 @@ impl<'a> SvgRenderer<'a> {
         let fake_count = count + additional_dots * 2;
         let x_fake_beginning = x_beginning - additional_dots as f64 * dot_size;
         let y_fake_beginning = y_beginning - additional_dots as f64 * dot_size;
-        let center = fake_count as f64 / 2.0;
+        let center = if self.js_compatible {
+            self.round_size(fake_count as f64 / 2.0)
+        } else {
+            fake_count as f64 / 2.0
+        };
 
         let mut fake_matrix = vec![vec![0u8; fake_count]; fake_count];
 
@@ -280,7 +294,13 @@ impl<'a> SvgRenderer<'a> {
                     row.wrapping_sub(additional_dots)
                 };
 
-                if source_row < count && source_col < count && matrix.is_dark(source_row, source_col) {
+                // JS calls isDark(col-derived, row-derived), i.e. transposed
+                let (r, c) = if self.js_compatible {
+                    (source_col, source_row)
+                } else {
+                    (source_row, source_col)
+                };
+                if r < count && c < count && matrix.is_dark(r, c) {
                     *cell = 1;
                 }
             }

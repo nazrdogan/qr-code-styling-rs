@@ -33,13 +33,20 @@ use crate::types::OutputFormat;
 pub struct QRCodeStyling {
     options: QRCodeStylingOptions,
     matrix: QRMatrix,
+    js_compatible: bool,
 }
 
 impl QRCodeStylingBuilder {
     /// Build the QRCodeStyling with the configured options.
     pub fn build(self) -> Result<QRCodeStyling> {
+        let js_compatible = self.js_compatible;
         let options = self.build_options()?;
-        QRCodeStyling::new(options)
+        let matrix = QRCodeStyling::make_matrix(&options, js_compatible)?;
+        Ok(QRCodeStyling {
+            options,
+            matrix,
+            js_compatible,
+        })
     }
 }
 
@@ -53,20 +60,48 @@ impl QRCodeStyling {
     pub fn new(options: QRCodeStylingOptions) -> Result<Self> {
         let matrix = QRMatrix::new(&options.data, &options.qr_options)?;
 
-        Ok(Self { options, matrix })
+        Ok(Self {
+            options,
+            matrix,
+            js_compatible: false,
+        })
+    }
+
+    fn make_matrix(options: &QRCodeStylingOptions, js_compatible: bool) -> Result<QRMatrix> {
+        if js_compatible {
+            QRMatrix::new_js_compatible(&options.data, &options.qr_options)
+        } else {
+            QRMatrix::new(&options.data, &options.qr_options)
+        }
+    }
+
+    /// Whether output matches the JavaScript `qr-code-styling` library
+    /// (see [`QRCodeStylingBuilder::js_compatible`]).
+    pub fn is_js_compatible(&self) -> bool {
+        self.js_compatible
+    }
+
+    /// Switch JS-compatible output on or off and regenerate the matrix.
+    pub fn set_js_compatible(&mut self, on: bool) -> Result<()> {
+        self.matrix = Self::make_matrix(&self.options, on)?;
+        self.js_compatible = on;
+        Ok(())
     }
 
     /// Update the data and regenerate the QR code.
     pub fn update(&mut self, data: &str) -> Result<&mut Self> {
         self.options.data = data.to_string();
-        self.matrix = QRMatrix::new(&self.options.data, &self.options.qr_options)?;
+        self.matrix = Self::make_matrix(&self.options, self.js_compatible)?;
         Ok(self)
+    }
+
+    fn renderer(&self) -> SvgRenderer<'_> {
+        SvgRenderer::from_ref(&self.options).js_compatible(self.js_compatible)
     }
 
     /// Render the QR code as an SVG string.
     pub fn render_svg(&self) -> Result<String> {
-        let renderer = SvgRenderer::from_ref(&self.options);
-        renderer.render(&self.matrix)
+        self.renderer().render(&self.matrix)
     }
 
     /// Render the QR code in the specified format.
@@ -103,7 +138,7 @@ impl QRCodeStyling {
     /// included, since they are applied to the SVG string.
     #[cfg(feature = "cmyk")]
     pub fn render_pdf_cmyk(&self, options: &crate::rendering::CmykPdfOptions) -> Result<Vec<u8>> {
-        let renderer = SvgRenderer::from_ref(&self.options);
+        let renderer = self.renderer();
         let scene = renderer.scene(&self.matrix);
         crate::rendering::cmyk_pdf_write(&scene, options)
     }
@@ -153,7 +188,7 @@ impl QRCodeStyling {
         alloc: &mut crate::pdf_writer::Ref,
         options: &crate::rendering::CmykPdfOptions,
     ) -> Result<crate::rendering::CmykXObject> {
-        let renderer = SvgRenderer::from_ref(&self.options);
+        let renderer = self.renderer();
         let scene = renderer.scene(&self.matrix);
         crate::rendering::cmyk_xobject_write(&scene, options, chunk, alloc)
     }
@@ -195,7 +230,7 @@ impl QRCodeStyling {
 
     /// Regenerate the QR matrix (call after modifying options).
     pub fn regenerate(&mut self) -> Result<()> {
-        self.matrix = QRMatrix::new(&self.options.data, &self.options.qr_options)?;
+        self.matrix = Self::make_matrix(&self.options, self.js_compatible)?;
         Ok(())
     }
 }
@@ -395,5 +430,30 @@ mod tests {
         assert_eq!(text.matches("/BBox [0 0 120 120]").count(), 3);
         // Each form has its own resources with its own shading named Sh0
         assert_eq!(text.matches("/Sh0").count(), 6); // resource entry + `sh` use, per form
+    }
+
+    #[test]
+    fn test_js_compatible_option() {
+        use crate::types::ShapeType;
+        let build = |compat: bool| {
+            QRCodeStyling::builder()
+                .data("https://github.com/nazrdogan/qr-code-styling-rs")
+                .shape(ShapeType::Circle)
+                .js_compatible(compat)
+                .build()
+                .unwrap()
+        };
+        let (native, js) = (build(false), build(true));
+        assert!(!native.is_js_compatible() && js.is_js_compatible());
+        // Different matrix and ring sampling => different output
+        assert_ne!(native.render_svg().unwrap(), js.render_svg().unwrap());
+
+        // The flag survives regeneration and can be toggled
+        let mut qr = build(true);
+        qr.update("https://example.com").unwrap();
+        assert!(qr.is_js_compatible());
+        let compat_svg = qr.render_svg().unwrap();
+        qr.set_js_compatible(false).unwrap();
+        assert_ne!(qr.render_svg().unwrap(), compat_svg);
     }
 }

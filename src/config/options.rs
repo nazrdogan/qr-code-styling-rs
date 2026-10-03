@@ -71,6 +71,7 @@ pub struct QRCodeStylingBuilder {
     corners_dot_options: Option<CornersDotOptions>,
     background_options: Option<BackgroundOptions>,
     image_options: Option<ImageOptions>,
+    pub(crate) js_compatible: bool,
 }
 
 impl QRCodeStylingBuilder {
@@ -155,6 +156,15 @@ impl QRCodeStylingBuilder {
     /// Set image embedding options.
     pub fn image_options(mut self, options: ImageOptions) -> Self {
         self.image_options = Some(options);
+        self
+    }
+
+    /// Produce output identical to the JavaScript `qr-code-styling` library:
+    /// the same QR matrix as `qrcode-generator` (mode, mask choice) and the
+    /// same circle-shape dot ring. Off by default; see
+    /// [`QRMatrix::new_js_compatible`](crate::core::QRMatrix::new_js_compatible).
+    pub fn js_compatible(mut self, on: bool) -> Self {
+        self.js_compatible = on;
         self
     }
 
