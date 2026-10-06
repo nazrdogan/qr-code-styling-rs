@@ -486,6 +486,7 @@ fn samples_corners_dots_comprehensive(
         let type_name = match corner_dot_type {
             CornerDotType::Dot => "dot",
             CornerDotType::Square => "square",
+            CornerDotType::FromDots => "from_dots",
         };
 
         for (treatment_name, treatment) in &color_treatments {
@@ -524,6 +525,7 @@ fn samples_corners_squares_comprehensive(
             CornerSquareType::Square => "square",
             CornerSquareType::Dot => "dot",
             CornerSquareType::ExtraRounded => "extra_rounded",
+            CornerSquareType::FromDots => "from_dots",
         };
 
         for (treatment_name, treatment) in &color_treatments {

@@ -209,6 +209,22 @@ The output then matches JS `qr-code-styling` 1.9.2: the same matrix as
 `qrcode-generator` and the same `circle`-shape dot ring. Text with characters
 above U+00FF is encoded as UTF-8; JS would truncate those characters.
 
+Options JS leaves unset map to these Rust settings:
+
+| JS | Rust |
+|----|------|
+| no `cornersSquareOptions.type` | `CornerSquareType::FromDots` (finder ring drawn module by module with the dots' type) |
+| no `cornersDotOptions.type` | `CornerDotType::FromDots` |
+| no `cornersSquareOptions.color`/`gradient` | `CornersSquareOptions::with_inherited_color()` (dots' color) |
+| no `cornersDotOptions.color`/`gradient` | `CornersDotOptions::with_inherited_color()` (corner squares' color) |
+
+So the JS defaults (no corner options at all) are:
+
+```rust,ignore
+.corners_square_options(CornersSquareOptions::new(CornerSquareType::FromDots).with_inherited_color())
+.corners_dot_options(CornersDotOptions::new(CornerDotType::FromDots).with_inherited_color())
+```
+
 ## CMYK PDF for print
 
 With the `cmyk` feature, `render_pdf_cmyk` writes the QR code straight to a
@@ -217,7 +233,7 @@ Black prints as 100% K by default, which keeps small modules sharp on press.
 Map brand colors to exact CMYK values:
 
 ```toml
-qr-code-styling = { version = "0.2.3", features = ["cmyk"] }
+qr-code-styling = { version = "0.2.4", features = ["cmyk"] }
 ```
 
 ```rust,ignore

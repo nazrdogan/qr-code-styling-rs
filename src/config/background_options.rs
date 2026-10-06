@@ -10,7 +10,8 @@ pub struct BackgroundOptions {
     pub color: Color,
     /// Optional gradient for background.
     pub gradient: Option<Gradient>,
-    /// Corner radius ratio (0.0 to 1.0, where 0.5 = fully rounded).
+    /// Corner radius as a fraction of half the (square) background's size,
+    /// 0.0 to 1.0: 1.0 is a full circle, as in JS qr-code-styling.
     pub round: f64,
 }
 
@@ -54,9 +55,9 @@ impl BackgroundOptions {
         self
     }
 
-    /// Set the corner radius ratio.
+    /// Set the corner radius ratio (0.0 to 1.0; 1.0 is a full circle).
     pub fn with_round(mut self, round: f64) -> Self {
-        self.round = round.clamp(0.0, 0.5);
+        self.round = round.clamp(0.0, 1.0);
         self
     }
 }

@@ -12,6 +12,10 @@ pub enum CornerSquareType {
     Dot,
     /// Extra rounded corner pattern.
     ExtraRounded,
+    /// Draw the pattern module by module with the dots' type, like JS
+    /// qr-code-styling does when the type is not set.
+    #[cfg_attr(feature = "serde", serde(rename = "from-dots"))]
+    FromDots,
 }
 
 impl CornerSquareType {
@@ -21,6 +25,7 @@ impl CornerSquareType {
             CornerSquareType::Square,
             CornerSquareType::Dot,
             CornerSquareType::ExtraRounded,
+            CornerSquareType::FromDots,
         ]
     }
 }

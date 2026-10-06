@@ -10,11 +10,15 @@ pub enum CornerDotType {
     Dot,
     /// Square dot.
     Square,
+    /// Draw the pattern module by module with the dots' type, like JS
+    /// qr-code-styling does when the type is not set.
+    #[cfg_attr(feature = "serde", serde(rename = "from-dots"))]
+    FromDots,
 }
 
 impl CornerDotType {
     /// Returns all available corner dot types.
     pub fn all() -> &'static [CornerDotType] {
-        &[CornerDotType::Dot, CornerDotType::Square]
+        &[CornerDotType::Dot, CornerDotType::Square, CornerDotType::FromDots]
     }
 }
