@@ -3,7 +3,7 @@
 //! Run with: cargo run --example cmyk_sheet --features cmyk
 
 use qr_code_styling::pdf_writer::{Content, Finish, Name, Pdf, Rect, Ref};
-use qr_code_styling::{CmykPdfOptions, CornerSquareType, CornersSquareOptions, DotType, DotsOptions, QRCodeStyling};
+use qr_code_styling::{CmykImageCache, CmykPdfOptions, CornerSquareType, CornersSquareOptions, DotType, DotsOptions, QRCodeStyling};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     const A4: (f32, f32) = (595.0, 842.0);
@@ -17,6 +17,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let (catalog, tree, page, contents) = (alloc.bump(), alloc.bump(), alloc.bump(), alloc.bump());
 
     let options = CmykPdfOptions::new();
+    // Images shared by several codes (e.g. a logo) are embedded once
+    let mut images = CmykImageCache::new();
     let grid_w = COLS as f32 * CELL + (COLS - 1) as f32 * GAP;
     let grid_h = ROWS as f32 * CELL + (ROWS - 1) as f32 * GAP;
     let (left, top) = ((A4.0 - grid_w) / 2.0, (A4.1 + grid_h) / 2.0);
@@ -31,7 +33,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             .dots_options(DotsOptions::new(DotType::Rounded))
             .corners_square_options(CornersSquareOptions::new(CornerSquareType::ExtraRounded))
             .build()?;
-        let form = qr.write_cmyk_xobject(&mut pdf, &mut alloc, &options)?;
+        let form = qr.write_cmyk_xobject_cached(&mut pdf, &mut alloc, &options, &mut images)?;
 
         let (col, row) = (i % COLS, i / COLS);
         let x = left + col as f32 * (CELL + GAP);

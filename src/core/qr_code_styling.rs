@@ -199,9 +199,41 @@ impl QRCodeStyling {
         alloc: &mut crate::pdf_writer::Ref,
         options: &crate::rendering::CmykPdfOptions,
     ) -> Result<crate::rendering::CmykXObject> {
+        let mut cache = crate::rendering::CmykImageCache::new();
+        self.write_cmyk_xobject_cached(chunk, alloc, options, &mut cache)
+    }
+
+    /// Like [`write_cmyk_xobject`](Self::write_cmyk_xobject), but images
+    /// (the logo, border decorations) already in `cache` are referenced
+    /// instead of decoded and embedded again. For many codes with the same
+    /// logo in one PDF, pass one cache to every call: the logo is processed
+    /// and stored once.
+    ///
+    /// ```
+    /// use qr_code_styling::pdf_writer::{Pdf, Ref};
+    /// use qr_code_styling::{CmykImageCache, CmykPdfOptions, QRCodeStyling};
+    ///
+    /// let mut pdf = Pdf::new();
+    /// let mut alloc = Ref::new(1);
+    /// let mut cache = CmykImageCache::new();
+    /// let options = CmykPdfOptions::new().with_compression_level(1);
+    /// for i in 0..3 {
+    ///     let qr = QRCodeStyling::builder().data(format!("https://example.com/{i}")).build().unwrap();
+    ///     let form = qr.write_cmyk_xobject_cached(&mut pdf, &mut alloc, &options, &mut cache).unwrap();
+    ///     // ... place `form` on a page
+    /// }
+    /// ```
+    #[cfg(feature = "cmyk")]
+    pub fn write_cmyk_xobject_cached(
+        &self,
+        chunk: &mut crate::pdf_writer::Chunk,
+        alloc: &mut crate::pdf_writer::Ref,
+        options: &crate::rendering::CmykPdfOptions,
+        cache: &mut crate::rendering::CmykImageCache,
+    ) -> Result<crate::rendering::CmykXObject> {
         let renderer = self.renderer();
         let scene = renderer.scene(&self.matrix);
-        crate::rendering::cmyk_xobject_write(&scene, options, chunk, alloc)
+        crate::rendering::cmyk_xobject_write(&scene, options, chunk, alloc, cache)
     }
 
     /// Save a CMYK PDF (see [`render_pdf_cmyk`](Self::render_pdf_cmyk)).
@@ -441,6 +473,77 @@ mod tests {
         assert_eq!(text.matches("/BBox [0 0 120 120]").count(), 3);
         // Each form has its own resources with its own shading named Sh0
         assert_eq!(text.matches("/Sh0").count(), 6); // resource entry + `sh` use, per form
+    }
+
+    #[test]
+    #[cfg(feature = "cmyk")]
+    fn test_cmyk_xobjects_share_cached_logo() {
+        use crate::config::Color;
+        use crate::pdf_writer::{Pdf, Ref};
+        use crate::rendering::{Cmyk, CmykImageCache, CmykPdfOptions};
+
+        let logo = include_bytes!("../../examples/logo.png").to_vec();
+        let qr = |i: usize| {
+            QRCodeStyling::builder()
+                .data(format!("item {}", i))
+                .size(200)
+                .image(logo.clone())
+                .build()
+                .unwrap()
+        };
+        let image_count = |pdf: Pdf| {
+            let bytes = pdf.finish();
+            String::from_utf8_lossy(&bytes).matches("/Subtype /Image").count()
+        };
+        let options = CmykPdfOptions::new();
+
+        // Without a cache, every form embeds its own copy
+        let (mut pdf, mut alloc) = (Pdf::new(), Ref::new(1));
+        for i in 0..3 {
+            qr(i).write_cmyk_xobject(&mut pdf, &mut alloc, &options).unwrap();
+        }
+        let uncached = image_count(pdf);
+        assert!(uncached >= 3);
+
+        // With one cache, the logo (and its soft mask, if any) is written once
+        let (mut pdf, mut alloc) = (Pdf::new(), Ref::new(1));
+        let mut cache = CmykImageCache::new();
+        for i in 0..3 {
+            qr(i).write_cmyk_xobject_cached(&mut pdf, &mut alloc, &options, &mut cache).unwrap();
+        }
+        assert_eq!(cache.len(), 1);
+        assert_eq!(image_count(pdf), uncached / 3);
+
+        // Different color conversion: the cache starts over
+        let (mut pdf, mut alloc) = (Pdf::new(), Ref::new(1));
+        let mut cache = CmykImageCache::new();
+        qr(0).write_cmyk_xobject_cached(&mut pdf, &mut alloc, &options, &mut cache).unwrap();
+        let recolored = options.clone().with_color(Color::BLACK, Cmyk::new(60.0, 40.0, 40.0, 100.0));
+        qr(1).write_cmyk_xobject_cached(&mut pdf, &mut alloc, &recolored, &mut cache).unwrap();
+        assert_eq!(image_count(pdf), 2 * uncached / 3);
+    }
+
+    #[test]
+    #[cfg(feature = "cmyk")]
+    fn test_cmyk_compression_level() {
+        use crate::rendering::CmykPdfOptions;
+
+        let qr = QRCodeStyling::builder()
+            .data("https://example.com/compression")
+            .size(300)
+            .dots_options(DotsOptions::new(DotType::Rounded))
+            .build()
+            .unwrap();
+        let size = |options: CmykPdfOptions| qr.render_pdf_cmyk(&options).unwrap().len();
+
+        let off = size(CmykPdfOptions::new().with_compression(false));
+        let fast = size(CmykPdfOptions::new().with_compression_level(1));
+        let default = size(CmykPdfOptions::new());
+        let best = size(CmykPdfOptions::new().with_compression_level(9));
+        // Level 9 isn't guaranteed to beat 6 on every input
+        assert!(off > fast && fast > default && off > best);
+        assert_eq!(default, size(CmykPdfOptions::new().with_compression_level(6)));
+        assert_eq!(off, size(CmykPdfOptions::new().with_compression_level(0)));
     }
 
     #[test]
