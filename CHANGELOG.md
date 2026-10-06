@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.3
 
 ### CMYK
 - **Compression level:** `CmykPdfOptions::with_compression_level(0..=10)`
