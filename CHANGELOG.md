@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### CMYK
+- **Compression level:** `CmykPdfOptions::with_compression_level(0..=10)`
+  sets the Flate level (default 6). Level 1 is several times faster for
+  bulk sheets, with somewhat larger files.
+- **Shared images:** `QRCodeStyling::write_cmyk_xobject_cached` takes a
+  `CmykImageCache`, so a logo (or border image) shared by many codes in one
+  PDF is decoded, converted and embedded once and referenced by every form.
+  On a 300-code sheet with a logo, it went from 2.2 to 0.7 ms and from 13.6
+  to 6.5 KB per code at level 6, and to 0.23 ms per code at level 1.
+
 ## 0.2.2
 
 ### CMYK

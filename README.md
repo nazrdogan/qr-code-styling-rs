@@ -244,7 +244,12 @@ let options = CmykPdfOptions::new()
 
 To lay out many codes on one sheet, write each as a Form XObject into your own
 `pdf_writer` document with `write_cmyk_xobject` (see
-`examples/cmyk_sheet.rs`).
+`examples/cmyk_sheet.rs`). For bulk output:
+
+- Use `write_cmyk_xobject_cached` with one `CmykImageCache` per PDF. A
+  shared logo is then decoded and embedded once instead of once per code.
+- `with_compression_level(1)` is about 3× faster than the default level 6,
+  at the cost of somewhat larger files.
 
 ## Output Formats
 

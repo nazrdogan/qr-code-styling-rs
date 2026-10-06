@@ -13,7 +13,7 @@ pub use svg_renderer::SvgRenderer;
 #[cfg(feature = "raster")]
 pub use raster_renderer::RasterRenderer;
 #[cfg(feature = "cmyk")]
-pub use cmyk_pdf::{Cmyk, CmykConverter, CmykPdfOptions, CmykXObject};
+pub use cmyk_pdf::{Cmyk, CmykConverter, CmykImageCache, CmykPdfOptions, CmykXObject};
 #[cfg(feature = "pdf")]
 pub use pdf_renderer::PdfRenderer;
 

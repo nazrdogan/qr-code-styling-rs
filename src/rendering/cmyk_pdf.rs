@@ -105,6 +105,7 @@ pub struct CmykPdfOptions {
     color_map: Vec<(Color, Cmyk)>,
     converter: Option<CmykConverter>,
     compress: bool,
+    compression_level: u8,
     overlays: Vec<Overlay>,
     fonts: Option<Arc<usvg::fontdb::Database>>,
 }
@@ -128,6 +129,7 @@ impl fmt::Debug for CmykPdfOptions {
             .field("color_map", &self.color_map)
             .field("converter", &self.converter.as_ref().map(|_| "<fn>"))
             .field("compress", &self.compress)
+            .field("compression_level", &self.compression_level)
             .field("overlays", &self.overlays)
             .field("fonts", &self.fonts.as_ref().map(|db| db.len()))
             .finish()
@@ -141,6 +143,7 @@ impl CmykPdfOptions {
             color_map: Vec::new(),
             converter: None,
             compress: true,
+            compression_level: DEFAULT_COMPRESSION_LEVEL,
             overlays: Vec::new(),
             fonts: None,
         }
@@ -197,6 +200,15 @@ impl CmykPdfOptions {
         self
     }
 
+    /// Flate compression level, 0–10 (default: 6). Lower is faster and
+    /// gives larger files; 1 is several times faster than 6 for bulk
+    /// output. 0 turns compression off, like `with_compression(false)`.
+    pub fn with_compression_level(mut self, level: u8) -> Self {
+        self.compression_level = level.min(10);
+        self.compress = level > 0;
+        self
+    }
+
     /// The CMYK value used for `color`.
     pub fn resolve(&self, color: Color) -> Cmyk {
         self.color_map
@@ -209,6 +221,8 @@ impl CmykPdfOptions {
             })
     }
 }
+
+const DEFAULT_COMPRESSION_LEVEL: u8 = 6;
 
 fn same_rgb(a: Color, b: Color) -> bool {
     (a.r, a.g, a.b) == (b.r, b.g, b.b)
@@ -226,13 +240,71 @@ pub struct CmykXObject {
     pub height: f32,
 }
 
+/// Raster images (logos, border decorations) already written into a PDF,
+/// so codes sharing a logo reference one image XObject instead of each
+/// decoding and embedding their own copy.
+///
+/// Pass the same cache to every
+/// [`write_cmyk_xobject_cached`](crate::QRCodeStyling::write_cmyk_xobject_cached)
+/// call whose objects end up in the same PDF. Don't share it between
+/// different PDFs: the cached objects only exist in the first one.
+///
+/// Images are converted with the colors and compression of the options
+/// they were first written with; if the options change, the cache starts
+/// over (later codes embed fresh copies).
+#[derive(Default)]
+pub struct CmykImageCache {
+    images: HashMap<Vec<u8>, Option<(Ref, u32, u32)>>,
+    /// Color map, converter and compression the images were written with.
+    written_with: Option<OptionsKey>,
+}
+
+type OptionsKey = (Vec<(Color, Cmyk)>, Option<usize>, Option<u8>);
+
+impl CmykImageCache {
+    /// An empty cache.
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    /// Number of distinct images written.
+    pub fn len(&self) -> usize {
+        self.images.values().filter(|v| v.is_some()).count()
+    }
+
+    /// Whether no images have been written.
+    pub fn is_empty(&self) -> bool {
+        self.len() == 0
+    }
+
+    /// Forget the cached images if `options` would convert them differently.
+    fn sync(&mut self, options: &CmykPdfOptions) {
+        let key: OptionsKey = (
+            options.color_map.clone(),
+            options.converter.as_ref().map(|c| Arc::as_ptr(c) as *const () as usize),
+            options.compress.then_some(options.compression_level),
+        );
+        if self.written_with.as_ref() != Some(&key) {
+            self.images.clear();
+            self.written_with = Some(key);
+        }
+    }
+}
+
+impl fmt::Debug for CmykImageCache {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("CmykImageCache").field("images", &self.len()).finish()
+    }
+}
+
 /// Write `scene` as a complete single-page PDF.
 pub(crate) fn write_pdf(scene: &Scene<'_>, options: &CmykPdfOptions) -> Result<Vec<u8>> {
     let mut pdf = Pdf::new();
     let mut alloc = Ref::new(1);
     let (catalog_id, tree_id, page_id) = (alloc.bump(), alloc.bump(), alloc.bump());
 
-    let mut writer = CmykPdfWriter::new(options, &mut pdf, &mut alloc);
+    let mut cache = CmykImageCache::new();
+    let mut writer = CmykPdfWriter::new(options, &mut pdf, &mut alloc, &mut cache);
     let content = writer.draw_scene(scene)?;
     let content_id = writer.write_stream(&content);
     let resources = writer.into_resources();
@@ -255,9 +327,10 @@ pub(crate) fn write_xobject(
     options: &CmykPdfOptions,
     chunk: &mut Chunk,
     alloc: &mut Ref,
+    cache: &mut CmykImageCache,
 ) -> Result<CmykXObject> {
     let id = alloc.bump();
-    let mut writer = CmykPdfWriter::new(options, chunk, alloc);
+    let mut writer = CmykPdfWriter::new(options, chunk, alloc, cache);
     let content = writer.draw_scene(scene)?;
     let (data, compressed) = writer.maybe_compress(&content);
     let resources = writer.into_resources();
@@ -312,15 +385,18 @@ struct CmykPdfWriter<'a> {
     options: &'a CmykPdfOptions,
     chunk: &'a mut Chunk,
     alloc: &'a mut Ref,
+    images: &'a mut CmykImageCache,
     names: ResourceNames,
 }
 
 impl<'a> CmykPdfWriter<'a> {
-    fn new(options: &'a CmykPdfOptions, chunk: &'a mut Chunk, alloc: &'a mut Ref) -> Self {
+    fn new(options: &'a CmykPdfOptions, chunk: &'a mut Chunk, alloc: &'a mut Ref, images: &'a mut CmykImageCache) -> Self {
+        images.sync(options);
         Self {
             options,
             chunk,
             alloc,
+            images,
             names: ResourceNames::default(),
         }
     }
@@ -373,7 +449,7 @@ impl<'a> CmykPdfWriter<'a> {
 
     fn maybe_compress(&self, data: &[u8]) -> (Vec<u8>, bool) {
         if self.options.compress {
-            (miniz_oxide::deflate::compress_to_vec_zlib(data, 6), true)
+            (miniz_oxide::deflate::compress_to_vec_zlib(data, self.options.compression_level), true)
         } else {
             (data.to_vec(), false)
         }
@@ -566,9 +642,35 @@ impl<'a> CmykPdfWriter<'a> {
         Ok(())
     }
 
-    /// Embed raster image data as a CMYK image XObject (with an alpha soft
-    /// mask if needed). Returns its resource name and pixel size.
+    /// Add raster image data to this drawing's resources, embedding it
+    /// unless the image cache already has it. Returns its resource name
+    /// and pixel size.
     fn embed_image(&mut self, data: &[u8]) -> Result<Option<(String, u32, u32)>> {
+        let cached = match self.images.images.get(data) {
+            Some(entry) => *entry,
+            None => {
+                let entry = self.write_image(data)?;
+                self.images.images.insert(data.to_vec(), entry);
+                entry
+            }
+        };
+        let Some((image_id, iw, ih)) = cached else {
+            return Ok(None);
+        };
+        let name = match self.names.images.iter().find(|(_, id)| *id == image_id) {
+            Some((name, _)) => name.clone(),
+            None => {
+                let name = format!("Im{}", self.names.images.len());
+                self.names.images.push((name.clone(), image_id));
+                name
+            }
+        };
+        Ok(Some((name, iw, ih)))
+    }
+
+    /// Write raster image data as a CMYK image XObject (with an alpha soft
+    /// mask if needed). Returns its id and pixel size.
+    fn write_image(&mut self, data: &[u8]) -> Result<Option<(Ref, u32, u32)>> {
         let decoded = image::load_from_memory(data)
             .map_err(|e| QRError::ImageLoadError(e.to_string()))?
             .to_rgba8();
@@ -626,10 +728,7 @@ impl<'a> CmykPdfWriter<'a> {
             xobj.s_mask(mask);
         }
         xobj.finish();
-
-        let name = format!("Im{}", self.names.images.len());
-        self.names.images.push((name.clone(), image_id));
-        Ok(Some((name, iw, ih)))
+        Ok(Some((image_id, iw, ih)))
     }
 
     /// Parse `svg` with usvg (text becomes outlines) and draw it in CMYK.
