@@ -27,6 +27,8 @@ impl QRCornerDot {
         match self.dot_type {
             CornerDotType::Dot => push_circle(out, x, y, size),
             CornerDotType::Square => push_square(out, x, y, size),
+            // Drawn module by module by the renderer
+            CornerDotType::FromDots => {}
         }
     }
 }

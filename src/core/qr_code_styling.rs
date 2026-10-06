@@ -546,6 +546,162 @@ mod tests {
         assert_eq!(off, size(CmykPdfOptions::new().with_compression_level(0)));
     }
 
+    /// Rasterize `svg` (300×300) to RGBA pixels.
+    #[cfg(feature = "png")]
+    fn raster_300(svg: &str) -> image::RgbaImage {
+        let png = crate::rendering::RasterRenderer::render(svg, 300, 300, OutputFormat::Png).unwrap();
+        image::load_from_memory(&png).unwrap().to_rgba8()
+    }
+
+    /// Number of pixels where any channel differs by more than `tolerance`.
+    #[cfg(feature = "png")]
+    fn pixels_differing(a: &image::RgbaImage, b: &image::RgbaImage, tolerance: u8) -> usize {
+        a.pixels()
+            .zip(b.pixels())
+            .filter(|(p, q)| p.0.iter().zip(q.0).any(|(x, y)| x.abs_diff(y) > tolerance))
+            .count()
+    }
+
+    /// The JS qr-code-styling 1.9.2 render of a case in tests/fixtures/js
+    /// (made by generate.js there).
+    #[cfg(feature = "png")]
+    fn js_fixture(name: &str) -> String {
+        let path = format!("{}/tests/fixtures/js/{}.svg", env!("CARGO_MANIFEST_DIR"), name);
+        std::fs::read_to_string(path).unwrap()
+    }
+
+    /// Same input as generate.js.
+    fn js_case() -> QRCodeStylingBuilder {
+        QRCodeStyling::builder()
+            .data("https://example.com/js-corners")
+            .size(300)
+            .margin(10)
+            .js_compatible(true)
+    }
+
+    #[test]
+    #[cfg(feature = "png")]
+    fn test_typeless_corners_match_js() {
+        use crate::config::{Color, CornersDotOptions, CornersSquareOptions};
+        use crate::types::{CornerDotType, CornerSquareType};
+
+        let blue = Color::from_hex("#1d4ed8").unwrap();
+        for (dot_type, name) in [
+            (DotType::Square, "square"),
+            (DotType::Dots, "dots"),
+            (DotType::Rounded, "rounded"),
+            (DotType::ExtraRounded, "extra-rounded"),
+            (DotType::Classy, "classy"),
+            (DotType::ClassyRounded, "classy-rounded"),
+        ] {
+            // JS: no cornersSquareOptions / cornersDotOptions at all
+            let qr = js_case()
+                .dots_options(DotsOptions::new(dot_type).with_color(blue))
+                .corners_square_options(CornersSquareOptions::new(CornerSquareType::FromDots).with_inherited_color())
+                .corners_dot_options(CornersDotOptions::new(CornerDotType::FromDots).with_inherited_color())
+                .build()
+                .unwrap();
+            let ours = raster_300(&qr.render_svg().unwrap());
+            let js = raster_300(&js_fixture(&format!("fromdots_{}", name)));
+            assert_eq!(pixels_differing(&ours, &js, 8), 0, "dots type {}", name);
+        }
+    }
+
+    #[test]
+    fn test_from_dots_corner_modules_use_dot_path() {
+        use crate::config::{CornersDotOptions, CornersSquareOptions};
+        use crate::figures::QRDot;
+        use crate::types::{CornerDotType, CornerSquareType};
+
+        // Square dots without neighbors' influence: every finder module is a
+        // plain module-sized square, like the data modules.
+        let qr = js_case()
+            .size(210)
+            .margin(0)
+            .data("A")
+            .dots_options(DotsOptions::new(DotType::Dots))
+            .corners_square_options(CornersSquareOptions::new(CornerSquareType::FromDots))
+            .corners_dot_options(CornersDotOptions::new(CornerDotType::FromDots))
+            .build()
+            .unwrap();
+        let svg = qr.render_svg().unwrap();
+        // A 21×21 code at 10 px per module: every finder module is its own
+        // closed circle, 24 in the ring and 9 in the center, per corner.
+        let paths: Vec<&str> = svg.lines().filter(|l| l.starts_with("<path")).collect();
+        assert_eq!(paths.len(), 7); // dots + 3 × (square, dot)
+        let mut module = String::new();
+        QRDot::new(DotType::Dots).push_path::<fn(i32, i32) -> bool>(&mut module, 0.0, 0.0, 10.0, None);
+        assert_eq!(module.matches('z').count(), 1);
+        for corner in 0..3 {
+            assert_eq!(paths[1 + corner * 2].matches('z').count(), 24);
+            assert_eq!(paths[2 + corner * 2].matches('z').count(), 9);
+        }
+        assert!(!paths[1].contains("evenodd"));
+    }
+
+    #[test]
+    fn test_corner_dot_inherits_square_color() {
+        use crate::config::{Color, CornersDotOptions, CornersSquareOptions};
+        use crate::types::{CornerDotType, CornerSquareType};
+
+        let red = Color::from_hex("#b91c1c").unwrap();
+        let qr = js_case()
+            .dots_options(DotsOptions::new(DotType::Rounded))
+            .corners_square_options(CornersSquareOptions::new(CornerSquareType::ExtraRounded).with_color(red))
+            .corners_dot_options(CornersDotOptions::new(CornerDotType::Dot).with_inherited_color())
+            .build()
+            .unwrap();
+        let svg = qr.render_svg().unwrap();
+        // 3 squares + 3 dots in red; the dots layer stays black
+        assert_eq!(svg.matches(r##"fill="#B91C1C""##).count(), 6);
+        assert!(svg.contains(r##"<path fill="#000000""##));
+
+        #[cfg(feature = "png")]
+        {
+            let ours = raster_300(&svg);
+            assert_eq!(pixels_differing(&ours, &raster_300(&js_fixture("inherit_square")), 8), 0);
+            // Center of the top-left corner dot
+            let px = ours.get_pixel(10 + 35 * 280 / 29 / 10, 10 + 35 * 280 / 29 / 10);
+            assert_eq!(&px.0[..3], &[0xb9, 0x1c, 0x1c]);
+        }
+    }
+
+    #[test]
+    fn test_round_background_is_full_circle() {
+        use crate::config::{BackgroundOptions, Color, CornersDotOptions, CornersSquareOptions};
+        use crate::types::{CornerDotType, CornerSquareType};
+
+        let bg = BackgroundOptions::new(Color::from_hex("#fde68a").unwrap()).with_round(1.0);
+        assert_eq!(bg.round, 1.0);
+        let qr = js_case()
+            .background_options(bg)
+            .corners_square_options(CornersSquareOptions::new(CornerSquareType::FromDots).with_inherited_color())
+            .corners_dot_options(CornersDotOptions::new(CornerDotType::FromDots).with_inherited_color())
+            .build()
+            .unwrap();
+        let svg = qr.render_svg().unwrap();
+        assert!(svg.contains(r#"width="300" height="300" rx="150""#));
+
+        #[cfg(feature = "png")]
+        {
+            let ours = raster_300(&svg);
+            let js = raster_300(&js_fixture("round_bg"));
+            // JS fills the background through a clip path, which resvg
+            // anti-aliases differently: compare away from the circle's edge.
+            let off_edge = |x: u32, y: u32| {
+                let d = ((x as f64 + 0.5 - 150.0).powi(2) + (y as f64 + 0.5 - 150.0).powi(2)).sqrt();
+                (d - 150.0).abs() > 1.5
+            };
+            let differing = ours
+                .enumerate_pixels()
+                .filter(|&(x, y, p)| off_edge(x, y) && p.0.iter().zip(js.get_pixel(x, y).0).any(|(a, b)| a.abs_diff(b) > 8))
+                .count();
+            assert_eq!(differing, 0);
+            // Corners outside the circle are transparent
+            assert_eq!(ours.get_pixel(2, 2).0[3], 0);
+        }
+    }
+
     #[test]
     fn test_js_compatible_option() {
         use crate::types::ShapeType;

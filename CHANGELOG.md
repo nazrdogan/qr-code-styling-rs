@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.2.4
+
+### JS compatibility
+- **Typeless corners:** `CornerSquareType::FromDots` and
+  `CornerDotType::FromDots` draw the finder pattern module by module with
+  the dots' type, as JS `qr-code-styling` does when the corner type is not
+  set (e.g. rounded/classy modules join along the ring). Serialized as
+  `"from-dots"`. Works in SVG, raster and CMYK output.
+- **Inherited corner colors:** `CornersSquareOptions::with_inherited_color`
+  paints the corner squares with the dots' color, and
+  `CornersDotOptions::with_inherited_color` paints the corner dots with the
+  corner squares' color (or the dots', if those inherit too), as JS does
+  when no color or gradient is given (new `inherit_color` field, serde
+  default `false`).
+- Verified pixel-identical with JS 1.9.2 for all six dot types with no
+  corner options (fixtures in `tests/fixtures/js`).
+
+### Fixes
+- `BackgroundOptions::with_round` clamped to 0.5, so a round background was
+  never a circle. It now takes 0.0–1.0 like JS: `1.0` is a full circle
+  (`rx` = half the size).
+
+### Notes
+- `CornerSquareType`/`CornerDotType` have a new variant and the corner
+  option structs a new field: exhaustive matches and struct literals need
+  updating.
+
 ## 0.2.3
 
 ### CMYK

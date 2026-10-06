@@ -13,6 +13,10 @@ pub struct CornersSquareOptions {
     pub color: Color,
     /// Optional gradient for corner squares.
     pub gradient: Option<Gradient>,
+    /// Ignore `color` and `gradient` and paint with the dots' color, like
+    /// JS qr-code-styling does when neither is set.
+    #[cfg_attr(feature = "serde", serde(default))]
+    pub inherit_color: bool,
 }
 
 impl Default for CornersSquareOptions {
@@ -21,6 +25,7 @@ impl Default for CornersSquareOptions {
             square_type: CornerSquareType::Square,
             color: Color::BLACK,
             gradient: None,
+            inherit_color: false,
         }
     }
 }
@@ -51,6 +56,13 @@ impl CornersSquareOptions {
         self.gradient = Some(gradient);
         self
     }
+
+    /// Paint like JS qr-code-styling when no color or gradient is given
+    /// (see [`inherit_color`](Self::inherit_color)).
+    pub fn with_inherited_color(mut self) -> Self {
+        self.inherit_color = true;
+        self
+    }
 }
 
 /// Options for styling QR code corner dots (center of finder patterns).
@@ -63,6 +75,11 @@ pub struct CornersDotOptions {
     pub color: Color,
     /// Optional gradient for corner dots.
     pub gradient: Option<Gradient>,
+    /// Ignore `color` and `gradient` and paint with the corner squares'
+    /// color (or the dots' color, if the squares inherit too), like JS
+    /// qr-code-styling does when neither is set.
+    #[cfg_attr(feature = "serde", serde(default))]
+    pub inherit_color: bool,
 }
 
 impl Default for CornersDotOptions {
@@ -71,6 +88,7 @@ impl Default for CornersDotOptions {
             dot_type: CornerDotType::Dot,
             color: Color::BLACK,
             gradient: None,
+            inherit_color: false,
         }
     }
 }
@@ -99,6 +117,13 @@ impl CornersDotOptions {
     /// Set the gradient.
     pub fn with_gradient(mut self, gradient: Gradient) -> Self {
         self.gradient = Some(gradient);
+        self
+    }
+
+    /// Paint like JS qr-code-styling when no color or gradient is given
+    /// (see [`inherit_color`](Self::inherit_color)).
+    pub fn with_inherited_color(mut self) -> Self {
+        self.inherit_color = true;
         self
     }
 }

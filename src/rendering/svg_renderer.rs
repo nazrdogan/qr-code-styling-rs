@@ -8,7 +8,7 @@ use crate::core::QRMatrix;
 use crate::error::Result;
 use crate::figures::{QRCornerDot, QRCornerSquare, QRDot};
 use crate::rendering::scene::{Background, ImageItem, Paint, Scene, Shape};
-use crate::types::{GradientType, ShapeType};
+use crate::types::{CornerDotType, CornerSquareType, GradientType, ShapeType};
 use crate::utils::calculate_image_size;
 
 /// SVG renderer for QR codes.
@@ -361,11 +361,18 @@ impl<'a> SvgRenderer<'a> {
                 corners_square_size,
                 &name,
             );
+            let square_paint = if sq.inherit_color { self.dots_paint(&name) } else { paint };
             let mut d = String::new();
-            square_drawer.push_path(&mut d, x, y, corners_square_size, rotation);
+            let even_odd = if sq.square_type == CornerSquareType::FromDots {
+                self.push_mask_dots(&mut d, &SQUARE_MASK, x, y, dot_size);
+                false
+            } else {
+                square_drawer.push_path(&mut d, x, y, corners_square_size, rotation);
+                true
+            };
             shapes.push(Shape {
-                paint,
-                even_odd: true,
+                paint: square_paint.clone(),
+                even_odd,
                 d,
             });
 
@@ -383,13 +390,56 @@ impl<'a> SvgRenderer<'a> {
                 corners_dot_size,
                 &name,
             );
+            // An inheriting dot takes the square's paint (JS draws it into
+            // the square's clip path), under its own gradient id.
+            let paint = if dot.inherit_color { renamed(square_paint, &name) } else { paint };
             let mut d = String::new();
-            dot_drawer.push_path(&mut d, dx, dy, corners_dot_size, rotation);
+            if dot.dot_type == CornerDotType::FromDots {
+                // DOT_MASK already includes the 2-module inset
+                self.push_mask_dots(&mut d, &DOT_MASK, x, y, dot_size);
+            } else {
+                dot_drawer.push_path(&mut d, dx, dy, corners_dot_size, rotation);
+            }
             shapes.push(Shape {
                 paint,
                 even_odd: false,
                 d,
             });
+        }
+    }
+
+    /// The dots' paint (over the whole canvas), under gradient id `name`.
+    fn dots_paint(&self, name: &str) -> Paint {
+        let dots = &self.options.dots_options;
+        self.create_paint(
+            dots.gradient.as_ref(),
+            &dots.color,
+            0.0,
+            0.0,
+            0.0,
+            self.options.height as f64,
+            self.options.width as f64,
+            name,
+        )
+    }
+
+    /// Draw each set cell of a 7×7 finder `mask` at (`x`, `y`) as a dot of
+    /// the dots' type. Neighbors outside the mask count as empty, so e.g.
+    /// rounded dots join along the ring but not into the data area.
+    fn push_mask_dots(&self, out: &mut String, mask: &[[u8; 7]; 7], x: f64, y: f64, dot_size: f64) {
+        let drawer = QRDot::new(self.options.dots_options.dot_type);
+        for (row, cells) in mask.iter().enumerate() {
+            for (col, &cell) in cells.iter().enumerate() {
+                if cell == 0 {
+                    continue;
+                }
+                let neighbor_fn = |x_offset: i32, y_offset: i32| -> bool {
+                    let (r, c) = (row as i32 + y_offset, col as i32 + x_offset);
+                    (0..7).contains(&r) && (0..7).contains(&c) && mask[r as usize][c as usize] == 1
+                };
+                let (dx, dy) = (x + col as f64 * dot_size, y + row as f64 * dot_size);
+                drawer.push_path(out, dx, dy, dot_size, Some(&neighbor_fn));
+            }
         }
     }
 
@@ -586,5 +636,14 @@ impl<'a> SvgRenderer<'a> {
         } else {
             value
         }
+    }
+}
+
+/// `paint` with its gradient (if any) under the id `name`.
+fn renamed(paint: Paint, name: &str) -> Paint {
+    match paint {
+        Paint::Solid(c) => Paint::Solid(c),
+        Paint::Linear { x1, y1, x2, y2, stops, .. } => Paint::Linear { id: name.to_string(), x1, y1, x2, y2, stops },
+        Paint::Radial { cx, cy, r, stops, .. } => Paint::Radial { id: name.to_string(), cx, cy, r, stops },
     }
 }

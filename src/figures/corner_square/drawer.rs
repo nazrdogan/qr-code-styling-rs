@@ -28,6 +28,8 @@ impl QRCornerSquare {
             CornerSquareType::Square => self.basic_square(out, x, y, size, rotation),
             CornerSquareType::Dot => self.basic_dot(out, x, y, size, rotation),
             CornerSquareType::ExtraRounded => self.basic_extra_rounded(out, x, y, size, rotation),
+            // Drawn module by module by the renderer
+            CornerSquareType::FromDots => {}
         }
     }
 
